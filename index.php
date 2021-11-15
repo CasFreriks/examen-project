@@ -10,5 +10,10 @@
 </head>
 <body>
     <?php echo "Hello world" ?>
+    <p>Hello world</p>
+
+<script>
+    alert("Hello World");
+</script>
 </body>
 </html>
