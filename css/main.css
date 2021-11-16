@@ -1,0 +1,11 @@
+.contentUnder {
+    margin-top: 100px;
+}
+p {
+    margin: 0 !important;
+}
+
+.footer-dark {
+    position: relative;
+    top:200px;
+}
