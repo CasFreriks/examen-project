@@ -1,23 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/header.css">
-    <title>Navigation bar</title>
-</head>
-<body>
+
     <!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light">
   <div class="container">
     <a class="navbar-brand" href="#"
       ><img
         id="DTV Logo"
-        src="https://mdbcdn.b-cdn.net/wp-content/uploads/2018/06/logo-mdb-jquery-small.png"
+        src="img/DTVlogo.jpg"
         alt="DTV Logo"
         draggable="false"
-        height="30"
+        height="40"
     /></a>
     <button
       class="navbar-toggler"
@@ -46,5 +37,3 @@
   </div>
 </nav>
 <!-- Navbar -->
-</body>
-</html>
