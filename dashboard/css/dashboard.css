@@ -69,10 +69,6 @@ main {
     transition: 0.5s;
 }
 
-.active {
-    width: 100%;
-}
-
 .toggleSidebar span {
     display: none;
     float: left;
