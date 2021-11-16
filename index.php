@@ -21,7 +21,7 @@
     <?php include('shared/nav.php') ?>
 
     <div class="container">
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="img/tennisfoto1.jpg" class="d-block w-100" alt="tennisfoto1">

@@ -11,3 +11,8 @@ p {
 }
 
 /* Homepage CSS */
+
+.carousel {
+    position: relative;
+    margin-top: 100px;
+}
