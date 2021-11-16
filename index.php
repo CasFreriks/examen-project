@@ -9,11 +9,8 @@
     <title>Document</title>
 </head>
 <body>
-    <?php echo "Hello world" ?>
-    <p>Hello world</p>
+    <?php include('shared/nav.php') ?>
 
-<script>
-    alert("Hello World");
-</script>
+
 </body>
 </html>
