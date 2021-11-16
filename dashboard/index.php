@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#4285f4"> <!-- Theme color for Google Chrome -->
-    <title>Simple bootstrapp 5 admin dashboard</title>
+    <title>DTV | Dashboard</title>
     <link rel="icon" href="http://example.com/favicon.png"> <!-- Favicon for your site -->
 
     <!-- Bootstrapp css and js -->
@@ -50,30 +50,24 @@
             <li class="nav-item">
                 <a href="#" class="nav-link active" aria-current="page">
                     <i class='bx bxs-home me-2'></i>
-                    <span>Home</span>
+                    <span>Leden overzicht</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="nav-link link-dark">
                     <i class='bx bxs-dashboard me-2'></i>
-                    <span>Dashboard</span>
+                    <span>Menukaart overzicht</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="nav-link link-dark">
                     <i class='bx bxs-group me-2'></i>
-                    <span>Users</span>
+                    <span>Toernooien overzicht</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="nav-link link-dark">
-                    <i class='bx bxs-shopping-bag me-2'></i>
-                    <span>Products</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link link-dark">
-                    <i class='bx bxs-bar-chart-alt-2 me-2' ></i>
+                    <i class='bx bxs-group me-2'></i>
                     <span>stats</span>
                 </a>
             </li>
