@@ -11,11 +11,8 @@
     <link rel="stylesheet" href="css/main.css">
 
     <link rel="stylesheet" href="https://mdbootstrap.com/snippets/styles.0839c4d26bba6648d360.css">
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
-            rel="stylesheet"
-    />
-    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
+    <title>DTV | Login</title>
 </head>
 <body>
 <?php include('shared/nav.php') ?>

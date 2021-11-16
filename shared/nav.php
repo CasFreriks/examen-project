@@ -24,13 +24,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto align-items-center">
         <li class="nav-item">
-          <a class="nav-link mx-2" href="#!"><i class="fas fa-plus-circle pe-2"></i>Home</a>
+          <a class="nav-link mx-2" href="#!">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link mx-2" href="#!"><i class="fas fa-bell pe-2"></i>Menukaart</a>
+          <a class="nav-link mx-2" href="#!">Menukaart</a>
         </li>
         <li class="nav-item ms-3">
-          <a class="btn btn-black btn-rounded" href="#!">Login</a>
+          <a class="btn btn-black btn-rounded" href="login.php">Login</a>
         </li>
       </ul>
     </div>

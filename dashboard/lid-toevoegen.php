@@ -89,49 +89,58 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-10" style="margin:40px auto;">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h5>Leden overzicht</h5>
-                            </div>
-                            <div class="col-md-6">
-                                <a href="lid-toevoegen.php" class="btn btn-primary" style="float:right;">Lid toevoegen</a>
-                            </div>
-                        </div>
+                        <h5>Lid toevoegen</h5>
                         <hr>
+                        <form>
+                            <div class="input-group">
+                                <div class="col-md-4">
+                                    <input type="text" placeholder="Voorletter" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" placeholder="Tussenvoegsel" class="form-control">
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" placeholder="Achternaam" class="form-control">
+                                </div>
+                            </div>
 
-                        <div class="table-responsive">
-                            <table id="dataUserTable" class="table table-striped" style="width:100%">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Voorletter</th>
-                                    <th>Tussenvoegsel</th>
-                                    <th>Achternaam</th>
-                                    <th>E-mail</th>
-                                    <th>Leden nummer</th>
-                                    <th>Rol</th>
-                                    <th>Wijzigen</th>
-                                    <th>Verwijderen</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>C</td>
-                                    <td>-</td>
-                                    <td>Achternaam</td>
-                                    <td>E-mail</td>
-                                    <td>12345678</td>
-                                    <td>Gebruiker</td>
-                                    <td><a href="leden-wijzigen.php" class="btn btn-secondary">Wijzigen</a></td>
-                                    <td><div class="btn btn-danger">Verwijderen</div></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        </div>
+                            <br>
+
+                            <div class="col-md-5">
+                                <input type="email" placeholder="E-mailadres" class="form-control">
+                            </div>
+
+                            <br>
+
+                            <div class="col-md-5">
+                                <input type="text" placeholder="Wachtwoord" class="form-control">
+                            </div>
+
+                            <br>
+
+                            <div class="col-md-5">
+                                <input type="text" placeholder="Leden nummer" class="form-control">
+                                <label style="font-size:0.8em;">Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.</label>
+                            </div>
+
+                            <br>
+
+                            <div class="col-md-5">
+                                <select class="form-control">
+                                    <option>Gebruiker</option>
+                                    <option>Admin</option>
+                                </select>
+                            </div>
+
+                            <br>
+
+                            <button class="btn-primary btn">Lid toevoegen</button>
+                        </form>
+
+
                     </div>
                 </div>
+            </div>
         </section>
     </div>
 

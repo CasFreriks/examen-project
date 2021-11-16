@@ -96,13 +96,14 @@ main {
 .content {
     margin-top: 85px;
     margin-left: 15px;
+    margin-right: 15px;
+    width:100%;
 }
 
 .contentSection {
-    width: fit-content;
     height: fit-content;
     padding: 10px;
-    background-color: #f1f2f7;
+    background-color: #f2f2f2;
 }
 
 .contentSection h5 {
