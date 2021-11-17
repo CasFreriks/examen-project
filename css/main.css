@@ -58,13 +58,13 @@ body, html {
     margin-left: 20%;
 }
 
-.row{
-    margin-top: 40px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+.row-content{
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.row img{
+.row-content img{
     height: 300px;
 }

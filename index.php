@@ -29,7 +29,7 @@
 </div>
 
 <div class="content">
-  <div class="row">
+  <div class="row-content">
     <div class="col-lg-4 col-sm-12">
       <h2>Tennissen op zowel binnen en buiten banen</h2>
       <p>bij de Doetinchemse tennisvereniging kunt u kiezen om op een binnen of buiten baan te tennisen.</p>
@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row-content">
     <div class="col-lg-4 col-sm-12">
       <h2>Squashen</h2>
       <p>bij de Doetinchemse tennisvereniging kunt u ook squashen en heeft u toegang tot 5 squashbanen</p>
