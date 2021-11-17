@@ -50,42 +50,6 @@
   </div>
 
 </div>
-<!---
-<div class="px-4 pt-5 my-5 text-center border-bottom">
-  <h1 class="display-4 fw-bold">Doetinchemse tennisvereniging</h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">tennisvereniging in doetinchem. supermooi en hier kan je erg fijn tennissen</p>
-    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-      <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">log in</button>
-      <button type="button" class="btn btn-outline-secondary btn-lg px-4">Bekijk kantine menu</button>
-    </div>
-</div>
-
-
-    <div class="container">
-        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="img/tennisfoto1.jpg" class="d-block w-100" alt="tennisfoto1">
-                </div>
-            <div class="carousel-item">
-                    <img src="img/tennisfoto2.jpg" class="d-block w-100" alt="tennisfoto2">
-            </div>
-            <div class="carousel-item">
-                    <img src="img/tennisfoto3.jpg" class="d-block w-100" alt="tennisfoto3">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Vorige</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Volgende</span>
-        </button>
-        </div>
-    </div>
--->
     <?php include('shared/footer.php') ?>
 </body>
 </html>

@@ -18,16 +18,24 @@
 <?php include('shared/nav.php') ?>
 
 <div class="container contentUnder">
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary float-right">Menu weergeven op volledig scherm</button>
+        </div>
+    </div>
   <div class="row">
     <div class="col-md-6">
-      <h4>Snacks</h4>
-      <p>Frikandel €1,75</p>
-      <p>Kroket €2,00</p>
+       <h4>Snacks</h4>
+        <hr>
+
+       <p>Frikandel €1,75</p>
+       <p>Kroket €2,00</p>
     </div>
     <div class="col-md-6">
-      <h4>Drankjes</h4>
-      <p>Cola €1,50</p>
-      <p>Fanta €1,50</p>
+        <h4>Drankjes</h4>
+        <hr>
+        <p>Cola €1,50</p>
+        <p>Fanta €1,50</p>
     </div>
   </div>
 </div>
