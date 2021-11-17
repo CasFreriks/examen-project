@@ -23,7 +23,7 @@
 </head>
 <body>
 <header class="bg-light">
-    <a href="#" class="link-dark text-decoration-none float-start">
+    <a href="index.php" class="link-dark text-decoration-none float-start">
         <span class="fs-4 nameDashboard">Admin dashboard</span>
     </a>
 
@@ -51,19 +51,19 @@
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar">
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
-                <a href="#" class="nav-link active" style="width:100%" aria-current="page">
+                <a href="index.php" class="nav-link active" style="width:100%" aria-current="page">
                     <i class='bx bxs-group me-2'></i>
                     <span>Leden overzicht</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link link-dark">
+                <a href="menukaart-overzicht.php" class="nav-link link-dark">
                     <i class='bx bxs-food-menu me-2'></i>
                     <span>Menukaart overzicht</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link link-dark">
+                <a href="toernooi-overzicht.php" class="nav-link link-dark">
                     <i class='bx bx-table me-2'></i>
                     <span>Toernooien overzicht</span>
                 </a>
@@ -88,7 +88,7 @@
         <section class="contentSection">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-10" style="margin:40px auto;">
+                    <div class="col-md-12" style="margin:40px auto;">
                         <h5>Lid toevoegen</h5>
                         <hr>
                         <form>

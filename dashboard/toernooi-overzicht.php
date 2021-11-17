@@ -50,8 +50,8 @@
 <main>
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar">
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="index.php" class="nav-link active" style="width:100%" aria-current="page">
+            <li>
+                <a href="index.php" class="nav-link link-dark">
                     <i class='bx bxs-group me-2'></i>
                     <span>Leden overzicht</span>
                 </a>
@@ -62,8 +62,8 @@
                     <span>Menukaart overzicht</span>
                 </a>
             </li>
-            <li>
-                <a href="toernooi-overzicht.php" class="nav-link link-dark">
+            <li class="nav-item">
+                <a href="toernooi-overzicht.php" class="nav-link active" style="width:100%;" aria-current="page">
                     <i class='bx bx-table me-2'></i>
                     <span>Toernooien overzicht</span>
                 </a>
@@ -90,11 +90,14 @@
                 <div class="row">
                     <div class="col-md-12" style="margin:40px auto;">
                         <div class="row">
-                            <div class="col-md-6">
-                                <h5>Leden overzicht</h5>
+                            <div class="col-md-8">
+                                <h5>Toernooien overzicht</h5>
                             </div>
-                            <div class="col-md-6">
-                                <a href="lid-toevoegen.php" class="btn btn-primary" style="float:right;">Lid toevoegen</a>
+                            <div class="col-md-2">
+                                <a href="#" class="btn btn-primary" style="float:right;">Toernooi uitslag</a>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="#" class="btn btn-primary" style="float:right;">Toernooi schema</a>
                             </div>
                         </div>
                         <hr>
@@ -104,12 +107,11 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Voorletter</th>
-                                    <th>Tussenvoegsel</th>
-                                    <th>Achternaam</th>
-                                    <th>E-mail</th>
-                                    <th>Leden nummer</th>
-                                    <th>Rol</th>
+                                    <th>Toernooi naam</th>
+                                    <th>Aantal deelnemers (max 32)</th>
+                                    <th>Van / tot</th>
+                                    <th>Toernooi datum</th>
+                                    <th>Toernooi deadline</th>
                                     <th>Wijzigen</th>
                                     <th>Verwijderen</th>
                                 </tr>
@@ -117,21 +119,20 @@
                                 <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>C</td>
-                                    <td>-</td>
-                                    <td>Achternaam</td>
-                                    <td>E-mail</td>
-                                    <td>12345678</td>
-                                    <td>Gebruiker</td>
-                                    <td><a href="leden-wijzigen.php" class="btn btn-secondary">Wijzigen</a></td>
+                                    <td><a href="toernooi-deelnemers.php">Herfst toernooi</a></td>
+                                    <td>15 / 32</td>
+                                    <td>15:00 tot 18:00</td>
+                                    <td>20-11-2021</td>
+                                    <td style="color:red">25-11-2021</td>
+                                    <td><a href="toernooi-wijzigen.php" class="btn btn-secondary">Wijzigen</a></td>
                                     <td><div class="btn btn-danger">Verwijderen</div></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-                        </div>
                     </div>
                 </div>
+            </div>
         </section>
     </div>
 
