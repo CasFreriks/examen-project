@@ -32,7 +32,7 @@
                             <a href="wachtwoord-vergeten.php">Wachtwoord vergeten?</a>
                         </div>
                     </div>
-                    <button class="btn btn-primary">Login</button>
+                    <button class="btn btn-primary"><a href="profiel-gegevens.php">Login</a></button>
                 </form>
             </div>
         </div>

@@ -30,7 +30,7 @@
           <a class="nav-link mx-2" href="menukaart.php">Menukaart</a>
         </li>
           <li class="nav-item">
-              <a class="nav-link mx-2" href="banen-reserveren.php">Baan reserveren</a>
+              <a class="nav-link mx-2" href="baan-reserveren.php">Baan reserveren</a>
           </li>
           <li class="nav-item">
               <a class="nav-link mx-2" href="inschrijven-toernooien.php">Inschrijven toernooien</a>
