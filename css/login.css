@@ -1,7 +1,8 @@
 .loginEnRegistreerPaneel {
     margin:100px auto;
     width: 80%;
-    height:370px;
+    height:fit-content;
+    padding-bottom:20px;
     background-color: #f2f2f2;
     border-radius:5px;
 }
@@ -9,6 +10,11 @@
 .loginEnRegistreerPaneel h5 {
     text-align: center;
     padding-top:10px;
+}
+
+.loginEnRegistreerPaneel p {
+    text-align: center;
+    font-size:0.9em;
 }
 
 .loginEnRegistreerPaneel form {
@@ -22,4 +28,18 @@
 
 .loginEnRegistreerPaneel button {
     margin-top: 30px;
+}
+
+.loginEnRegistreerPaneel a {
+    color:black !important;
+    text-decoration:underline;
+}
+
+@media screen and (max-width: 766px) {
+    .loginEnRegistreerPaneel form {
+        width:80%;
+        margin:auto;
+
+    }
+
 }

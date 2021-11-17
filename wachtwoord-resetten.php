@@ -19,44 +19,19 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 m-auto">
             <div class="loginEnRegistreerPaneel">
-                <h5>Login</h5>
+                <h5>Wachtwoord resetten</h5>
+                <p>Hier kunt u een nieuw wachtwoord invullen</p>
                 <form>
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
-                            <input type="email" placeholder="E-mailadres" class="form-control">
-                        </div>
-                        <div class="col-md-8">
-                            <input type="password" placeholder="Wachtwoord" class="form-control">
-                            <a href="wachtwoord-vergeten.php">Wachtwoord vergeten?</a>
+                            <input type="password" placeholder="Nieuw wachtwoord" class="form-control" required>
+                            <input type="password" placeholder="Wachtwoord herhalen" class="form-control" required>
                         </div>
                     </div>
-                    <button class="btn btn-primary">Login</button>
+                    <button class="btn btn-primary">Wachtwoord veranderen</button>
                 </form>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="loginEnRegistreerPaneel">
-                <h5>Registreer</h5>
-                <form>
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-md-8">
-                            <input type="text" placeholder="Achternaam" class="form-control">
-                        </div>
-                        <div class="col-md-8">
-                            <input type="email" placeholder="E-mailadres" class="form-control">
-                        </div>
-                        <div class="col-md-8">
-                            <input type="password" placeholder="Wachtwoord" class="form-control">
-                        </div>
-                        <div class="col-md-8">
-                            <input type="number" placeholder="Leden nummer" class="form-control">
-                        </div>
-                    </div>
-
-                    <button class="btn btn-primary">Registreer</button>
-
             </div>
         </div>
     </div>

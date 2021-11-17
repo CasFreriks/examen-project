@@ -37,11 +37,12 @@
           </div>
           <div class="col-md-8">
             <h4>Profiel info</h4>
-            <input type="text" placeholder="Voornaam..." value="" name="edit-naam" class="form-control">
-            <input type="text" placeholder="Tussenvoegsel..." value="" name="edit-tusv" class="form-control">
-            <input type="text" placeholder="Achternaam..." value="" name="edit-achternaam" class="form-control">
-            <input type="email" placeholder="Email..." value="" name="edit-email" class="form-control">
-            <input type="password" placeholder="Wachtwoord..." value="" name="edit-password" class="form-control">
+                <input type="text" placeholder="Voornaam..." value="" name="edit-naam" class="form-control">
+                <input type="text" placeholder="Tussenvoegsel..." value="" name="edit-tusv" class="form-control">
+                <input type="text" placeholder="Achternaam..." value="" name="edit-achternaam" class="form-control">
+                <input type="email" placeholder="Email..." value="" name="edit-email" class="form-control">
+                <input type="password" placeholder="Wachtwoord..." value="" name="edit-password" class="form-control">
+                 <button class="btn btn-primary">Bijwerken</button>
           </div>
         </div>
       </form>

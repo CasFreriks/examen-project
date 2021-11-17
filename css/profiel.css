@@ -20,11 +20,20 @@
     border-right: 1px solid black;
   }
 
-  li a {
+  .menu-lijst li {
     color:black;
+    list-style-type: none;
   }
 
-  ul {
+  .menu-lijst a {
+    color:black !important;
+  }
+
+  .menu-lijst ul {
     list-style-type: square;
     text-decoration: none;
+  }
+
+  form input {
+    margin-bottom: 10px;
   }
