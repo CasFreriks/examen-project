@@ -43,7 +43,7 @@
                 <form>
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
-                            <input type="text" placeholder="Voornaam" class="form-control">
+                            <input type="text" placeholder="Achternaam" class="form-control">
                         </div>
                         <div class="col-md-8">
                             <input type="email" placeholder="E-mailadres" class="form-control">
