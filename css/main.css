@@ -68,3 +68,19 @@ body, html {
 .row-content img{
     height: 300px;
 }
+
+/* Toernooi overzicht CSS */
+
+.menu-toernooi {
+    margin-top: 100px;
+    margin-left: 150px;
+    border-right: 1px solid black;
+}
+
+.menu-toernooi a {
+    color: black;
+}
+
+.menu-toernooi li {
+    list-style-type: none;
+}
