@@ -20,57 +20,33 @@
 <body>
     <?php include('shared/nav.php') ?>
 
-    <section class="vh-100" style="background-color: #f4f5f7;">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-lg-6 mb-4 mb-lg-0">
-        <div class="card mb-3" style="border-radius: .5rem;">
-          <div class="row g-0">
-            <div class="col-md-4 gradient-custom text-center text-white" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-              <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.png"
-                alt="..."
-                class="img-fluid my-5"
-                style="width: 80px;"
-              />
-              <h5>Cas Freriks</h5>
-              <p>Web Designer</p>
-              <i class="far fa-edit mb-5"></i>
-            </div>
-            <div class="col-md-8">
-              <div class="card-body p-4">
-                <h6>Information</h6>
-                <hr class="mt-0 mb-4">
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h6>Email</h6>
-                    <p class="text-muted">info@example.com</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h6>Phone</h6>
-                    <p class="text-muted">123 456 789</p>
-                  </div>
-                </div>
-                <h6>Projects</h6>
-                <hr class="mt-0 mb-4">
-                <div class="row pt-1">
-                  <div class="col-6 mb-3">
-                    <h6>Recent</h6>
-                    <p class="text-muted">Lorem ipsum</p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <h6>Most Viewed</h6>
-                    <p class="text-muted">Dolor sit amet</p>
-                  </div>
-                </div>
+    <div class="container">
+      <form class="editGegevens">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-4">
+            <div class="menu-lijst">
+              <div>
+                <ul>
+                  <li><a href="#">Profielgegevens</a></li>
+                  <li><a href="#">Banen reservatie</a></li>
+                  <li><a href="#">Inschrijven toernooien</a></li>
+                  <li><a href="#">Uitloggen</a></li>
+                </ul>
               </div>
             </div>
           </div>
+          <div class="col-md-8">
+            <h4>Profiel info</h4>
+            <input type="text" placeholder="Voornaam..." value="" name="edit-naam" class="form-control">
+            <input type="text" placeholder="Tussenvoegsel..." value="" name="edit-tusv" class="form-control">
+            <input type="text" placeholder="Achternaam..." value="" name="edit-achternaam" class="form-control">
+            <input type="email" placeholder="Email..." value="" name="edit-email" class="form-control">
+            <input type="password" placeholder="Wachtwoord..." value="" name="edit-password" class="form-control">
+          </div>
         </div>
-      </div>
+      </form>
     </div>
-  </div>
-</section>
+ 
 
     <?php include('shared/footer.php') ?>
 </body>
