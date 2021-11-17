@@ -50,14 +50,14 @@
 <main>
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar">
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="index.php" class="nav-link active" style="width:100%" aria-current="page">
+            <li>
+                <a href="index.php" class="nav-link link-dark" aria-current="page">
                     <i class='bx bxs-group me-2'></i>
                     <span>Leden overzicht</span>
                 </a>
             </li>
-            <li>
-                <a href="menukaart-overzicht.php" class="nav-link link-dark">
+            <li class="nav-item">
+                <a href="menukaart-overzicht.php" class="nav-link active" style="width:100%;" aria-current="page">
                     <i class='bx bxs-food-menu me-2'></i>
                     <span>Menukaart overzicht</span>
                 </a>
@@ -91,10 +91,10 @@
                     <div class="col-md-12" style="margin:40px auto;">
                         <div class="row">
                             <div class="col-md-6">
-                                <h5>Leden overzicht</h5>
+                                <h5>Menukaart overzicht</h5>
                             </div>
                             <div class="col-md-6">
-                                <a href="lid-toevoegen.php" class="btn btn-primary" style="float:right;">Lid toevoegen</a>
+                                <a href="product-toevoegen.php" class="btn btn-primary" style="float:right;">Product toevoegen</a>
                             </div>
                         </div>
                         <hr>
@@ -104,12 +104,9 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Voorletter</th>
-                                    <th>Tussenvoegsel</th>
-                                    <th>Achternaam</th>
-                                    <th>E-mail</th>
-                                    <th>Leden nummer</th>
-                                    <th>Rol</th>
+                                    <th>Productnaam</th>
+                                    <th>Soort</th>
+                                    <th>Prijs</th>
                                     <th>Wijzigen</th>
                                     <th>Verwijderen</th>
                                 </tr>
@@ -117,21 +114,18 @@
                                 <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>C</td>
-                                    <td>-</td>
-                                    <td>Achternaam</td>
-                                    <td>E-mail</td>
-                                    <td>12345678</td>
-                                    <td>Gebruiker</td>
-                                    <td><a href="leden-wijzigen.php" class="btn btn-secondary">Wijzigen</a></td>
+                                    <td>Frikandel</td>
+                                    <td>Snack</td>
+                                    <td>€1,75</td>
+                                    <td><a href="product-wijzigen.php" class="btn btn-secondary">Wijzigen</a></td>
                                     <td><div class="btn btn-danger">Verwijderen</div></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-                        </div>
                     </div>
                 </div>
+            </div>
         </section>
     </div>
 
