@@ -18,7 +18,49 @@
     <title>Document</title>
 </head>
 <body>
-    <?php include('shared/nav.php') ?>
+<?php include('shared/nav.php') ?>
+
+<div class="hero-image">
+  <div class="hero-text">
+    <h1>Doetinchemse tennisvereniging</h1>
+    <p>tennisvereniging in doetinchem. supermooi en hier kan je erg fijn tennissen</p>
+    <button>Log in</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="col-lg-4 col-sm-12">
+      <h2>Tennissen op zowel binnen en buiten banen</h2>
+      <p>bij de Doetinchemse tennisvereniging kunt u kiezen om op een binnen of buiten baan te tennisen.</p>
+    </div>
+    <div class="col-lg-8 col-sm-12">
+      <img class="article-image" src="img/tennisfoto2.jpg" alt="article-image">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4 col-sm-12">
+      <h2>Squashen</h2>
+      <p>bij de Doetinchemse tennisvereniging kunt u ook squashen en heeft u toegang tot 5 squashbanen</p>
+    </div>
+    <div class="col-lg-8 col-sm-12">
+      <img class="article-image" src="img/tennisfoto3.jpg" alt="article-image">
+    </div>
+  </div>
+
+</div>
+<!---
+<div class="px-4 pt-5 my-5 text-center border-bottom">
+  <h1 class="display-4 fw-bold">Doetinchemse tennisvereniging</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">tennisvereniging in doetinchem. supermooi en hier kan je erg fijn tennissen</p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+      <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">log in</button>
+      <button type="button" class="btn btn-outline-secondary btn-lg px-4">Bekijk kantine menu</button>
+    </div>
+</div>
+
 
     <div class="container">
         <div id="carousel" class="carousel slide" data-bs-ride="carousel">
@@ -43,7 +85,7 @@
         </button>
         </div>
     </div>
-
+-->
     <?php include('shared/footer.php') ?>
 </body>
 </html>
