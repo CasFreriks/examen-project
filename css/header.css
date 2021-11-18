@@ -1,7 +1,7 @@
 .navbar-light .navbar-nav .nav-link {
-    color: red;
-  }
+    color: black !important;
+}
 
-  .navbar .navbar-brand img {
-    height: 35px !important; 
+.navbar .navbar-brand img {
+    height: 35px !important;
 } 

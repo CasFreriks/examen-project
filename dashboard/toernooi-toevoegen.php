@@ -69,7 +69,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link link-dark">
+                <a href="baan-reserveren.php" class="nav-link link-dark">
                     <i class='bx bxs-calendar-alt me-2'></i>
                     <span>Baan reserveren</span>
                 </a>

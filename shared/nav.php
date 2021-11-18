@@ -36,7 +36,7 @@
               <a class="nav-link mx-2" href="inschrijven-toernooien.php">Inschrijven toernooien</a>
           </li>
         <li class="nav-item ms-3">
-          <a class="btn btn-black btn-rounded" href="login.php">Login</a>
+          <a class="btn btn-primary btn-rounded" href="login.php">Login</a>
         </li>
 
       </ul>
