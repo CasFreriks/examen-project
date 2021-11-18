@@ -46,6 +46,12 @@
                 <form>
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
+                            <input type="text" placeholder="Voornaam" class="form-control">
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" placeholder="Tussenvoegsel" class="form-control">
+                        </div>
+                        <div class="col-md-8">
                             <input type="text" placeholder="Achternaam" class="form-control">
                         </div>
                         <div class="col-md-8">
@@ -55,7 +61,8 @@
                             <input type="password" placeholder="Wachtwoord" class="form-control">
                         </div>
                         <div class="col-md-8">
-                            <input type="number" placeholder="Leden nummer" class="form-control">
+                            <input type="number" placeholder="Leden nummer*" class="form-control">
+                            <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.</span>
                         </div>
                     </div>
 

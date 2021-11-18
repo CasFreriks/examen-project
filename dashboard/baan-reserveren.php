@@ -662,7 +662,9 @@
 
                                     </td>
                                     <td>
-
+                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                                        <div class="margin-10px-top font-size14">18:00-18:30</div>
+                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                     </td>
                                     <td>
 
