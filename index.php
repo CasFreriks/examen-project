@@ -29,22 +29,22 @@
 </div>
 
 <div class="content">
-  <div class="row-content">
-    <div class="col-lg-4 col-sm-12">
+  <div class="row row-content">
+    <div class="col-lg-4 col-sm-6">
       <h2>Tennissen op zowel binnen en buiten banen</h2>
       <p>bij de Doetinchemse tennisvereniging kunt u kiezen om op een binnen of buiten baan te tennisen.</p>
     </div>
-    <div class="col-lg-8 col-sm-12">
+    <div class="col-lg-8 col-sm-6">
       <img class="article-image" src="img/tennisfoto2.jpg" alt="article-image">
     </div>
   </div>
 
-  <div class="row-content">
-    <div class="col-lg-4 col-sm-12">
+  <div class="row row-content">
+    <div class="col-lg-4 col-sm-6">
       <h2>Squashen</h2>
       <p>bij de Doetinchemse tennisvereniging kunt u ook squashen en heeft u toegang tot 5 squashbanen</p>
     </div>
-    <div class="col-lg-8 col-sm-12">
+    <div class="col-lg-8 col-sm-6">
       <img class="article-image" src="img/tennisfoto3.jpg" alt="article-image">
     </div>
   </div>

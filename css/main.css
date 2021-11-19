@@ -59,7 +59,7 @@ body, html {
 }
 
 .row-content{
-    margin-top: 40px;
+    margin-top: 40px !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,10 +70,18 @@ body, html {
     box-shadow: 5px 8px 8px 2px #888888;
 }
 
+@media only screen and (max-width: 415px) {
+    .content {
+        margin-left: 5%;
+    }
+    .row-content img {
+        height: 200px;
+    }
+  }
 /* Toernooi overzicht CSS */
 
 .menu-toernooi {
-    margin-top: 100px;
+    margin-top: 100px;  
     margin-left: 150px;
     border-right: 1px solid black;
 }
@@ -85,6 +93,7 @@ body, html {
 .menu-toernooi li {
     list-style-type: none;
 }
+
 
 /* Menukaart css */
 
