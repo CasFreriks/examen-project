@@ -26,17 +26,17 @@
         <div class="col-md-6">
             <div class="loginEnRegistreerPaneel">
                 <h5>Login</h5>
-                <form>
+                <form method="post" action="actions/inloggen.php">
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
-                            <input type="email" placeholder="E-mailadres" class="form-control">
+                            <input type="email" placeholder="E-mailadres" class="form-control" name="email">
                         </div>
                         <div class="col-md-8">
-                            <input type="password" placeholder="Wachtwoord" class="form-control">
+                            <input type="password" placeholder="Wachtwoord" class="form-control" name="wachtwoord">
                             <a href="wachtwoord-vergeten.php">Wachtwoord vergeten?</a>
                         </div>
                     </div>
-                    <button class="btn btn-primary"><a href="profiel-gegevens.php">Login</a></button>
+                    <button class="btn btn-primary" type="submit">Login</button>
                 </form>
             </div>
         </div>
@@ -46,15 +46,6 @@
                 <form>
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
-                            <input type="text" placeholder="Voornaam" class="form-control">
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" placeholder="Tussenvoegsel" class="form-control">
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" placeholder="Achternaam" class="form-control">
-                        </div>
-                        <div class="col-md-8">
                             <input type="email" placeholder="E-mailadres" class="form-control">
                         </div>
                         <div class="col-md-8">
@@ -62,7 +53,8 @@
                         </div>
                         <div class="col-md-8">
                             <input type="number" placeholder="Leden nummer*" class="form-control">
-                            <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.</span>
+                            <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.
+                             Deze heb je in onze mail ontvangen</span>
                         </div>
                     </div>
 
