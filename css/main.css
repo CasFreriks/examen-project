@@ -85,3 +85,9 @@ body, html {
 .menu-toernooi li {
     list-style-type: none;
 }
+
+/* Menukaart css */
+
+table {
+    width: 100%;
+  }

@@ -16,7 +16,7 @@
 
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>  <!-- Custom icons from BoxIcons.com CSS -->
 
-    <title>DTV | Login</title>
+    <title>DTV | Menukaart</title>
 </head>
 <body>
 <?php include('shared/nav.php') ?>
@@ -31,15 +31,26 @@
     <div class="col-md-6">
        <h4>Snacks</h4>
         <hr>
-
-       <p>Frikandel €1,75</p>
-       <p>Kroket €2,00</p>
+        <table>
+            <tr>
+                <td>Frikandel</td><td>€1,50</td>
+            </tr>
+            <tr>
+                <td>Kroket</td><td>€1,50</td>
+            </tr>
+        </table>
     </div>
     <div class="col-md-6">
         <h4>Drankjes</h4>
         <hr>
-        <p>Cola €1,50</p>
-        <p>Fanta €1,50</p>
+        <table>
+            <tr>
+                <td>Cola</td><td>€1,50</td>
+            </tr>
+            <tr>
+                <td>Fanta</td><td>€1,50</td>
+            </tr>
+        </table>
     </div>
   </div>
 </div>
