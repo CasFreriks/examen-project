@@ -1,3 +1,16 @@
+<?php
+include('db/dbconfig.php');
+
+$db = new Dbh();
+$pdo = $db->connect();
+
+$querySnacks = "SELECT * FROM assortiment WHERE product_soort = 'snack'";
+$queryDrank = "SELECT * FROM assortiment WHERE product_soort = 'drank'";
+
+$querySnacksDone = $pdo->query($querySnacks);
+$queryDrankDone = $pdo->query($queryDrank);
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -32,24 +45,22 @@
        <h4>Snacks</h4>
         <hr>
         <table>
+        <?php foreach ($querySnacksDone as $snackRow) { ?>
             <tr>
-                <td>Frikandel</td><td>€1,50</td>
+                <td><?php echo $snackRow['product_naam'] ?></td><td>€<?php echo $snackRow['product_prijs'] ?></td>
             </tr>
-            <tr>
-                <td>Kroket</td><td>€1,50</td>
-            </tr>
+        <?php } ?>
         </table>
     </div>
     <div class="col-md-6">
         <h4>Drankjes</h4>
         <hr>
         <table>
+        <?php foreach($queryDrankDone as $drankRow) { ?>
             <tr>
-                <td>Cola</td><td>€1,50</td>
+                <td><?php echo $drankRow['product_naam'] ?></td><td>€<?php echo $drankRow['product_prijs'] ?></td>
             </tr>
-            <tr>
-                <td>Fanta</td><td>€1,50</td>
-            </tr>
+        <?php } ?>
         </table>
     </div>
   </div>
