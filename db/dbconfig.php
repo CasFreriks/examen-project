@@ -12,7 +12,7 @@ class Dbh //Hier maak ik de class Dbh aan
     public function connect()
     {
         //hier vul ik de variabelen met waardes
-        $this->servername = "185.87.187.247";
+        $this->servername = "185.87.187.247"; //verander dit naar localhost als je het op de server zet
         $this->username = "jkrudde_examen-project";
         $this->password = "Bier123Bazen!";
         $this->dbname = "jkrudde_examen-project";

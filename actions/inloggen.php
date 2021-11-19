@@ -5,7 +5,7 @@ $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 
 $test = $con->prepare("SELECT * FROM assortiment");
 $test->execute();
-$result = $test->get_result()->fetch_assoc();
+$result = $test->fetch();
 echo $result["product_naam"];
 
 //if (!empty($_POST["email"]) && !empty($_POST["wachtwoord"])) {
