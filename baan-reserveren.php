@@ -23,9 +23,10 @@
 </head>
 <body>
 
-<?php include('shared/nav.php') ?>
+<?php include('shared/nav.php') 
 
 
+?>
 <div class="container-fluid">
     <div class="container contentUnder">
         <div class="row">
@@ -53,13 +54,13 @@
                 <tr class="bg-light-gray">
                     <th class="text-uppercase">Tijd
                     </th>
-                    <th class="text-uppercase">Maandag</th>
-                    <th class="text-uppercase">Dinsdag</th>
-                    <th class="text-uppercase">Woensdag</th>
-                    <th class="text-uppercase">Donderdag</th>
-                    <th class="text-uppercase">Vrijdag</th>
-                    <th class="text-uppercase">Zaterdag</th>
-                    <th class="text-uppercase">Zondag</th>
+                    <th class="text-uppercase"><?php echo date("d-m-y"); ?></th>
+                    <th class="text-uppercase"><?php $datetime = new DateTime('+1 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase"><?php $datetime = new DateTime('+2 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase"><?php $datetime = new DateTime('+3 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase"><?php $datetime = new DateTime('+4 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase"><?php $datetime = new DateTime('+5 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase"><?php $datetime = new DateTime('+6 day'); echo $datetime->format('d-m-y');?></th>
                 </tr>
                 </thead>
                 <tbody>
