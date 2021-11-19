@@ -47,7 +47,7 @@ $queryDrankDone = $pdo->query($queryDrank);
         <table>
         <?php foreach ($querySnacksDone as $snackRow) { ?>
             <tr>
-                <td><?php echo $snackRow['product_naam'] ?></td><td>€<?php echo $snackRow['product_prijs'] ?></td>
+                <td><?php echo $snackRow['product_naam'] ?></td><td>€ <?php echo $snackRow['product_prijs'] ?></td>
             </tr>
         <?php } ?>
         </table>
@@ -58,7 +58,7 @@ $queryDrankDone = $pdo->query($queryDrank);
         <table>
         <?php foreach($queryDrankDone as $drankRow) { ?>
             <tr>
-                <td><?php echo $drankRow['product_naam'] ?></td><td>€<?php echo $drankRow['product_prijs'] ?></td>
+                <td><?php echo $drankRow['product_naam'] ?></td><td>€ <?php echo $drankRow['product_prijs'] ?></td>
             </tr>
         <?php } ?>
         </table>
