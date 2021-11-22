@@ -1,3 +1,15 @@
+<?php
+include('../db/dbconfig.php');
+
+$db = new Dbh();
+$pdo = $db->connect();
+
+$queryAssortiment = "SELECT * FROM assortiment";
+
+$queryAssortimentDone = $pdo->query($queryAssortiment);
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -112,14 +124,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Frikandel</td>
-                                    <td>Snack</td>
-                                    <td>€1,75</td>
-                                    <td><a href="product-wijzigen.php" class="btn btn-secondary">Wijzigen</a></td>
-                                    <td><div class="btn btn-danger">Verwijderen</div></td>
-                                </tr>
+                                <?php foreach($queryAssortimentDone as $assortimentRow) { ?>                                    
+                                    <tr>
+                                        <td><?php echo $assortimentRow['product_id']?></td>
+                                        <td><?php echo $assortimentRow['product_naam']?></td>
+                                        <td><?php echo $assortimentRow['product_soort']?></td>
+                                        <td><?php echo $assortimentRow['product_prijs']?></td>
+                                        <td><a href="product-wijzigen.php" class="btn btn-secondary">Wijzigen</a></td>
+                                        <td><a href="../actions/product-verwijderen.php?product_id=<?php echo $assortimentRow['product_id'];?>" class="btn btn-danger">Verwijderen</a></td>
+                                    </tr>
+                                <?php } ?>
                                 </tbody>
                             </table>
                         </div>
