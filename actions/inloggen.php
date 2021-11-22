@@ -29,6 +29,10 @@ if (!empty($_POST["email"]) && !empty($_POST["wachtwoord"])) { //als de formulie
             $_SESSION["statusCode"] = "error";
             header ("Location: ../login.php");
         }
+    } else {
+        $_SESSION["status1"] = "sorry, je gegevens zijn verkeerd.";
+        $_SESSION["statusCode"] = "error";
+        header ("Location: ../login.php");
     }
 } else {
     $_SESSION["status1"] = "sorry, je moet al je gegevens invullen";

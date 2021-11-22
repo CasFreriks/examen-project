@@ -21,7 +21,7 @@
 <body>
 <?php include('shared/nav.php') ?>
 
-<div class="container">
+<div class="container marginBottom">
     <div class="row">
         <div class="col-md-6 m-auto">
             <div class="loginEnRegistreerPaneel">
@@ -33,7 +33,7 @@
                             <input type="email" placeholder="E-mailadres" class="form-control" required>
                         </div>
                     </div>
-                    <a href="wachtwoord-resetten.php" class="btn btn-primary">Mail sturen</a>
+                    <button class="btn btn-primary" type="submit">Mail sturen</button>
                 </form>
             </div>
         </div>
