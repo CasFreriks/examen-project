@@ -1,5 +1,14 @@
 <?php
 session_start();
+require_once ("db/dbconfig.php");
+$con = new Dbh();
+$con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
+$lidID = $_SESSION["lidID"];
+
+$sql = $con->prepare("SELECT * FROM lid WHERE lid_id = :lidID");
+$sql->bindParam(":lidID", $lidID);
+$sql->execute();
+$result = $sql->fetch();
 ?>
 <!doctype html>
 <html lang="en">
@@ -27,7 +36,7 @@ session_start();
     <?php include('shared/nav.php') ?>
 
     <div class="container">
-      <form class="editGegevens">
+      <form class="editGegevens" method="post" action="actions/update-gegevens.php">
         <div class="row d-flex justify-content-center">
           <div class="col-md-4">
             <div class="menu-lijst">
@@ -43,12 +52,14 @@ session_start();
           </div>
           <div class="col-md-8">
             <h4>Profiel info</h4>
-                <input type="text" placeholder="Voornaam..." value="" name="edit-naam" class="form-control">
-                <input type="text" placeholder="Tussenvoegsel..." value="" name="edit-tusv" class="form-control">
-                <input type="text" placeholder="Achternaam..." value="" name="edit-achternaam" class="form-control">
-                <input type="email" placeholder="Email..." value="" name="edit-email" class="form-control">
+
+                <input type="text" placeholder="Voornaam..." value="<?php echo $result["lid_vnaam"] ?>" name="edit-naam" class="form-control">
+                <input type="text" placeholder="Tussenvoegsel..." value="<?php echo $result["lid_tvoegsel"] ?>" name="edit-tusv" class="form-control">
+                <input type="text" placeholder="Achternaam..." value="<?php echo $result["lid_anaam"] ?>" name="edit-achternaam" class="form-control">
+                <input type="email" placeholder="Email..." value="<?php echo $result["lid_email"] ?>" name="edit-email" class="form-control">
                 <input type="password" placeholder="Wachtwoord..." value="" name="edit-password" class="form-control">
-                 <button class="btn btn-primary">Bijwerken</button>
+
+                <button class="btn btn-primary" type="submit">Bijwerken</button>
           </div>
         </div>
       </form>
