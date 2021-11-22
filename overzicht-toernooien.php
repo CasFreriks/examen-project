@@ -1,3 +1,15 @@
+<?php 
+include('db/dbconfig.php');
+
+$db = new Dbh();
+$pdo = $db->connect();
+
+$queryToernooi = "SELECT * FROM toernooien";
+$sth = $pdo->prepare($queryToernooi);
+$sth->execute();
+$data = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -60,23 +72,22 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>Herfst toernooi</td>
-                                <td>15 / 32</td>
-                                <td>15:00 tot 18:00</td>
-                                <td>20-11-2021</td>
-                                <td style="color:red">25-11-2021</td>
+                            <?php foreach ($data as $toernooiRow) { ?>
+                                <td><?php echo $toernooiRow['toernooi_id'] ?></td>
+                                <td><?php echo $toernooiRow['toernooi_naam'] ?></td>
+                                <td><?php echo $toernooiRow['toernooi_deelnemers'] ?> / 32</td>
+                                <td><?php echo $toernooiRow['toernooi_begintijd'] ?> / <?php echo $toernooiRow['toernooi_eindtijd'] ?></td>
+                                <td><?php echo $toernooiRow['toernooi_datum'] ?></td>
+                                <td style="color:red"><?php echo $toernooiRow['toernooi_deadline'] ?></td>
                                 <td><a href="#" class="btn btn-danger">Verlaten</a></td>
                             </tr>
+                            <?php } ?>
                             </tbody>
                         </table>
                     </div>
-
                 </div>
-
             </div>
     </div>
-
 <?php include('shared/footer.php') ?>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
