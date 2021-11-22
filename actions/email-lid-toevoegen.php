@@ -11,7 +11,6 @@ function lidToevoegenMail($ledenNmr, $lidEmail) {
     $message = file_get_contents('../mail-templates/lid-toevoegen.html');
     $message = str_replace('$ledenNmr', $ledenNmr, $message);
 
-
 //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
 
@@ -24,7 +23,7 @@ function lidToevoegenMail($ledenNmr, $lidEmail) {
         $mail->Password = 'MailTestCaFr.nl';                               //SMTP password
         $mail->Port = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 //        $mail->SMTPDebug = SMTP::DEBUG_CONNECTION; //hiermee kan je je connectie debuggen. Handig als er iets mis mee is. Eventuele link naar meer info: https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting
-
+//SSL kan niet door de servers van school 😢 dus dat gaat helaas niet.
         //Recipients
         $mail->setFrom('mailtest@cafr.nl', 'Doetinchemse tennis vereniging');
         $mail->addAddress($lidEmail);     //Add a recipient
