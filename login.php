@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,6 +10,7 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/melding.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -21,7 +25,7 @@
 <body>
 <?php include('shared/nav.php') ?>
 
-<div class="container">
+<div class="container marginBottom">
     <div class="row">
         <div class="col-md-6">
             <div class="loginEnRegistreerPaneel">
@@ -29,38 +33,60 @@
                 <form method="post" action="actions/inloggen.php">
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
-                            <input type="email" placeholder="E-mailadres" class="form-control" name="email">
+                            <input type="email" placeholder="E-mailadres" class="form-control" name="email" required>
                         </div>
                         <div class="col-md-8">
-                            <input type="password" placeholder="Wachtwoord" class="form-control" name="wachtwoord">
+                            <input type="password" placeholder="Wachtwoord" class="form-control" name="wachtwoord" required>
                             <a href="wachtwoord-vergeten.php">Wachtwoord vergeten?</a>
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit">Login</button>
                 </form>
             </div>
+
+            <?php
+            if(isset($_SESSION["status1"]) && $_SESSION["status1"] != "") {
+                ?>
+                <div class="melding  <?php echo $_SESSION["statusCode"]; ?>">
+                    <h6><?php echo $_SESSION["status1"]; ?></h6>
+                </div>
+
+                <?php
+                unset($_SESSION["status1"]);
+            }
+            ?>
         </div>
         <div class="col-md-6">
             <div class="loginEnRegistreerPaneel">
                 <h5>Registreer</h5>
-                <form>
+                <form action="actions/registreren.php" method="post">
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
-                            <input type="email" placeholder="E-mailadres" class="form-control">
+                            <input type="email" placeholder="E-mailadres" class="form-control" name="email" required>
                         </div>
                         <div class="col-md-8">
-                            <input type="password" placeholder="Wachtwoord" class="form-control">
+                            <input type="password" placeholder="Wachtwoord" class="form-control" name="wachtwoord" required>
                         </div>
                         <div class="col-md-8">
-                            <input type="number" placeholder="Leden nummer*" class="form-control">
+                            <input type="number" placeholder="Leden nummer*" class="form-control" name="ledenNmr" required>
                             <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.
                              Deze heb je in onze mail ontvangen</span>
                         </div>
                     </div>
 
                     <button class="btn btn-primary">Registreer</button>
-
             </div>
+            <?php
+            if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                ?>
+                <div class="melding inlogEnRegistreerMelding  <?php echo $_SESSION["statusCode"]; ?>">
+                    <h6><?php echo $_SESSION["status"]; ?></h6>
+                </div>
+
+                <?php
+                unset($_SESSION["status"]);
+            }
+            ?>
         </div>
     </div>
 </div>

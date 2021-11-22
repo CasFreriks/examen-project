@@ -1,5 +1,9 @@
+.marginBottom {
+    margin-bottom:100px;
+}
+
 .loginEnRegistreerPaneel {
-    margin: 100px auto;
+    margin: 100px auto 0;
     width: 80%;
     height: fit-content;
     padding-bottom: 20px;
