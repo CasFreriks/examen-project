@@ -1,3 +1,15 @@
+<?php
+include('../db/dbconfig.php');
+
+$db = new Dbh();
+$pdo = $db->connect();
+
+$queryLid = "SELECT * FROM lid";
+
+$queryLidDone = $pdo->query($queryLid);
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -104,7 +116,7 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Voorletter</th>
+                                    <th>Voornaam</th>
                                     <th>Tussenvoegsel</th>
                                     <th>Achternaam</th>
                                     <th>E-mail</th>
@@ -115,16 +127,19 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                
+                                <?php foreach($queryLidDone as $lidRow) { ?>
                                 <tr>
-                                    <td>1</td>
-                                    <td>C</td>
-                                    <td>-</td>
-                                    <td>Achternaam</td>
-                                    <td>E-mail</td>
-                                    <td>12345678</td>
-                                    <td>Gebruiker</td>
+                                    <td><?php echo $lidRow['lid_id'] ?></td>
+                                    <td><?php echo $lidRow['lid_vnaam'] ?></td>
+                                    <td><?php echo $lidRow['lid_tvoegsel'] ?></td>
+                                    <td><?php echo $lidRow['lid_anaam'] ?></td>
+                                    <td><?php echo $lidRow['lid_email'] ?></td>
+                                    <td><?php echo $lidRow['lid_nr'] ?></td>
+                                    <td><?php echo $lidRow['lid_rol'] ?></td>
                                     <td><a href="leden-wijzigen.php" class="btn btn-secondary">Wijzigen</a></td>
-                                    <td><div class="btn btn-danger">Verwijderen</div></td>
+                                    <td><a href="../actions/lid-verwijderen.php?lid_id=<?php echo $lidRow['lid_id'];?>" class="btn btn-danger">Verwijderen</a></td>
+                                    <?php } ?>
                                 </tr>
                                 </tbody>
                             </table>
