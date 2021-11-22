@@ -137,7 +137,7 @@ $queryLidDone = $pdo->query($queryLid);
                                     <td><?php echo $lidRow['lid_email'] ?></td>
                                     <td><?php echo $lidRow['lid_nr'] ?></td>
                                     <td><?php echo $lidRow['lid_rol'] ?></td>
-                                    <td><a href="leden-wijzigen.php" class="btn btn-secondary">Wijzigen</a></td>
+                                    <td><a href="leden-wijzigen.php?id=<?php echo $lidRow['lid_id'] ?>" class="btn btn-secondary">Wijzigen</a></td>
                                     <td><a href="../actions/lid-verwijderen.php?lid_id=<?php echo $lidRow['lid_id'];?>" class="btn btn-danger">Verwijderen</a></td>
                                     <?php } ?>
                                 </tr>

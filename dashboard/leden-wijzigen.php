@@ -1,3 +1,30 @@
+<?php 
+include('../db/dbconfig.php');
+
+
+$db = new Dbh();
+$pdo = $db->connect();
+
+$id = $_GET['id'];
+
+$sth = $pdo->prepare("SELECT * FROM lid WHERE lid_id = $id");
+$sth->execute(array($id));
+
+$data = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+foreach($data as $row) {
+    $lidvoornaam = $row['lid_vnaam'];
+    $lidtvoegsel = $row['lid_tvoegsel'];
+    $lidanaam = $row['lid_anaam'];
+    $lidtelnr = $row['lid_tel'];
+    $lidemail = $row['lid_email'];
+    $lidwachtwoord = $row['lid_wachtwoord'];
+    $lidrol = $row['lid_rol'];
+    $lidsinds = $row['lid_sinds'];
+    $lidnr = $row['lid_nr'];
+}
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -94,13 +121,13 @@
                         <form>
                             <div class="input-group">
                                 <div class="col-md-4">
-                                    <input type="text" placeholder="Voorletter" class="form-control">
+                                    <input type="text" placeholder="Voornaam" class="form-control" value="<?php echo $lidvoornaam ?>">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" placeholder="Tussenvoegsel" class="form-control">
+                                    <input type="text" placeholder="Tussenvoegsel" class="form-control" value="<?php echo $lidtvoegsel ?>">
                                 </div>
                                 <div class="col-md-5">
-                                    <input type="text" placeholder="Achternaam" class="form-control">
+                                    <input type="text" placeholder="Achternaam" class="form-control" value="<?php echo $lidanaam ?>">
                                 </div>
                             </div>
 
