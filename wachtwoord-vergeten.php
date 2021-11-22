@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,6 +10,7 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/melding.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -27,15 +31,27 @@
             <div class="loginEnRegistreerPaneel">
                 <h5>Wachtwoord vergeten</h5>
                 <p>U krijgt een mail waar u uw wachtwoord kan resetten</p>
-                <form>
+                <form action="actions/wachtwoordResetRequest.php" method="post">
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
-                            <input type="email" placeholder="E-mailadres" class="form-control" required>
+                            <input type="email" placeholder="E-mailadres" class="form-control" required name="email">
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit">Mail sturen</button>
                 </form>
             </div>
+
+            <?php
+            if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                ?>
+                <div class="melding <?php echo $_SESSION["statusCode"]; ?>">
+                    <h6><?php echo $_SESSION["status"]; ?></h6>
+                </div>
+
+                <?php
+                unset($_SESSION["status"]);
+            }
+            ?>
         </div>
     </div>
 </div>
