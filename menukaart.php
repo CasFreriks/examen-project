@@ -10,6 +10,7 @@ $queryDrank = "SELECT * FROM assortiment WHERE product_soort = 'drank'";
 $querySnacksDone = $pdo->query($querySnacks);
 $queryDrankDone = $pdo->query($queryDrank);
 
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -40,7 +41,7 @@ $queryDrankDone = $pdo->query($queryDrank);
             <div class="btn btn-primary float-right">Menu weergeven op volledig scherm</div>
         </div>
     </div>
-  <div class="row">
+  <div class="row menukaart">
     <div class="col-md-6">
        <h4>Snacks</h4>
         <hr>
@@ -73,7 +74,19 @@ $queryDrankDone = $pdo->query($queryDrank);
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 <script>
     $(".btn").on("click", function (){
-        document.documentElement.requestFullscreen();
+        let elem = document.querySelector('.menukaart');
+
+        if (!document.fullscreenElement) {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        } else {
+            document.exitFullscreen();
+        }
     });
 </script>
 </body>

@@ -124,3 +124,22 @@ body {
 .table-responsive {
     height: 400px ;
 }
+
+.mobileSelectDay {
+    display: none;
+}
+
+.bigScreenTableOnly {
+    /*box-sizing: content-box;*/
+}
+
+@media only screen and (max-width: 991px) {
+    .mobileSelectDay {
+        display: block;
+        margin-right:10px;
+    }
+
+    .bigScreenTableOnly {
+        display: none !important;
+    }
+}

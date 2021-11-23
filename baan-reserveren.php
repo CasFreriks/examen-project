@@ -34,6 +34,18 @@
                 <p>Je kan maar 1 uur per dag reserveren en maar 7 dagen vooruit kijken.</p>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
+                <form class="mobileSelectDay">
+                    <select class="form-select">
+                        <option selected><?php echo date("d-m-y"); ?></option>
+                        <option><?php $datetime = new DateTime('+1 day'); echo $datetime->format('d-m-y');?></option>
+                        <option><?php $datetime = new DateTime('+2 day'); echo $datetime->format('d-m-y');?></option>
+                        <option><?php $datetime = new DateTime('+3 day'); echo $datetime->format('d-m-y');?></option>
+                        <option><?php $datetime = new DateTime('+4 day'); echo $datetime->format('d-m-y');?></option>
+                        <option><?php $datetime = new DateTime('+5 day'); echo $datetime->format('d-m-y');?></option>
+                        <option><?php $datetime = new DateTime('+6 day'); echo $datetime->format('d-m-y');?></option>
+                    </select>
+                </form>
+
                 <form>
                     <select class="form-select">
                         <option>Baan 1 | Buiten tennis</option>
@@ -55,12 +67,12 @@
                     <th class="text-uppercase">Tijd
                     </th>
                     <th class="text-uppercase"><?php echo date("d-m-y"); ?></th>
-                    <th class="text-uppercase"><?php $datetime = new DateTime('+1 day'); echo $datetime->format('d-m-y');?></th>
-                    <th class="text-uppercase"><?php $datetime = new DateTime('+2 day'); echo $datetime->format('d-m-y');?></th>
-                    <th class="text-uppercase"><?php $datetime = new DateTime('+3 day'); echo $datetime->format('d-m-y');?></th>
-                    <th class="text-uppercase"><?php $datetime = new DateTime('+4 day'); echo $datetime->format('d-m-y');?></th>
-                    <th class="text-uppercase"><?php $datetime = new DateTime('+5 day'); echo $datetime->format('d-m-y');?></th>
-                    <th class="text-uppercase"><?php $datetime = new DateTime('+6 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase bigScreenTableOnly"><?php $datetime = new DateTime('+1 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase bigScreenTableOnly"><?php $datetime = new DateTime('+2 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase bigScreenTableOnly"><?php $datetime = new DateTime('+3 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase bigScreenTableOnly"><?php $datetime = new DateTime('+4 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase bigScreenTableOnly"><?php $datetime = new DateTime('+5 day'); echo $datetime->format('d-m-y');?></th>
+                    <th class="text-uppercase bigScreenTableOnly"><?php $datetime = new DateTime('+6 day'); echo $datetime->format('d-m-y');?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,33 +83,33 @@
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
                         <div class="font-size13 text-light-gray">De heer Freriks</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
                         <div class="font-size13 text-light-gray">De heer Freriks</div>
                     </td>
 
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
                         <div class="font-size13 text-light-gray">De heer Freriks</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
                         <div class="font-size13 text-light-gray">De heer Freriks</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
                         <div class="font-size13 text-light-gray">De heer Freriks</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
                         <div class="font-size13 text-light-gray">De heer Freriks</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
                         <div class="font-size13 text-light-gray">De heer Freriks</div>
@@ -111,32 +123,32 @@
                         <div class="margin-10px-top font-size14">13:00-14:00</div>
                         <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
                         <div class="margin-10px-top font-size14">13:00-14:00</div>
                         <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
                         <div class="margin-10px-top font-size14">13:00-14:00</div>
                         <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
                         <div class="margin-10px-top font-size14">13:00-14:00</div>
                         <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
                         <div class="margin-10px-top font-size14">13:00-14:00</div>
                         <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
                         <div class="margin-10px-top font-size14">13:00-14:00</div>
                         <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
                         <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
                         <div class="margin-10px-top font-size14">13:00-14:00</div>
                         <div class="font-size13 text-light-gray">Reserveerbaar</div>
@@ -148,19 +160,19 @@
                     <td>
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
                 </tr>
@@ -170,62 +182,45 @@
                     <td class="bg-light-gray">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td class="bg-light-gray">
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
                 </tr>
 
                 <tr>
                     <td class="align-middle">16:00</td>
-                    <td>
 
-                    </td>
-                    <td>
-
-                    </td>
-                    <td class="bg-light-gray">
-
-                    </td>
-                    <td>
-
-                    </td>
-                    <td>
-
-                    </td>
-                    <td>
-
-                    </td>
                 </tr>
                 <tr>
                     <td class="align-middle">17:00</td>
                     <td>
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td class="bg-light-gray">
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
                 </tr>
@@ -234,19 +229,19 @@
                     <td>
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td class="bg-light-gray">
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
                 </tr>
@@ -255,19 +250,19 @@
                     <td>
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td class="bg-light-gray">
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
                 </tr>
@@ -276,19 +271,19 @@
                     <td>
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td class="bg-light-gray">
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
                 </tr>
@@ -297,19 +292,19 @@
                     <td>
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td class="bg-light-gray">
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
                 </tr>
@@ -318,19 +313,19 @@
                     <td>
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td class="bg-light-gray">
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
-                    <td>
+                    <td class="bigScreenTableOnly">
 
                     </td>
                 </tr>
