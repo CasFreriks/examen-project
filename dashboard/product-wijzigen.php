@@ -1,3 +1,18 @@
+<?php
+include('../db/dbconfig.php');
+
+$db = new Dbh();
+$pdo = $db->connect();
+
+$productID = $_GET['product_id'];
+
+$queryProduct = $pdo->prepare("SELECT * FROM assortiment WHERE product_id = :productID");
+$queryProduct->bindParam(":productID", $productID);
+$queryProduct->execute();
+
+$queryProductDone = $queryProduct->fetch();
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -91,9 +106,9 @@
                     <div class="col-md-12" style="margin:40px auto;">
                         <h5>Product wijzigen</h5>
                         <hr>
-                        <form>
+                        <form action="../actions/update-product.php?product_id=<?php echo $_GET['product_id']; ?>" method="POST">
                             <div class="col-md-5">
-                                <input type="text" placeholder="Productnaam" class="form-control">
+                                <input type="text" value="<?php echo $queryProductDone['product_naam'] ?>" placeholder="Productnaam" class="form-control" name="product_naam">
                             </div>
 
                             <br>
@@ -108,12 +123,12 @@
                             <br>
 
                             <div class="col-md-5">
-                                <input type="text" placeholder="Prijs" class="form-control">
+                                <input type="text" value="<?php echo $queryProductDone['product_prijs'] ?>" placeholder="Prijs" class="form-control" name="product_prijs">
                             </div>
 
                             <br>
 
-                            <button class="btn-primary btn">Product wijzigen</button>
+                            <button class="btn-primary btn"> Product wijzigen </button>
                         </form>
 
 
