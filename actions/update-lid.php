@@ -1,0 +1,43 @@
+<?php
+session_start();
+
+include('../db/dbconfig.php');
+
+$dbh = new Dbh();
+$pdo = $dbh->connect();
+$id = $_GET['id'];
+
+if (isset($_POST['opslaan'])) {
+    $nieuwVnaam = "lid_vnaam=:vnaam";
+    $nieuwTvoegsel = "lid_tvoegsel=:tvoegsel";
+    $nieuwAnaam = "lid_anaam=:anaam";
+    $nieuwEmail = "lid_email=:email";
+    $nieuwWachtwoord = "lid_wachtwoord=:wachtwoord";
+    $nieuwLidnr = "lid_nr=:lidnr";
+    $nieuwLidrol = "lid_rol=:lidrol";
+
+    $wachtwoordMetSaltEncrypt = password_hash($_POST["wachtwoord"] . "examen", PASSWORD_DEFAULT);
+
+    $query = $pdo->prepare("UPDATE lid SET $nieuwVnaam, $nieuwTvoegsel, $nieuwAnaam, $nieuwEmail, $nieuwWachtwoord, $nieuwLidnr, $nieuwLidrol WHERE lid_id=$id");
+
+    $query->bindParam(':vnaam', $_POST['vnaam']);
+    $query->bindParam(':tvoegsel', $_POST['tvoegsel']);
+    $query->bindParam(':anaam', $_POST['anaam']);
+    $query->bindParam(':email', $_POST['email']);
+    $query->bindParam(':wachtwoord', $wachtwoordMetSaltEncrypt);
+    $query->bindParam(':lidnr', $_POST['lidnr']);
+    $query->bindParam(':lidrol', $_POST['lidrol']);
+
+    $query_exec = $query->execute();
+
+    if($query_exec) {
+            $_SESSION["status"] = "De gegevens zijn ge-update";
+            $_SESSION["statusCode"] = "success";
+            header("Location: ../dashboard/leden-wijzigen.php?id=".$id);
+    } else {
+        $_SESSION["status"] = "De gegevens zijn niet ge-update";
+        $_SESSION["statusCode"] = "error";
+        header("Location: ../dashboard/leden-wijzigen.php?id=".$id);
+    }
+}
+?>

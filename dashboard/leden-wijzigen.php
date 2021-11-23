@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include('../db/dbconfig.php');
 
 
@@ -47,6 +48,7 @@ foreach($data as $row) {
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> <!-- Google font Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet"> <!-- Google font Poppins -->
+    <link href="../css/melding.css" rel="stylesheet">
 </head>
 <body>
 <header class="bg-light">
@@ -118,64 +120,88 @@ foreach($data as $row) {
                     <div class="col-md-12" style="margin:40px auto;">
                         <h5>Lid wijzigen</h5>
                         <hr>
-                        <form>
+                        <form method="POST" action="../actions/update-lid.php?id=<?php echo $id ?>">
                             <div class="input-group">
                                 <div class="col-md-4">
-                                    <input type="text" placeholder="Voornaam" class="form-control" value="<?php echo $lidvoornaam ?>">
+                                    <input type="text" name="vnaam" placeholder="Voornaam" class="form-control" value="<?php echo $lidvoornaam ?>">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" placeholder="Tussenvoegsel" class="form-control" value="<?php echo $lidtvoegsel ?>">
+                                    <input type="text" name="tvoegsel" placeholder="Tussenvoegsel" class="form-control" value="<?php echo $lidtvoegsel ?>">
                                 </div>
                                 <div class="col-md-5">
-                                    <input type="text" placeholder="Achternaam" class="form-control" value="<?php echo $lidanaam ?>">
+                                    <input type="text" name="anaam" placeholder="Achternaam" class="form-control" value="<?php echo $lidanaam ?>">
                                 </div>
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="email" placeholder="E-mailadres" class="form-control">
+                                <input type="email" name="email" placeholder="E-mailadres" class="form-control" value="<?php echo $lidemail ?>">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="text" placeholder="Wachtwoord" class="form-control">
+                                <input type="password" name="wachtwoord" placeholder="Wachtwoord" class="form-control"">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="text" placeholder="Leden nummer" class="form-control">
-                                <label style="font-size:0.8em;">Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.</label>
+                                <input type="text" name="lidnr" placeholder="Leden nummer" class="form-control" value="<?php echo $lidnr ?>">
+                                <label style="font-size:0.8em;">Vul hier je leden nummer in.</label>
                             </div>
 
                             <br>
 
+                            <?php if($lidrol == 'Admin') { ?>
                             <div class="col-md-5">
-                                <select class="form-control">
+                                <select name="lidrol" class="form-control">
+                                    <option>Gebruiker</option>
+                                    <option selected>Admin</option>
+                                </select>
+                            </div>
+                            <?php } ?>
+                            <?php if($lidrol == 'Gebruiker') { ?>
+                            <div class="col-md-5">
+                                <select name="lidrol" class="form-control">
+                                    <option selected>Gebruiker</option>
+                                    <option>Admin</option>
+                                </select>
+                            </div>
+                            <?php } ?>
+                            <?php if($lidrol == '') { ?>
+                                <div class="col-md-5">
+                                <select name="lidrol" class="form-control">
                                     <option>Gebruiker</option>
                                     <option>Admin</option>
                                 </select>
                             </div>
-
+                            <?php } ?>
                             <br>
 
-                            <button class="btn-primary btn">Lid wijzigen</button>
+                            <button class="btn-primary btn" name="opslaan" type="submit">Lid wijzigen</button>
+
+                            <div class="col-md-5">
+                                <?php
+                                if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                                    ?>
+                                    <div class="melding  <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%; margin: 20px 0;">
+                                        <h6><?php echo $_SESSION["status"]; ?></h6>
+                                    </div>
+
+                                    <?php
+                                    unset($_SESSION["status"]);
+                                }
+                                ?>
+                            </div>
                         </form>
-
-
                     </div>
                 </div>
             </div>
         </section>
     </div>
-
-
 </main>
-
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
