@@ -72,13 +72,23 @@ $data = $sth->fetchAll(PDO::FETCH_ASSOC);
                             </thead>
                             <tbody>
                             <tr>
-                            <?php foreach ($data as $toernooiRow) { ?>
+                            <?php
+                            foreach ($data as $toernooiRow) {
+
+                            $toernooiDatum = $toernooiRow["toernooi_datum"];
+                            $changeToernooiDatum = date("d-m-Y", strtotime($toernooiDatum));
+
+                            $toernooiDeadline = $toernooiRow["toernooi_deadline"];
+                            $ChangeToernooiDeadline = date("d-m-Y", strtotime($toernooiDeadline));
+                                ?>
+
+
                                 <td><?php echo $toernooiRow['toernooi_id'] ?></td>
                                 <td><?php echo $toernooiRow['toernooi_naam'] ?></td>
                                 <td><?php echo $toernooiRow['toernooi_deelnemers'] ?> / 32</td>
                                 <td><?php echo $toernooiRow['toernooi_begintijd'] ?> / <?php echo $toernooiRow['toernooi_eindtijd'] ?></td>
-                                <td><?php echo $toernooiRow['toernooi_datum'] ?></td>
-                                <td style="color:red"><?php echo $toernooiRow['toernooi_deadline'] ?></td>
+                                <td><?php echo $changeToernooiDatum ?></td>
+                                <td style="color:red"><?php echo $ChangeToernooiDeadline ?></td>
                                 <td><a href="#" class="btn btn-danger">Verlaten</a></td>
                             </tr>
                             <?php } ?>
