@@ -4,6 +4,7 @@ body, html {
     overflow-x: hidden !important;
 }
 
+
 .contentUnder {
     margin-top: 100px;
 }
@@ -102,5 +103,6 @@ table {
     width: 100%;
   }
 
-.menukaart {
+.menukaart:fullscreen {
+    background-color: white;
 }
