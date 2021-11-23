@@ -19,6 +19,7 @@ $result = $sql->fetch();
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/profiel.css">
+    <link rel="stylesheet" href="css/melding.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -51,15 +52,28 @@ $result = $sql->fetch();
             </div>
           </div>
           <div class="col-md-8">
-            <h4>Profiel info</h4>
+            <h4>Profiel gegevens</h4>
 
                 <input type="text" placeholder="Voornaam..." value="<?php echo $result["lid_vnaam"] ?>" name="edit-naam" class="form-control">
                 <input type="text" placeholder="Tussenvoegsel..." value="<?php echo $result["lid_tvoegsel"] ?>" name="edit-tusv" class="form-control">
                 <input type="text" placeholder="Achternaam..." value="<?php echo $result["lid_anaam"] ?>" name="edit-achternaam" class="form-control">
                 <input type="email" placeholder="Email..." value="<?php echo $result["lid_email"] ?>" name="edit-email" class="form-control">
+                <input type="tel" placeholder="Telefoonnummer..." value="<?php echo $result["lid_tel"] ?>" name="edit-tel" class="form-control">
                 <input type="password" placeholder="Wachtwoord..." value="" name="edit-password" class="form-control">
 
                 <button class="btn btn-primary" type="submit">Bijwerken</button>
+
+              <?php
+              if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                  ?>
+                  <div class="melding <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
+                      <h6><?php echo $_SESSION["status"]; ?></h6>
+                  </div>
+
+                  <?php
+                  unset($_SESSION["status"]);
+              }
+              ?>
           </div>
         </div>
       </form>
