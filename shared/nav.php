@@ -29,16 +29,25 @@
         <li class="nav-item">
           <a class="nav-link mx-2" href="menukaart.php">Menukaart</a>
         </li>
+          <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] == "Gebruiker") { ?>
+
           <li class="nav-item">
               <a class="nav-link mx-2" href="baan-reserveren.php">Baan reserveren</a>
           </li>
           <li class="nav-item">
               <a class="nav-link mx-2" href="inschrijven-toernooien.php">Inschrijven toernooien</a>
           </li>
-        <li class="nav-item ms-3">
+          <?php  } ?>
+
+          <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] == "Admin") { ?>
+              <li class="nav-item">
+                  <a class="nav-link mx-2" href="dashboard/index.php">Dashboard</a>
+              </li>
+          <?php }?>
+
+          <li class="nav-item ms-3">
           <a class="btn btn-primary btn-rounded" href="login.php">Login</a>
         </li>
-
       </ul>
     </div>
   </div>

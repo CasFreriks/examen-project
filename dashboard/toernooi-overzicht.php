@@ -89,17 +89,17 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12" style="margin:40px auto;">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h5>Toernooien overzicht</h5>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="#" class="btn btn-primary" style="float:right;">Toernooi uitslag</a>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="#" class="btn btn-primary" style="float:right;">Toernooi schema</a>
-                            </div>
-                        </div>
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-8">-->
+<!--                                <h5>Toernooien overzicht</h5>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-2">-->
+<!--                                <a href="#" class="btn btn-primary" style="float:right;">Toernooi uitslag</a>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-2">-->
+<!--                                <a href="#" class="btn btn-primary" style="float:right;">Toernooi schema</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <hr>
 
                         <div class="table-responsive">
