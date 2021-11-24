@@ -91,15 +91,15 @@
                     <div class="col-md-12" style="margin:40px auto;">
                         <h5>Product toevoegen</h5>
                         <hr>
-                        <form>
+                        <form action="../actions/product-toevoegen.php" method="POST">
                             <div class="col-md-5">
-                                <input type="text" placeholder="Productnaam" class="form-control">
+                                <input type="text" placeholder="Productnaam" class="form-control" name="product_naam">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <select class="form-control">
+                                <select class="form-control" name="product_soort">
                                     <option>Snack</option>
                                     <option>Drank</option>
                                 </select>
@@ -108,12 +108,12 @@
                             <br>
 
                             <div class="col-md-5">
-                                <input type="text" placeholder="Prijs" class="form-control">
+                                <input type="text" placeholder="Prijs" class="form-control" name="product_prijs">
                             </div>
 
                             <br>
 
-                            <button class="btn-primary btn">Product toevoegen</button>
+                            <button class="btn-primary btn" name="toevoegen">Product toevoegen</button>
                         </form>
 
 
