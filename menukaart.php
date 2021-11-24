@@ -38,7 +38,7 @@ $queryDrankDone = $pdo->query($queryDrank);
 <div class="container contentUnder">
     <div class="row">
         <div class="col-md-12 d-flex justify-content-end">
-            <div class="btn btn-primary float-right">Menu weergeven op volledig scherm</div>
+            <div class="btn btn-primary float-right menuKnop">Menu weergeven op volledig scherm</div>
         </div>
     </div>
   <div class="row menukaart">
@@ -73,7 +73,7 @@ $queryDrankDone = $pdo->query($queryDrank);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 <script>
-    $(".btn").on("click", function (){
+    $(".menuKnop").on("click", function (){
         let elem = document.querySelector('.menukaart');
 
         if (!document.fullscreenElement) {
