@@ -1,18 +1,31 @@
 <?php
-require '../db/dbConfig.php';
-$con = new Dbh();
-$con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
+session_start();
 
+include('../db/dbconfig.php');
+
+$dbh = new Dbh();
+$pdo = $dbh->connect();
 $productID = $_GET['product_id'];
-$productNaam = $_POST["product_naam"];
-$productSoort = $_POST["product_soort"];
-$productPrijs = $_POST["product_prijs"];
 
-$sql = $con->prepare("UPDATE assortiment SET product_naam = :productNaam, product_prijs = :productPrijs, productSoort, :productSoort WHERE product_id = :productID");
-$sql->bindParam(":productNaam", $productNaam);
-$sql->bindParam(":productID", $productID);
-$sql->bindParam(":productSoort", $productSoort);
-$sql->bindParam(":productPrijs", $productPrijs);
-$sql->execute();
-header ("Location: ../dashboard/product-wijzigen.php");
+if (isset($_POST['wijzigen'])) {
+    $nieuwProductNaam = "product_naam=:productNaam";
+    $nieuwProductPrijs = "product_prijs=:productPrijs";
+
+    $query = $pdo->prepare("UPDATE assortiment SET $nieuwProductNaam, $nieuwProductPrijs WHERE product_id= '$productID' ");
+
+    $query->bindParam(':productNaam', $_POST['product_naam']);
+    $query->bindParam(':productPrijs', $_POST['product_prijs']);
+
+    $query_exec = $query->execute();
+
+    if($query_exec) {
+            $_SESSION["status"] = "De gegevens zijn ge-update";
+            $_SESSION["statusCode"] = "success";
+            header("Location: ../dashboard/product-wijzigen.php?product_id=".$productID);
+    } else {
+        $_SESSION["status"] = "De gegevens zijn niet ge-update";
+        $_SESSION["statusCode"] = "error";
+        header("Location: ../dashboard/product-wijzigen.php?product_id=".$productID);
+    }
+}
 ?>

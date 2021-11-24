@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('../db/dbconfig.php');
 
 $db = new Dbh();
@@ -26,6 +27,7 @@ $queryProductDone = $queryProduct->fetch();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/dashboard.css" type="text/css"> <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="../css/melding.css" type="text/css"> <!-- melding CSS -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>  <!-- Custom icons from BoxIcons.com CSS -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <!-- Jquery for the mobile nav -->
@@ -106,7 +108,7 @@ $queryProductDone = $queryProduct->fetch();
                     <div class="col-md-12" style="margin:40px auto;">
                         <h5>Product wijzigen</h5>
                         <hr>
-                        <form action="../actions/update-product.php?product_id=<?php echo $_GET['product_id']; ?>" method="POST">
+                        <form action="../actions/update-product.php?product_id=<?php echo $productID; ?>" method="POST">
                             <div class="col-md-5">
                                 <input type="text" value="<?php echo $queryProductDone['product_naam'] ?>" placeholder="Productnaam" class="form-control" name="product_naam">
                             </div>
@@ -128,10 +130,21 @@ $queryProductDone = $queryProduct->fetch();
 
                             <br>
 
-                            <button class="btn-primary btn"> Product wijzigen </button>
+                            <button class="btn-primary btn" name="wijzigen"> Product wijzigen </button>
+                            <div class="col-md-5">
+                                <?php
+                                if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                                    ?>
+                                    <div class="melding  <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%; margin: 20px 0;">
+                                        <h6><?php echo $_SESSION["status"]; ?></h6>
+                                    </div>
+
+                                    <?php
+                                    unset($_SESSION["status"]);
+                                }
+                                ?>
+                            </div>
                         </form>
-
-
                     </div>
                 </div>
             </div>
