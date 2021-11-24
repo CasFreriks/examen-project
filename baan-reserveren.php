@@ -201,11 +201,29 @@
 
                 <tr>
                     <td class="align-middle">16:00</td>
+                    <td class="bg-light-gray">
 
+                    </td>
+                    <td class="bigScreenTableOnly">
+
+                    </td>
+                    <td class="bigScreenTableOnly">
+
+                    </td>
+                    <td class="bigScreenTableOnly">
+
+                    </td>
+                    <td class="bigScreenTableOnly">
+
+                    </td>
+                    <td class="bigScreenTableOnly">
+
+                    </td>
                 </tr>
+
                 <tr>
                     <td class="align-middle">17:00</td>
-                    <td>
+                    <td class="bg-light-gray">
 
                     </td>
                     <td class="bigScreenTableOnly">
@@ -224,6 +242,7 @@
 
                     </td>
                 </tr>
+
                 <tr>
                     <td class="align-middle">18:00</td>
                     <td>

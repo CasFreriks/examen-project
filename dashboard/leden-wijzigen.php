@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include('../db/dbconfig.php');
 
@@ -8,8 +8,9 @@ $pdo = $db->connect();
 
 $id = $_GET['id'];
 
-$sth = $pdo->prepare("SELECT * FROM lid WHERE lid_id = $id");
-$sth->execute(array($id));
+$sth = $pdo->prepare("SELECT * FROM lid WHERE lid_id = :lidID");
+$sth->bindParam(":lidID", $id);
+$sth->execute();
 
 $data = $sth->fetchAll(PDO::FETCH_ASSOC);
 
@@ -155,28 +156,28 @@ foreach($data as $row) {
                             <br>
 
                             <?php if($lidrol == 'Admin') { ?>
-                            <div class="col-md-5">
-                                <select name="lidrol" class="form-control">
-                                    <option>Gebruiker</option>
-                                    <option selected>Admin</option>
-                                </select>
-                            </div>
+                                <div class="col-md-5">
+                                    <select name="lidrol" class="form-control">
+                                        <option>Gebruiker</option>
+                                        <option selected>Admin</option>
+                                    </select>
+                                </div>
                             <?php } ?>
                             <?php if($lidrol == 'Gebruiker') { ?>
-                            <div class="col-md-5">
-                                <select name="lidrol" class="form-control">
-                                    <option selected>Gebruiker</option>
-                                    <option>Admin</option>
-                                </select>
-                            </div>
+                                <div class="col-md-5">
+                                    <select name="lidrol" class="form-control">
+                                        <option selected>Gebruiker</option>
+                                        <option>Admin</option>
+                                    </select>
+                                </div>
                             <?php } ?>
                             <?php if($lidrol == '') { ?>
                                 <div class="col-md-5">
-                                <select name="lidrol" class="form-control">
-                                    <option>Gebruiker</option>
-                                    <option>Admin</option>
-                                </select>
-                            </div>
+                                    <select name="lidrol" class="form-control">
+                                        <option>Gebruiker</option>
+                                        <option>Admin</option>
+                                    </select>
+                                </div>
                             <?php } ?>
                             <br>
 
