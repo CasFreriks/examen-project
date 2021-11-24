@@ -1,3 +1,17 @@
+<?php
+session_start();
+include('db/dbconfig.php');
+
+$db = new Dbh();
+$pdo = $db->connect();
+
+$query = "SELECT * FROM toernooien";
+
+$sth = $pdo->prepare($query);
+$sth->execute();
+$data = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,6 +32,7 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>  <!-- Custom icons from BoxIcons.com CSS -->
 
     <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" rel="stylesheet"> <!-- Datatables bootstrapp 5 theme-->
+    <link href="css/melding.css" rel="stylesheet">
 
     <title>DTV | Inschrijven toernooien</title>
 </head>
@@ -35,7 +50,17 @@
 
             </div>
             <hr>
+            <?php
+              if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                  ?>
+                  <div class="melding <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
+                      <h6><?php echo $_SESSION["status"]; ?></h6>
+                  </div>
 
+                  <?php
+                  unset($_SESSION["status"]);
+              }
+              ?>
             <div class="table-responsive">
                 <table id="dataUserTable" class="table table-striped" style="width:100%">
                     <thead>
@@ -46,19 +71,27 @@
                         <th>Van / tot</th>
                         <th>Toernooi datum</th>
                         <th>Toernooi deadline</th>
-                        <th>Wijzigen</th>
+                        <th>Deelnemen</th>
                     </tr>
                     </thead>
                     <tbody>
+                    <?php foreach($data as $toernooi) {
+                        $toernooiDatum = $toernooi["toernooi_datum"];
+                        $changeToernooiDatum = date("d-m-Y", strtotime($toernooiDatum));
+
+                            $toernooiDeadline = $toernooi["toernooi_deadline"];
+                            $ChangeToernooiDeadline = date("d-m-Y", strtotime($toernooiDeadline));
+                            ?>
                     <tr>
-                        <td>1</td>
-                        <td>Herfst toernooi</td>
-                        <td>15 / 32</td>
-                        <td>15:00 tot 18:00</td>
-                        <td>20-11-2021</td>
-                        <td style="color:red">25-11-2021</td>
-                        <td><a hrevf="#" class="btn btn-primary">Deelnemen</a></td>
+                        <td><?php echo $toernooi['toernooi_id'] ?></td>
+                        <td><?php echo $toernooi['toernooi_naam'] ?></td>
+                        <td><?php echo $toernooi['toernooi_deelnemers'] ?> / 32</td>
+                        <td><?php echo $toernooi['toernooi_begintijd'] ?> : <?php echo $toernooi['toernooi_eindtijd'] ?></td>
+                        <td><?php echo $changeToernooiDatum ?></td>
+                        <td style="color:red"><?php echo $ChangeToernooiDeadline ?></td>
+                        <td><a href="actions/inschrijven-toernooi.php?id=<?php echo $toernooi['toernooi_id'] ?>" class="btn btn-primary">Deelnemen</a></td>
                     </tr>
+                    <?php } ?>
                     </tbody>
                 </table>
             </div>
@@ -78,6 +111,5 @@
     });
 
 </script>
-
 </body>
 </html>
