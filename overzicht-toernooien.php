@@ -86,7 +86,7 @@ $data = $sth->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $toernooiRow['toernooi_id'] ?></td>
                                 <td><?php echo $toernooiRow['toernooi_naam'] ?></td>
                                 <td><?php echo $toernooiRow['toernooi_deelnemers'] ?> / 32</td>
-                                <td><?php echo $toernooiRow['toernooi_begintijd'] ?> / <?php echo $toernooiRow['toernooi_eindtijd'] ?></td>
+                                <td><?php echo $toernooiRow['toernooi_begintijd'] ?> : <?php echo $toernooiRow['toernooi_eindtijd'] ?></td>
                                 <td><?php echo $changeToernooiDatum ?></td>
                                 <td style="color:red"><?php echo $ChangeToernooiDeadline ?></td>
                                 <td><a href="#" class="btn btn-danger">Verlaten</a></td>
