@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTV</title>
+    <title>DTV | Account verwijderd</title>
 </head>
 <body>
     <h1>dit account is succesvol verwijderd</h1>

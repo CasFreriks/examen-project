@@ -81,38 +81,38 @@
                     <td>
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">De heer Freriks</div>
+                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
                     </td>
                     <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">De heer Freriks</div>
+                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
                     </td>
 
                     <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">De heer Freriks</div>
+                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
                     </td>
                     <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">De heer Freriks</div>
+                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
                     </td>
                     <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">De heer Freriks</div>
+                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
                     </td>
                     <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">De heer Freriks</div>
+                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
                     </td>
                     <td class="bigScreenTableOnly">
                         <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
                         <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">De heer Freriks</div>
+                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
                     </td>
                 </tr>
 
@@ -158,194 +158,347 @@
                 <tr>
                     <td class="align-middle">14:00</td>
                     <td>
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">14:00-15:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">14:00-15:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">14:00-15:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">14:00-15:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">14:00-15:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">14:00-15:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                    </td>
+                    <td class="bigScreenTableOnly">
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">14:00-15:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="align-middle">15:00</td>
-                    <td class="bg-light-gray">
-
+                    <td>
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">15:00-16:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">15:00-16:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">15:00-16:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">15:00-16:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">15:00-16:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">15:00-16:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                    </td>
+                    <td class="bigScreenTableOnly">
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">15:00-16:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="align-middle">16:00</td>
-                    <td class="bg-light-gray">
-
+                    <td>
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">16:00-17:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">16:00-17:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">16:00-17:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">16:00-17:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">16:00-17:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">16:00-17:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                    </td>
+                    <td class="bigScreenTableOnly">
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">16:00-17:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="align-middle">17:00</td>
-                    <td class="bg-light-gray">
-
+                    <td>
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">17:00-18:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">17:00-18:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">17:00-18:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">17:00-18:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">17:00-18:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">17:00-18:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                    </td>
+                    <td class="bigScreenTableOnly">
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">17:00-18:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                 </tr>
 
                 <tr>
                     <td class="align-middle">18:00</td>
                     <td>
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">18:00-19:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">18:00-19:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">18:00-19:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">18:00-19:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">18:00-19:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">18:00-19:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                    </td>
+                    <td class="bigScreenTableOnly">
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">18:00-19:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                 </tr>
                 <tr>
                     <td class="align-middle">19:00</td>
                     <td>
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">19:00-20:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">19:00-20:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">19:00-20:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">19:00-20:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">19:00-20:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">19:00-20:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                    </td>
+                    <td class="bigScreenTableOnly">
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">19:00-20:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                 </tr>
                 <tr>
                     <td class="align-middle">20:00</td>
                     <td>
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">20:00-21:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">20:00-21:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">20:00-21:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">20:00-21:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">20:00-21:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">20:00-21:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                    </td>
+                    <td class="bigScreenTableOnly">
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">20:00-21:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                 </tr>
                 <tr>
                     <td class="align-middle">21:00</td>
                     <td>
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">21:00-22:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">21:00-22:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">21:00-22:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">21:00-22:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">21:00-22:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">21:00-22:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                    </td>
+                    <td class="bigScreenTableOnly">
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">21:00-22:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                 </tr>
                 <tr>
                     <td class="align-middle">22:00</td>
                     <td>
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">22:00-23:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">22:00-23:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">22:00-23:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">22:00-23:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">22:00-23:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                     <td class="bigScreenTableOnly">
-
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">22:00-23:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                    </td>
+                    <td class="bigScreenTableOnly">
+                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
+                        <div class="margin-10px-top font-size14">22:00-23:00</div>
+                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
                     </td>
                 </tr>
                 </tbody>
