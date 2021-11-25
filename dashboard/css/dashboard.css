@@ -21,7 +21,6 @@ main {
     height: -webkit-fill-available;
     max-height: 100vh;
     overflow-x: auto;
-    overflow-y: hidden;
 }
 
 .mobileHamburgerMenu {
@@ -101,7 +100,8 @@ main {
 }
 
 .contentSection {
-    height: fit-content;
+    height: 580px;
+    overflow: auto;
     padding: 10px;
     background-color: #f2f2f2;
 }
