@@ -106,7 +106,6 @@ session_start();
 
                             <div class="col-md-5">
                                 <input type="text" placeholder="Leden nummer" class="form-control" name="ledenNmr" required>
-                                <label style="font-size:0.8em;">Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.</label>
                             </div>
 
                             <br>
@@ -136,10 +135,6 @@ session_start();
                                 ?>
                             </div>
                         </form>
-
-
-
-
                     </div>
                 </div>
             </div>
