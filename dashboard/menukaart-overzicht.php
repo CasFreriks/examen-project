@@ -129,7 +129,7 @@ $queryAssortimentDone = $pdo->query($queryAssortiment);
                                         <td><?php echo $assortimentRow['product_id']?></td>
                                         <td><?php echo $assortimentRow['product_naam']?></td>
                                         <td><?php echo $assortimentRow['product_soort']?></td>
-                                        <td><?php echo $assortimentRow['product_prijs']?></td>
+                                        <td>&euro;<?php echo $assortimentRow['product_prijs']?></td>
                                         <td><a href="product-wijzigen.php?product_id=<?php echo $assortimentRow['product_id'];?>" class="btn btn-secondary"> Wijzigen</a></td>
                                         <td><a href="../actions/product-verwijderen.php?product_id=<?php echo $assortimentRow['product_id'];?>" class="btn btn-danger">Verwijderen</a></td>
                                     </tr>

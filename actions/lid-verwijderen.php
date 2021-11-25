@@ -10,5 +10,5 @@ $deleteQuery = $con->prepare("DELETE FROM lid WHERE lid_id = :lid_id");
 $deleteQuery->bindParam(":lid_id", $lidID);
 $deleteQuery->execute();
 
-header ("Location: ../account-verwijderd.php")
+header ("Location: ../dashboard/index.php")
 ?>

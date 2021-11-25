@@ -94,12 +94,12 @@
                             <div class="col-md-8">
                                 <h5>Baan Reserveren</h5>
                             </div>
-                            <div class="col-md-2 d-flex justify-content-end">
-                                <form>
-                                    <button class="btn btn-primary">De hele dag reserveren</button>
-                                </form>
-                            </div>
-                            <div class="col-md-2">
+<!--                            <div class="col-md-2 d-flex justify-content-end">-->
+<!--                                <form>-->
+<!--                                    <button class="btn btn-primary">De hele dag reserveren</button>-->
+<!--                                </form>-->
+<!--                            </div>-->
+                            <div class="col-md-4">
                                 <form>
                                     <select class="form-select">
                                         <option>Baan 1 | Buiten tennis</option>
