@@ -29,24 +29,32 @@
         <li class="nav-item">
           <a class="nav-link mx-2" href="menukaart.php">Menukaart</a>
         </li>
-          <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] == "Gebruiker") { ?>
 
-          <li class="nav-item">
-              <a class="nav-link mx-2" href="baan-reserveren.php">Baan reserveren</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link mx-2" href="inschrijven-toernooien.php">Inschrijven toernooien</a>
-          </li>
+          <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] != "") { ?>
+              <?php if ( $_SESSION["lidRol"] == "Admin" || $_SESSION["lidRol"] == "Gebruiker") { ?>
+                  <li class="nav-item">
+                      <a class="nav-link mx-2" href="baan-reserveren.php">Baan reserveren</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link mx-2" href="inschrijven-toernooien.php">Inschrijven toernooien</a>
+                  </li>
+              <?php  } ?>
           <?php  } ?>
 
-          <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] == "Admin") { ?>
-              <li class="nav-item">
-                  <a class="nav-link mx-2" href="dashboard/index.php">Dashboard</a>
-              </li>
+          <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] != "") { ?>
+              <?php if ($_SESSION["lidRol"] == "Admin") { ?>
+                  <li class="nav-item">
+                      <a class="nav-link mx-2" href="dashboard/index.php">Dashboard</a>
+                  </li>
+              <?php }?>
           <?php }?>
 
           <li class="nav-item ms-3">
+              <?php if(isset($_SESSION["lidID"]) && $_SESSION["lidID"] != "") { ?>
+                  <a class="btn btn-primary btn-rounded" href="actions/uitloggen.php">Uitloggen</a>
+              <?php } else { ?>
           <a class="btn btn-primary btn-rounded" href="login.php">Login</a>
+              <?php } ?>
         </li>
       </ul>
     </div>

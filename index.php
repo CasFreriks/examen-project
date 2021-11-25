@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,7 +25,11 @@
   <div class="hero-text">
     <h1>Doetinchemse tennisvereniging</h1>
     <p>tennisvereniging in doetinchem. supermooi en hier kan je erg fijn tennissen</p>
-    <a class="heroBtn" href="login.php">Log in</a>
+      <?php if(isset($_SESSION["lidID"]) && $_SESSION["lidID"] != "") { ?>
+          <a class="heroBtn" href="actions/uitloggen.php">Log uit</a>
+      <?php } else { ?>
+          <a class="heroBtn" href="login.php">Log in</a>
+      <?php } ?>
   </div>
 </div>
 

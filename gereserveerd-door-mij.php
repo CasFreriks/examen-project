@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -32,7 +33,7 @@
                             <li><a href="profiel-gegevens.php">Profielgegevens</a></li>
                             <li><a href="overzicht-toernooien.php">Overzicht toernooien</a></li>
                             <li><a href="gereserveerd-door-mij.php">Gereserveerd door mij</a></li>
-                            <li><a href="index.php">Uitloggen</a></li>
+                            <li><a href="actions/uitloggen.php">Uitloggen</a></li>
                         </ul>
                     </div>
                 </div>
