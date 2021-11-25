@@ -38,6 +38,9 @@
                   <li class="nav-item">
                       <a class="nav-link mx-2" href="inschrijven-toernooien.php">Inschrijven toernooien</a>
                   </li>
+                  <li class="nav-item">
+                      <a class="nav-link mx-2" href="profiel-gegevens.php">Profiel</a>
+                  </li>
               <?php  } ?>
           <?php  } ?>
 

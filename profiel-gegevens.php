@@ -54,11 +54,19 @@ $result = $sql->fetch();
           <div class="col-md-8">
             <h4>Profiel gegevens</h4>
 
+              <?php
+              if ($result["lid_tel"] == null) {
+                  $lidTel = "";
+              } else {
+                  $lidTel = $result["lid_tel"];
+              }
+              ?>
+
                 <input type="text" placeholder="Voornaam..." value="<?php echo $result["lid_vnaam"] ?>" name="edit-naam" class="form-control">
                 <input type="text" placeholder="Tussenvoegsel..." value="<?php echo $result["lid_tvoegsel"] ?>" name="edit-tusv" class="form-control">
                 <input type="text" placeholder="Achternaam..." value="<?php echo $result["lid_anaam"] ?>" name="edit-achternaam" class="form-control">
                 <input type="email" placeholder="Email..." value="<?php echo $result["lid_email"] ?>" name="edit-email" class="form-control">
-                <input type="tel" placeholder="Telefoonnummer..." value="<?php echo $result["lid_tel"] ?>" name="edit-tel" class="form-control">
+                <input type="tel" placeholder="Telefoonnummer..." value="<?php echo $lidTel ?>" name="edit-tel" class="form-control">
                 <input type="password" placeholder="Wachtwoord..." value="" name="edit-password" class="form-control">
 
                 <button class="btn btn-primary" type="submit">Bijwerken</button>
