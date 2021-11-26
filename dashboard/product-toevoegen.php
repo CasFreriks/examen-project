@@ -108,7 +108,7 @@
                             <br>
 
                             <div class="col-md-5">
-                                <input type="text" placeholder="Prijs" class="form-control prijs" name="product_prijs">
+                                <input type="text" placeholder="Prijs" onchange="this.value = this.value.replace(/,/g, '.')" class="form-control" name="product_prijs">
                             </div>
 
                             <br>
@@ -120,11 +120,6 @@
                     </div>
                 </div>
             </div>
-
-            <div id="test">test</div>
-
-            <p class="output"></p>
-
         </section>
     </div>
 
@@ -143,14 +138,6 @@
     $(function (){
         $('#dataUserTable').DataTable();
     });
-
-   $("#test").on("click", function (){
-        let text = $('[name=product_prijs]').val();
-        let test = text.replace(",", ".");
-        $(".output").append(test);
-   });
-
-
 </script>
 
 </body>

@@ -32,15 +32,30 @@ session_start();
                 <h5>Login</h5>
                 <form method="post" action="actions/inloggen.php">
                     <div class="row d-flex justify-content-center">
-                        <div class="col-md-8">
-                            <input type="email" placeholder="E-mailadres" class="form-control" name="email" required>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="password" placeholder="Wachtwoord" class="form-control" name="wachtwoord" required>
-                            <a href="wachtwoord-vergeten.php">Wachtwoord vergeten?</a>
-                        </div>
+                        <?php if (isset($_GET["email"]) && $_GET["email"] != "" || isset($_GET["ledenNmr"]) && $_GET["ledenNmr"] != "") {?>
+                            <div class="col-md-8">
+                                <input type="email" placeholder="E-mailadres" class="form-control" name="email" required disabled>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="password" placeholder="Wachtwoord" class="form-control" name="wachtwoord" required disabled>
+                                <a href="wachtwoord-vergeten.php">Wachtwoord vergeten?</a>
+                            </div>
+                        <?php } else { ?>
+                            <div class="col-md-8">
+                                <input type="email" placeholder="E-mailadres" class="form-control" name="email" required>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="password" placeholder="Wachtwoord" class="form-control" name="wachtwoord" required>
+                                <a href="wachtwoord-vergeten.php">Wachtwoord vergeten?</a>
+                            </div>
+                        <?php } ?>
+
                     </div>
-                    <button class="btn btn-primary" type="submit">Login</button>
+                    <?php if (isset($_GET["email"]) && $_GET["email"] != "" || isset($_GET["ledenNmr"]) && $_GET["ledenNmr"] != "") {?>
+                        <button class="btn btn-primary" type="submit" disabled>Login</button>
+                    <?php } else {?>
+                        <button class="btn btn-primary" type="submit">Login</button>
+                    <?php } ?>
                 </form>
             </div>
 
@@ -62,15 +77,25 @@ session_start();
                 <form action="actions/registreren.php" method="post">
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
-                            <input type="email" placeholder="E-mailadres" class="form-control" name="email" required>
+                            <?php if (isset($_GET["email"]) && $_GET["email"] != "") { ?>
+                                <input type="email" placeholder="E-mailadres" class="form-control" value="<?php echo $_GET["email"]?>" name="email" required>
+                            <?php } else { ?>
+                                 <input type="email" placeholder="E-mailadres" class="form-control" name="email" required>
+                            <?php }  ?>
                         </div>
                         <div class="col-md-8">
                             <input type="password" placeholder="Wachtwoord" class="form-control" name="wachtwoord" required>
                         </div>
                         <div class="col-md-8">
-                            <input type="number" placeholder="Leden nummer*" class="form-control" name="ledenNmr" required>
-                            <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.
-                             Deze heb je in onze mail ontvangen</span>
+                            <?php if (isset($_GET["ledenNmr"]) && $_GET["ledenNmr"] != "") { ?>
+                                <input type="number" placeholder="Leden nummer*" class="form-control" value="<?php echo $_GET["ledenNmr"]; ?>" name="ledenNmr" required>
+                                <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.
+                                Deze heb je in onze mail ontvangen</span>
+                            <?php } else { ?>
+                                <input type="number" placeholder="Leden nummer*" class="form-control" name="ledenNmr" required>
+                                <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.
+                                Deze heb je in onze mail ontvangen</span>
+                            <?php }  ?>
                         </div>
                     </div>
 
