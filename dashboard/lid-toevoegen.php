@@ -111,7 +111,7 @@ session_start();
                             <br>
 
                             <div class="col-md-5">
-                                <select class="form-control" name="rolKeuze" required>
+                                <select class="form-select" name="rolKeuze" required>
                                     <option>Gebruiker</option>
                                     <option>Admin</option>
                                 </select>

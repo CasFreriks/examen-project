@@ -99,7 +99,7 @@
                             <br>
 
                             <div class="col-md-5">
-                                <select class="form-control" name="product_soort">
+                                <select class="form-select" name="product_soort">
                                     <option>Snack</option>
                                     <option>Drank</option>
                                 </select>

@@ -173,7 +173,7 @@ foreach($data as $row) {
                             <?php } ?>
                             <?php if($lidrol == '') { ?>
                                 <div class="col-md-5">
-                                    <select name="lidrol" class="form-control">
+                                    <select name="lidrol" class="form-select">
                                         <option>Gebruiker</option>
                                         <option>Admin</option>
                                     </select>

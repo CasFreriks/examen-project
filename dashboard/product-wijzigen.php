@@ -116,7 +116,7 @@ $queryProductDone = $queryProduct->fetch();
                             <br>
 
                             <div class="col-md-5">
-                                <select class="form-control">
+                                <select class="form-select">
                                     <option>Snack</option>
                                     <option>Drank</option>
                                 </select>
