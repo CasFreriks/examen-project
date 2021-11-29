@@ -1,6 +1,13 @@
 <?php
     session_start();
-?>
+
+    $date1 = new DateTime("29-11-2021");
+    $date2 = new DateTime("+7 days");
+    $date3 = new DateTime("+14 days");
+    $week1 = $date1->format("W");
+    $week2 = $date2->format("W");
+    $week3 = $date3->format("W");
+    ?>
 
 <!doctype html>
 <html lang="en">
@@ -97,15 +104,19 @@
                 <div class="row">
                     <div class="col-md-12" style="margin:40px auto;">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <h5>Baan Reserveren</h5>
                             </div>
-<!--                            <div class="col-md-2 d-flex justify-content-end">-->
-<!--                                <form>-->
-<!--                                    <button class="btn btn-primary">De hele dag reserveren</button>-->
-<!--                                </form>-->
-<!--                            </div>-->
-                            <div class="col-md-4">
+                            <div class="col-md-3 d-flex justify-content-end">
+                                <form>
+                                    <select class="form-select">
+                                        <option>week <?php echo $week1 ?></option>
+                                        <option>week <?php echo $week2 ?></option>
+                                        <option>week <?php echo $week3 ?></option>
+                                    </select>
+                                </form>
+                            </div>
+                            <div class="col-md-3">
                                 <form>
                                     <select class="form-select">
                                         <option>Baan 1 | Buiten tennis</option>

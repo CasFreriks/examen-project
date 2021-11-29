@@ -121,6 +121,7 @@ $queryLidDone = $pdo->query($queryLid);
                             <table id="dataUserTable" class="table table-striped" style="width:100%">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>#</th>
                                     <th>Voornaam</th>
                                     <th>Tussenvoegsel</th>
@@ -136,6 +137,9 @@ $queryLidDone = $pdo->query($queryLid);
                                 
                                 <?php foreach($queryLidDone as $lidRow) { ?>
                                 <tr>
+                                    <td>  <?php if ($lidRow["lid_wachtwoord"] == "") {
+                                            echo "<i class='bx bxs-user-x' style='color:red;' title='Deze persoon is nog niet actief op onze site.'></i>";
+                                        } ?></td>
                                     <td><?php echo $lidRow['lid_id'] ?></td>
                                     <td><?php echo $lidRow['lid_vnaam'] ?></td>
                                     <td><?php echo $lidRow['lid_tvoegsel'] ?></td>
