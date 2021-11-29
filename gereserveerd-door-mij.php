@@ -1,4 +1,19 @@
-<?php session_start() ?>
+<?php
+session_start();
+require_once ("db/dbconfig.php");
+
+$con = new Dbh();
+$con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
+
+$lidID = $_SESSION["lidID"];
+
+$sql = $con->prepare("SELECT * FROM reservering WHERE lid_id = :lidID");
+$sql->bindParam(":lidID", $lidID);
+$sql->execute();
+$result = $sql->fetch();
+?>
+
+
 <!doctype html>
 <html lang="en">
 <head>

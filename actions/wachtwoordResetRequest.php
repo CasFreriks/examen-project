@@ -2,13 +2,13 @@
 session_start();
 // Import PHPMailer classes into the global namespace
 // These must be at the top of your script, not inside a function
-//use PHPMailer\PHPMailer\PHPMailer;
-//use PHPMailer\PHPMailer\SMTP;
-//use PHPMailer\PHPMailer\Exception;
-//
-//require '../PHPMailer/src/Exception.php';
-//require '../PHPMailer/src/PHPMailer.php';
-//require '../PHPMailer/src/SMTP.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer/src/Exception.php';
+require '../PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/src/SMTP.php';
 require '../db/dbConfig.php';
 $con = new Dbh();
 $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
