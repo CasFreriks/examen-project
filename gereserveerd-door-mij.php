@@ -7,10 +7,11 @@ $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 
 $lidID = $_SESSION["lidID"];
 
-$sql = $con->prepare("SELECT * FROM reservering WHERE lid_id = :lidID");
+$sql = $con->prepare("SELECT * FROM reservering LEFT JOIN baan ON reservering.baan_id = baan.baan_id
+WHERE lid_id = :lidID");
 $sql->bindParam(":lidID", $lidID);
 $sql->execute();
-$result = $sql->fetch();
+$result = $sql->fetchAll();
 ?>
 
 
@@ -23,6 +24,7 @@ $result = $sql->fetch();
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/profiel.css">
+    <link rel="stylesheet" href="css/melding.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -61,6 +63,17 @@ $result = $sql->fetch();
 
                 </div>
                 <hr>
+                <?php
+                if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                    ?>
+                    <div class="melding <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
+                        <h6><?php echo $_SESSION["status"]; ?></h6>
+                    </div>
+
+                    <?php
+                    unset($_SESSION["status"]);
+                }
+                ?>
                 <div class="table-responsive">
                     <table id="dataUserTable" class="table table-striped" style="width:100%">
                         <thead>
@@ -68,18 +81,30 @@ $result = $sql->fetch();
                             <th>Baan</th>
                             <th>Soort</th>
                             <th>Van / tot</th>
-                            <th>datum</th>
-                            <th>verwijderen</th>
+                            <th>Datum</th>
+                            <th>Verwijderen</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <?php
+                        foreach($result as $results) {
+                            $date = date_create($results["reserveer_datum"]); //zet de datum om naar de Europese datum
+                            $newDate = date_format($date, 'd-m-Y');
+
+                            $time = date_create($results["reserveer_tijd"]); //zet de datum om naar de Europese datum
+                            $newTime = date_format($date, 'g:i');
+
+                            $timestamp = strtotime($results["reserveer_tijd"]) + 60*60;
+                            $endTime = date('H:i', $timestamp);
+                            ?>
                         <tr>
-                            <td>Baan 1</td>
-                            <td>Buiten tennis</td>
-                            <td>12:00 tot 13:00</td>
-                            <td>25-11-2021</td>
-                            <td><a href="#" class="btn btn-danger">verwijderen</a></td>
+                            <td>Baan <?php echo $results["baan_id"] ?></td>
+                            <td><?php echo ucfirst($results["baan_naam"]) ?></td>
+                            <td><?php echo $newTime ?> tot <?php echo $endTime ?></td>
+                            <td><?php echo $newDate ?></td>
+                            <td><a href="actions/reservatie-verwijderen.php?id=<?php echo $results["reserveer_id"] ?>" class="btn btn-danger">verwijderen</a></td>
                         </tr>
+                        <?php } ?>
                         </tbody>
                     </table>
                 </div>
