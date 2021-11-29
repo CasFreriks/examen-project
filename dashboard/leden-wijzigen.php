@@ -66,12 +66,14 @@ foreach($data as $row) {
     <div class="float-end">
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                John Doe
+            <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] != "") { ?>
+              <?php if ($_SESSION["lidRol"] == "Admin") { ?>
+                  Hoi, <?php echo ucfirst($_SESSION["lidName"]);?>
+          <?php }}?>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownBtn">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Log out</a></li>
+                <li><a class="dropdown-item" href="../profiel-gegevens.php">Profiel</a></li>
+                <li><a class="dropdown-item" href="../index.php">terug naar leden site</a></li>
             </ul>
         </div>
     </div>
