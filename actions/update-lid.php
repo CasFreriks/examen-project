@@ -12,7 +12,7 @@ if (isset($_POST['opslaan'])) {
     $nieuwTvoegsel = "lid_tvoegsel=:tvoegsel";
     $nieuwAnaam = "lid_anaam=:anaam";
     $nieuwEmail = "lid_email=:email";
-    $nieuwWachtwoord = "lid_wachtwoord = :wachtwoord";
+    $nieuwWachtwoord = "lid_wachtwoord=:wachtwoord";
     $nieuwLidnr = "lid_nr=:lidnr";
     $nieuwLidrol = "lid_rol=:lidrol";
 
