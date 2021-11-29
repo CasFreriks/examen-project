@@ -129,10 +129,6 @@ body {
     display: none;
 }
 
-.bigScreenTableOnly {
-    /*box-sizing: content-box;*/
-}
-
 @media only screen and (max-width: 991px) {
     .mobileSelectDay {
         display: block;

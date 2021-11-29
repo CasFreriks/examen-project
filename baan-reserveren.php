@@ -1,4 +1,17 @@
-<?php session_start() ?>
+<?php
+session_start();
+require_once ("db/dbconfig.php");
+
+$con = new Dbh();
+$con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
+
+$baan = $_GET["baan"] ?? 1; //als get baan niet gezet is dan is die standaard baan 1, de ?? is een korte if statement
+
+$selectBaanGegevens = $con->prepare("SELECT * FROM baan WHERE baan_id = :baanID"); //haalt alle gegevens van de baan op
+$selectBaanGegevens->bindParam(":baanID", $baan);
+$selectBaanGegevens->execute();
+$baanGegevens = $selectBaanGegevens->fetch();
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,6 +22,7 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/baan-reserveren.css">
+    <link rel="stylesheet" href="css/melding.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -24,38 +38,60 @@
 </head>
 <body>
 
-<?php include('shared/nav.php') 
-
-
+<?php include('shared/nav.php');
 ?>
 <div class="container-fluid">
     <div class="container contentUnder">
         <div class="row">
+            <div class="col-md-12">
+                <?php
+                if(isset($_SESSION["status1"]) && $_SESSION["status1"] != "") {
+                    ?>
+                    <div class="melding  <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
+                        <h6><?php echo $_SESSION["status1"]; ?></h6>
+                    </div>
+
+                    <?php
+                    unset($_SESSION["status1"]);
+                }
+                ?>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-6">
-                <p>Je kan maar 1 uur per dag reserveren en maar 7 dagen vooruit kijken.</p>
+                <p style="text-decoration: underline">Je kan maar 1 uur per dag reserveren en maar 7 dagen vooruit kijken.</p>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
-                <form class="mobileSelectDay">
-                    <select class="form-select">
-                        <option selected><?php echo date("d-m-y"); ?></option>
-                        <option><?php $datetime = new DateTime('+1 day'); echo $datetime->format('d-m-y');?></option>
-                        <option><?php $datetime = new DateTime('+2 day'); echo $datetime->format('d-m-y');?></option>
-                        <option><?php $datetime = new DateTime('+3 day'); echo $datetime->format('d-m-y');?></option>
-                        <option><?php $datetime = new DateTime('+4 day'); echo $datetime->format('d-m-y');?></option>
-                        <option><?php $datetime = new DateTime('+5 day'); echo $datetime->format('d-m-y');?></option>
-                        <option><?php $datetime = new DateTime('+6 day'); echo $datetime->format('d-m-y');?></option>
+                <form class="mobileSelectDay" method="get">
+                    <select class="form-select" onchange="this.form.submit();" name="datum">
+                        <?php if (isset($_GET["datum"])) {
+                            echo "<option value='" . $_GET["datum"] . "'>" . $_GET["datum"] . "</option>";
+                            echo "<option disabled>-----------------------</option>";
+                        } ?>
+                        <option value="<?php echo date("Y-m-d");?>"><?php echo date("Y-m-d");?></option>
+                        <option value="<?php $datetime = new DateTime('+1 day'); echo $datetime->format('Y-m-d');?>"><?php $datetime = new DateTime('+1 day'); echo $datetime->format('Y-m-d');?></option>
+                        <option value="<?php $datetime = new DateTime('+2 day'); echo $datetime->format('Y-m-d');?>"><?php $datetime = new DateTime('+2 day'); echo $datetime->format('Y-m-d');?></option>
+                        <option value="<?php $datetime = new DateTime('+3 day'); echo $datetime->format('Y-m-d');?>"><?php $datetime = new DateTime('+3 day'); echo $datetime->format('Y-m-d');?></option>
+                        <option value="<?php $datetime = new DateTime('+4 day'); echo $datetime->format('Y-m-d');?>"><?php $datetime = new DateTime('+4 day'); echo $datetime->format('Y-m-d');?></option>
+                        <option value="<?php $datetime = new DateTime('+5 day'); echo $datetime->format('Y-m-d');?>"><?php $datetime = new DateTime('+5 day'); echo $datetime->format('Y-m-d');?></option>
+                        <option value="<?php $datetime = new DateTime('+6 day'); echo $datetime->format('Y-m-d');?>"><?php $datetime = new DateTime('+6 day'); echo $datetime->format('Y-m-d');?></option>
                     </select>
                 </form>
 
-                <form>
-                    <select class="form-select">
-                        <option>Baan 1 | Buiten tennis</option>
-                        <option>Baan 2 | Buiten tennis</option>
-                        <option>Baan 3 | Buiten tennis</option>
-                        <option>Baan 4 | Buiten tennis</option>
-                        <option>Baan 5 | Buiten tennis</option>
-                        <option>Baan 6 | binnen squash</option>
-                        <option>Baan 7 | binnen squash</option>
+                <form class="banenSelectie" method="get">
+                    <select class="form-select" onchange="this.form.submit();" name="baan">
+                        <?php if (isset($_GET["baan"])) {
+                            echo "<option value='" . $_GET["baan"] . "'>Baan " . $_GET["baan"] . " | " . ucfirst($baanGegevens["baan_naam"]) . " </option>";
+                            echo "<option disabled>-----------------------</option>";
+                        } ?>
+                        <option value="1">Baan 1 | Buiten tennis</option>
+                        <option value="2">Baan 2 | Buiten tennis</option>
+                        <option value="3">Baan 3 | Buiten tennis</option>
+                        <option value="4">Baan 4 | Buiten tennis</option>
+                        <option value="5">Baan 5 | Buiten tennis</option>
+                        <option value="6">Baan 6 | Binnen squash</option>
+                        <option value="7">Baan 7 | Binnen squash</option>
                     </select>
                 </form>
             </div>
@@ -67,7 +103,13 @@
                 <tr class="bg-light-gray">
                     <th class="text-uppercase">Tijd
                     </th>
-                    <th class="text-uppercase"><?php echo date("d-m-y"); ?></th>
+                    <?php
+                        if (isset($_GET["datum"])) {
+                            echo "<th class='text-uppercase'>" .  $_GET["datum"] . "</th>";
+                        } else {
+                            echo "<th class='text-uppercase'>" .  date("d-m-y") . "</th>";
+                        }
+                    ?>
                     <th class="text-uppercase bigScreenTableOnly"><?php $datetime = new DateTime('+1 day'); echo $datetime->format('d-m-y');?></th>
                     <th class="text-uppercase bigScreenTableOnly"><?php $datetime = new DateTime('+2 day'); echo $datetime->format('d-m-y');?></th>
                     <th class="text-uppercase bigScreenTableOnly"><?php $datetime = new DateTime('+3 day'); echo $datetime->format('d-m-y');?></th>
@@ -80,202 +122,750 @@
                 <tr>
                     <td class="align-middle">12:00</td>
                     <td>
-                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                        <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
-                    </td>
-                    <td class="bigScreenTableOnly">
-                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                        <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
-                    </td>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d"); //als get datum niet gezet is dan is die standaard de actuele datum, de ?? is een korte if statement
 
-                    <td class="bigScreenTableOnly">
-                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                        <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '12:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "12:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">12:00-13:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=12:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">12:00-13:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=12:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                            <div class="margin-10px-top font-size14">12:00-13:00</div>
+                            <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                        <?php } ?>
                     </td>
-                    <td class="bigScreenTableOnly">
-                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                        <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
-                    </td>
-                    <td class="bigScreenTableOnly">
-                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                        <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
-                    </td>
-                    <td class="bigScreenTableOnly">
-                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                        <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
-                    </td>
-                    <td class="bigScreenTableOnly">
-                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                        <div class="margin-10px-top font-size14">12:00-13:00</div>
-                        <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
-                    </td>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
+
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '12:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "12:00:00") { ?>
+                            <td class="bigScreenTableOnly">
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">12:00-13:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            </td>
+                        <?php } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=12:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">12:00-13:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                        <td class="bigScreenTableOnly">
+                            <a href="actions/baan-reserveren.php?tijd=12:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                            echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                            <div class="margin-10px-top font-size14">12:00-13:00</div>
+                            <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                        </td>
+                    <?php }} ?>
                 </tr>
-
                 <tr>
                     <td class="align-middle">13:00</td>
                     <td>
-                        <a href="actions/baan-reserveren.php?tijd=13:00&&datum=<?php echo date('Y-m-d'); ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">13:00-14:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                    </td>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d");
 
-                    <?php for ($i = 0; $i <= 5; $i++) { ?>
-                    <td class="bigScreenTableOnly">
-                        <a href="actions/baan-reserveren.php?tijd=13:00"" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">13:00-14:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '13:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "13:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">13:00-14:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=13:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">13:00-14:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=13:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                            <div class="margin-10px-top font-size14">13:00-14:00</div>
+                            <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                        <?php } ?>
                     </td>
-                    <?php } ?>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
+
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '13:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "13:00:00") { ?>
+                                <td class="bigScreenTableOnly">
+                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                    <div class="margin-10px-top font-size14">13:00-14:00</div>
+                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bigScreenTableOnly">
+                                    <a href="actions/baan-reserveren.php?tijd=13:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                    echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                    <div class="margin-10px-top font-size14">13:00-14:00</div>
+                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=13:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">13:00-14:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                        <?php }} ?>
                 </tr>
-
                 <tr>
                     <td class="align-middle">14:00</td>
                     <td>
-                        <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">14:00-15:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                    </td>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d");
 
-                    <?php for ($i = 0; $i <= 5; $i++) { ?>
-                        <td class="bigScreenTableOnly">
-                            <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '14:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "14:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">14:00-15:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=14:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">14:00-15:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=14:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                             <div class="margin-10px-top font-size14">14:00-15:00</div>
                             <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                        </td>
-                    <?php } ?>
-                </tr>
+                        <?php } ?>
+                    </td>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
 
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '14:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "14:00:00") { ?>
+                                <td class="bigScreenTableOnly">
+                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                    <div class="margin-10px-top font-size14">14:00-15:00</div>
+                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bigScreenTableOnly">
+                                    <a href="actions/baan-reserveren.php?tijd=14:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                    echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                    <div class="margin-10px-top font-size14">14:00-15:00</div>
+                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=14:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">14:00-15:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                        <?php }} ?>
+                </tr>
                 <tr>
                     <td class="align-middle">15:00</td>
                     <td>
-                        <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">15:00-16:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                    </td>
-                    <?php for ($i = 0; $i <= 5; $i++) { ?>
-                        <td class="bigScreenTableOnly">
-                            <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d");
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '15:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "15:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">15:00-16:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=15:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">15:00-16:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=15:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                             <div class="margin-10px-top font-size14">15:00-16:00</div>
                             <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                        </td>
-                    <?php } ?>
-                </tr>
+                        <?php } ?>
+                    </td>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
 
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '15:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "15:00:00") { ?>
+                                <td class="bigScreenTableOnly">
+                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                    <div class="margin-10px-top font-size14">15:00-16:00</div>
+                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bigScreenTableOnly">
+                                    <a href="actions/baan-reserveren.php?tijd=15:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                    echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                    <div class="margin-10px-top font-size14">15:00-16:00</div>
+                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=15:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">15:00-16:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                        <?php }} ?>
+                </tr>
                 <tr>
                     <td class="align-middle">16:00</td>
                     <td>
-                        <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">16:00-17:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                    </td>
-                    <?php for ($i = 0; $i <= 5; $i++) { ?>
-                        <td class="bigScreenTableOnly">
-                            <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d");
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '16:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "16:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">16:00-17:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=16:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">16:00-17:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=16:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                             <div class="margin-10px-top font-size14">16:00-17:00</div>
                             <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                        </td>
-                    <?php } ?>
-                </tr>
+                        <?php } ?>
+                    </td>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
 
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '16:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "16:00:00") { ?>
+                                <td class="bigScreenTableOnly">
+                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                    <div class="margin-10px-top font-size14">16:00-17:00</div>
+                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bigScreenTableOnly">
+                                    <a href="actions/baan-reserveren.php?tijd=16:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                    echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                    <div class="margin-10px-top font-size14">16:00-17:00</div>
+                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=16:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">16:00-17:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                        <?php }} ?>
+                </tr>
                 <tr>
                     <td class="align-middle">17:00</td>
                     <td>
-                        <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">17:00-18:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                    </td>
-                    <?php for ($i = 0; $i <= 5; $i++) { ?>
-                        <td class="bigScreenTableOnly">
-                            <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d");
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '17:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "17:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">17:00-18:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=17:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">17:00-18:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=17:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                             <div class="margin-10px-top font-size14">17:00-18:00</div>
                             <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                        </td>
-                    <?php } ?>
-                </tr>
+                        <?php } ?>
+                    </td>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
 
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '17:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "17:00:00") { ?>
+                                <td class="bigScreenTableOnly">
+                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                    <div class="margin-10px-top font-size14">17:00-18:00</div>
+                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bigScreenTableOnly">
+                                    <a href="actions/baan-reserveren.php?tijd=17:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                    echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                    <div class="margin-10px-top font-size14">17:00-18:00</div>
+                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=17:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">17:00-18:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                        <?php }} ?>
+                </tr>
                 <tr>
                     <td class="align-middle">18:00</td>
                     <td>
-                        <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">18:00-19:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                    </td>
-                    <?php for ($i = 0; $i <= 5; $i++) { ?>
-                        <td class="bigScreenTableOnly">
-                            <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d");
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '18:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "18:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">18:00-19:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=18:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">18:00-19:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=18:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                             <div class="margin-10px-top font-size14">18:00-19:00</div>
                             <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                        </td>
-                    <?php } ?>
+                        <?php } ?>
+                    </td>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
+
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '18:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "18:00:00") { ?>
+                                <td class="bigScreenTableOnly">
+                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                    <div class="margin-10px-top font-size14">18:00-19:00</div>
+                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bigScreenTableOnly">
+                                    <a href="actions/baan-reserveren.php?tijd=18:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                    echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                    <div class="margin-10px-top font-size14">18:00-19:00</div>
+                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=18:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">18:00-19:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                        <?php }} ?>
                 </tr>
                 <tr>
                     <td class="align-middle">19:00</td>
                     <td>
-                        <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">19:00-20:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                    </td>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d");
 
-                    <?php for ($i = 0; $i <= 5; $i++) { ?>
-                        <td class="bigScreenTableOnly">
-                            <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '19:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "19:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">19:00-20:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=19:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">19:00-20:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=19:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                             <div class="margin-10px-top font-size14">19:00-20:00</div>
                             <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                        </td>
-                    <?php } ?>
+                        <?php } ?>
+                    </td>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
+
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '19:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "19:00:00") { ?>
+                                <td class="bigScreenTableOnly">
+                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                    <div class="margin-10px-top font-size14">19:00-20:00</div>
+                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bigScreenTableOnly">
+                                    <a href="actions/baan-reserveren.php?tijd=19:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                    echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                    <div class="margin-10px-top font-size14">19:00-20:00</div>
+                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=19:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">19:00-20:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                        <?php }} ?>
                 </tr>
                 <tr>
                     <td class="align-middle">20:00</td>
                     <td>
-                        <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">20:00-21:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                    </td>
-                    <?php for ($i = 0; $i <= 5; $i++) { ?>
-                        <td class="bigScreenTableOnly">
-                            <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d");
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '20:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "20:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">20:00-21:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=20:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">20:00-21:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=20:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                             <div class="margin-10px-top font-size14">20:00-21:00</div>
                             <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                        </td>
-                    <?php } ?>
+                        <?php } ?>
+                    </td>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
+
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '20:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "20:00:00") { ?>
+                                <td class="bigScreenTableOnly">
+                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                    <div class="margin-10px-top font-size14">20:00-21:00</div>
+                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bigScreenTableOnly">
+                                    <a href="actions/baan-reserveren.php?tijd=20:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                    echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                    <div class="margin-10px-top font-size14">20:00-21:00</div>
+                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=20:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">20:00-21:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                        <?php }} ?>
                 </tr>
                 <tr>
                     <td class="align-middle">21:00</td>
                     <td>
-                        <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">21:00-22:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                    </td>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d");
 
-                    <?php for ($i = 0; $i <= 5; $i++) { ?>
-                        <td class="bigScreenTableOnly">
-                            <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '21:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "21:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">21:00-22:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=21:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">21:00-22:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=21:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                             <div class="margin-10px-top font-size14">21:00-22:00</div>
                             <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                        </td>
-                    <?php } ?>
+                        <?php } ?>
+                    </td>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
+
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '21:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "21:00:00") { ?>
+                                <td class="bigScreenTableOnly">
+                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                    <div class="margin-10px-top font-size14">21:00-22:00</div>
+                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bigScreenTableOnly">
+                                    <a href="actions/baan-reserveren.php?tijd=21:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                    echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                    <div class="margin-10px-top font-size14">21:00-22:00</div>
+                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=21:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">21:00-22:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                        <?php }} ?>
                 </tr>
                 <tr>
                     <td class="align-middle">22:00</td>
                     <td>
-                        <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                        <div class="margin-10px-top font-size14">22:00-23:00</div>
-                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                    </td>
+                        <?php
+                        $date = $_GET["datum"] ?? date("Y-m-d");
 
-                    <?php for ($i = 0; $i <= 5; $i++) { ?>
-                        <td class="bigScreenTableOnly">
-                            <a href="#" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                            <div class="margin-10px-top font-size14">22:00-23:00</div>
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '22:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $date);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $date && $reserveringenResult["reserveer_tijd"] == "22:00:00") {
+                                ?>
+                                <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                <div class="margin-10px-top font-size14">22:00-23:00</div>
+                                <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                            <?php } else { ?>
+                                <a href="actions/baan-reserveren.php?tijd=22:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">22:00-23:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            <?php } ?>
+
+                        <?php } else { ?>
+                            <a href="actions/baan-reserveren.php?tijd=22:00&&datum=<?php echo $date; ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                            <div class="margin-10px-top font-size14">21:00-22:00</div>
                             <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                        </td>
-                    <?php } ?>
+                        <?php } ?>
+                    </td>
+                    <?php
+                    $day = 1; //dag is standaard al een dag vooruit
+
+                    for ($i = 0; $i <= 5; $i++) {
+                        $days = $day++;
+                        $date = new DateTime('+ ' .  $days . ' day');
+                        $newDate = $date->format('Y-m-d');
+
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '22:00:00' AND baan_id = :baanID");
+                        $reserveringenSql->bindParam(":reserveerDatum", $newDate);
+                        $reserveringenSql->bindParam(":baanID", $baan);
+                        $reserveringenSql->execute();
+                        $reserveringenResult = $reserveringenSql->fetch();
+
+                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "22:00:00") { ?>
+                                <td class="bigScreenTableOnly">
+                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                    <div class="margin-10px-top font-size14">22:00-23:00</div>
+                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                </td>
+                            <?php } else { ?>
+                                <td class="bigScreenTableOnly">
+                                    <a href="actions/baan-reserveren.php?tijd=22:00&&datum=<?php $datetime = new DateTime('+ ' .  $days . ' day');
+                                    echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                    <div class="margin-10px-top font-size14">22:00-23:00</div>
+                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                </td>
+                            <?php  }  ?>
+                        <?php  } else { ?>
+                            <td class="bigScreenTableOnly">
+                                <a href="actions/baan-reserveren.php?tijd=22:00&&datum=<?php $datetime = new DateTime('+ ' . $days. ' day');
+                                echo $datetime->format('Y-m-d');  ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                <div class="margin-10px-top font-size14">22:00-23:00</div>
+                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                            </td>
+                        <?php }} ?>
                 </tr>
                 </tbody>
             </table>
