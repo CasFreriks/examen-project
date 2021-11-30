@@ -25,6 +25,7 @@ $inschrijvingen = $queryInschrijven->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/profiel.css">
+    <link rel="stylesheet" href="css/melding.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -63,6 +64,17 @@ $inschrijvingen = $queryInschrijven->fetchAll(PDO::FETCH_ASSOC);
 
                     </div>
                     <hr>
+                    <?php
+                        if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                            ?>
+                            <div class="melding <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
+                                <h6><?php echo $_SESSION["status"]; ?></h6>
+                            </div>
+
+                            <?php
+                            unset($_SESSION["status"]);
+                        }
+                        ?>
                     <div class="table-responsive">
                         <table id="dataUserTable" class="table table-striped" style="width:100%">
                             <thead>
@@ -95,7 +107,7 @@ $inschrijvingen = $queryInschrijven->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $toernooiRow['toernooi_begintijd'] ?> : <?php echo $toernooiRow['toernooi_eindtijd'] ?></td>
                                 <td><?php echo $changeToernooiDatum ?></td>
                                 <td style="color:red"><?php echo $ChangeToernooiDeadline ?></td>
-                                <td><a href="#" class="btn btn-danger">Verlaten</a></td>
+                                <td><a href="actions/verwijder-inschrijving.php?toernooi_id=<?php echo $toernooiRow['toernooi_id'] ?>" class="btn btn-danger">Verlaten</a></td>
                             </tr>
                             <?php } ?>
                             </tbody>
