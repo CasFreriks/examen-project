@@ -2,13 +2,18 @@
 session_start();
 include('db/dbconfig.php');
 
-$db = new Dbh();
-$pdo = $db->connect();
+$lidID = $_SESSION['lidID'];
 
-$queryToernooi = "SELECT * FROM toernooien";
-$sth = $pdo->prepare($queryToernooi);
-$sth->execute();
-$data = $sth->fetchAll(PDO::FETCH_ASSOC);
+$db = new Dbh();
+$pdo = $db->connect(); //Connect d.m.v. het object.
+
+$queryInschrijven = $pdo->prepare("SELECT * FROM inschrijvingen LEFT JOIN toernooien ON inschrijvingen.toernooi_id = toernooien.toernooi_id 
+WHERE lid_id = :lidID"); // Select alles van inschrijvingen, koppel met LEFT JOIN tabellen aan elkaar.
+
+$queryInschrijven->bindParam(":lidID", $lidID);
+$queryInschrijven->execute();
+$inschrijvingen = $queryInschrijven->fetchAll(PDO::FETCH_ASSOC);
+
 
 ?>
 <!doctype html>
@@ -74,7 +79,7 @@ $data = $sth->fetchAll(PDO::FETCH_ASSOC);
                             <tbody>
                             <tr>
                             <?php
-                            foreach ($data as $toernooiRow) {
+                            foreach ($inschrijvingen as $toernooiRow) {
 
                             $toernooiDatum = $toernooiRow["toernooi_datum"];
                             $changeToernooiDatum = date("d-m-Y", strtotime($toernooiDatum));
