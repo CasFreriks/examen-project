@@ -1,5 +1,14 @@
 <?php
     session_start();
+
+    include('../db/dbconfig.php');
+
+    $db = new Dbh();
+    $pdo = $db->connect();
+
+    $queryToernooien = "SELECT * FROM toernooien";
+
+    $queryToernooienDone = $pdo->query($queryToernooien);
 ?>
 
 <!doctype html>
@@ -112,7 +121,8 @@
                                     <th>#</th>
                                     <th>Toernooi naam</th>
                                     <th>Aantal deelnemers (max 32)</th>
-                                    <th>Van / tot</th>
+                                    <th>Van</th>
+                                    <th>Tot</th>
                                     <th>Toernooi datum</th>
                                     <th>Toernooi deadline</th>
                                     <th>Wijzigen</th>
@@ -120,16 +130,29 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><a href="toernooi-deelnemers.php">Herfst toernooi</a></td>
-                                    <td>15 / 32</td>
-                                    <td>15:00 tot 18:00</td>
-                                    <td>20-11-2021</td>
-                                    <td style="color:red">25-11-2021</td>
-                                    <td><a href="toernooi-wijzigen.php" class="btn btn-secondary">Wijzigen</a></td>
-                                    <td><div class="btn btn-danger">Verwijderen</div></td>
-                                </tr>
+                                <?php foreach($queryToernooienDone as $toernooiRow) { 
+                                    //   $date = date_create($queryToernooienDone['toernooi_datum']); //zet de datum om naar de Europese datum
+                                    //   $newDate = date_format($date, 'd-m-Y');
+                                    
+                                    //   $time = date_create($queryToernooienDone['reserveer_begintijd']); //zet de datum om naar de Europese datum
+                                    //   $beginTijd = date_format($date, 'g:i');
+                                    
+                                    //   $timestamp = strtotime($queryToernooienDone['reserveer_eindtijd']);
+                                    //   $eindTijd = date('H:i', $timestamp);
+                                    
+                                ?>                                    
+                                    <tr>
+                                        <td><?php echo $toernooiRow['toernooi_id']?></td>
+                                        <td><?php echo $toernooiRow['toernooi_naam']?></td>
+                                        <td><?php echo $toernooiRow['toernooi_deelnemers']?></td>
+                                        <td><?php echo $toernooiRow['toernooi_begintijd']?></td>
+                                        <td><?php echo $toernooiRow['toernooi_eindtijd']?></td>
+                                        <td><?php echo $toernooiRow['toernooi_datum']?></td>
+                                        <td><?php echo $toernooiRow['toernooi_deadline']?></td>
+                                        <td><a href="toernooi-wijzigen.php?product_id=<?php echo $toernooiRow['toernooi_id'];?>" class="btn btn-secondary"> Wijzigen</a></td>
+                                        <td><a href="../actions/toernooi-verwijderen.php?product_id=<?php echo $toernooiRow['toernooi_id'];?>" class="btn btn-danger">Verwijderen</a></td>
+                                    </tr>
+                                <?php } ?>
                                 </tbody>
                             </table>
                         </div>
