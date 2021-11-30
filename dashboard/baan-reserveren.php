@@ -1,5 +1,9 @@
 <?php
     session_start();
+    require_once ("../db/dbconfig.php");
+
+    $con = new Dbh();
+    $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 
     $date1 = new DateTime("29-11-2021");
     $date2 = new DateTime("+7 days");
@@ -7,7 +11,52 @@
     $week1 = $date1->format("W");
     $week2 = $date2->format("W");
     $week3 = $date3->format("W");
-    ?>
+
+    $baan = $_GET["baan"] ?? 1; //als get baan niet gezet is dan is die standaard baan 1, de ?? is een korte if statement
+
+    $selectBaanGegevens = $con->prepare("SELECT * FROM baan WHERE baan_id = :baanID"); //haalt alle gegevens van de baan op
+    $selectBaanGegevens->bindParam(":baanID", $baan);
+    $selectBaanGegevens->execute();
+    $baanGegevens = $selectBaanGegevens->fetch();
+
+
+if (isset($_GET["week"])) {
+    if ($_GET["week"] == $week1) {
+        $dag1 = new DateTime('now');
+        $dag2 = new DateTime('+1 day');
+        $dag3 = new DateTime('+2 day');
+        $dag4 = new DateTime('+3 day');
+        $dag5 = new DateTime('+4 day');
+        $dag6 = new DateTime('+5 day');
+        $dag7 = new DateTime('+6 day');
+
+    } elseif ($_GET["week"] == $week2) {
+        $dag1 = new DateTime('+7 day');
+        $dag2 = new DateTime('+8 day');
+        $dag3 = new DateTime('+9 day');
+        $dag4 = new DateTime('+10 day');
+        $dag5 = new DateTime('+11 day');
+        $dag6 = new DateTime('+12 day');
+        $dag7 = new DateTime('+13 day');
+    } elseif ($_GET["week"] == $week3) {
+        $dag1 = new DateTime('+14 day');
+        $dag2 = new DateTime('+15 day');
+        $dag3 = new DateTime('+16 day');
+        $dag4 = new DateTime('+17 day');
+        $dag5 = new DateTime('+18 day');
+        $dag6 = new DateTime('+19 day');
+        $dag7 = new DateTime('+20 day');
+    }
+} else {
+    $dag1 = new DateTime('now');
+    $dag2 = new DateTime('+1 day');
+    $dag3 = new DateTime('+2 day');
+    $dag4 = new DateTime('+3 day');
+    $dag5 = new DateTime('+4 day');
+    $dag6 = new DateTime('+5 day');
+    $dag7 = new DateTime('+6 day');
+}
+?>
 
 <!doctype html>
 <html lang="en">
@@ -109,23 +158,31 @@
                             </div>
                             <div class="col-md-3 d-flex justify-content-end">
                                 <form>
-                                    <select class="form-select">
-                                        <option>week <?php echo $week1 ?></option>
-                                        <option>week <?php echo $week2 ?></option>
-                                        <option>week <?php echo $week3 ?></option>
+                                    <select class="form-select" name="week" onchange="this.form.submit();">
+                                        <?php if (isset($_GET["week"])) {
+                                            echo "<option value='" . $_GET["week"] . "'>Week " . $_GET["week"] . "</option>";
+                                            echo "<option disabled>-----------------------</option>";
+                                        } ?>
+                                        <option value="<?php echo $week1 ?>">Week <?php echo $week1 ?></option>
+                                        <option value="<?php echo $week2 ?>">Week <?php echo $week2 ?></option>
+                                        <option value="<?php echo $week3 ?>">Week <?php echo $week3 ?></option>
                                     </select>
                                 </form>
                             </div>
                             <div class="col-md-3">
                                 <form>
-                                    <select class="form-select">
-                                        <option>Baan 1 | Buiten tennis</option>
-                                        <option>Baan 2 | Buiten tennis</option>
-                                        <option>Baan 3 | Buiten tennis</option>
-                                        <option>Baan 4 | Buiten tennis</option>
-                                        <option>Baan 5 | Buiten tennis</option>
-                                        <option>Baan 6 | binnen squash</option>
-                                        <option>Baan 7 | binnen squash</option>
+                                    <select class="form-select" name="baan" onchange="this.form.submit();">
+                                        <?php if (isset($_GET["baan"])) {
+                                            echo "<option value='" . $_GET["baan"] . "'>Baan " . $_GET["baan"] . " | " . ucfirst($baanGegevens["baan_naam"]) . " </option>";
+                                            echo "<option disabled>-----------------------</option>";
+                                        } ?>
+                                        <option value="1">Baan 1 | Buiten tennis</option>
+                                        <option value="2">Baan 2 | Buiten tennis</option>
+                                        <option value="3">Baan 3 | Buiten tennis</option>
+                                        <option value="4">Baan 4 | Buiten tennis</option>
+                                        <option value="5">Baan 5 | Buiten tennis</option>
+                                        <option value="6">Baan 6 | binnen squash</option>
+                                        <option value="7">Baan 7 | binnen squash</option>
                                     </select>
                                 </form>
                             </div>
@@ -136,559 +193,54 @@
                             <table class="table table-bordered text-center overflow-auto">
                                 <thead>
                                 <tr class="bg-light-gray">
-                                    <th class="text-uppercase">Tijd
-                                    </th>
-                                    <th class="text-uppercase">Maandag</th>
-                                    <th class="text-uppercase">Dinsdag</th>
-                                    <th class="text-uppercase">Woensdag</th>
-                                    <th class="text-uppercase">Donderdag</th>
-                                    <th class="text-uppercase">Vrijdag</th>
-                                    <th class="text-uppercase">Zaterdag</th>
-                                    <th class="text-uppercase">Zondag</th>
+                                    <th class="text-uppercase">Tijd</th>
+
+                                    <th class="text-uppercase "><?php echo $dag1->format('Y-m-d'); ?></th>
+                                    <th class="text-uppercase "><?php echo $dag2->format('Y-m-d'); ?></th>
+                                    <th class="text-uppercase "><?php echo $dag3->format('Y-m-d'); ?></th>
+                                    <th class="text-uppercase "><?php echo $dag4->format('Y-m-d'); ?></th>
+                                    <th class="text-uppercase "><?php echo $dag5->format('Y-m-d'); ?></th>
+                                    <th class="text-uppercase "><?php echo $dag6->format('Y-m-d'); ?></th>
+                                    <th class="text-uppercase "><?php echo $dag7->format('Y-m-d'); ?></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td class="align-middle">12:00</td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">12:00-12:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">12:00-12:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">12:00-12:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">12:00-12:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">12:00-12:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">12:00-12:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">12:00-12:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">12:30</td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">12:30-13:00</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">12:30-13:00</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">12:30-13:00</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">12:30-13:00</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">12:30-13:00</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">12:30-13:00</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">12:30-13:00</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">13:00</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">13:30</td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">14:00</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">14:30</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">15:00</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">15:30</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">16:00</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">16:30</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">17:00</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">17:30</td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">17:00-17:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">17:00-17:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">17:00-17:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">17:00-17:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">17:00-17:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">17:00-17:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
-                                        <div class="margin-10px-top font-size14">17:00-17:30</div>
-                                        <div class="font-size13 text-light-gray">De heer Freriks</div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">18:00</td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">18:00-18:30</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">18:00-18:30</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">18:00-18:30</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">18:00-18:30</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">18:00-18:30</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">18:00-18:30</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">18:00-18:30</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">18:30</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">19:00</td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="align-middle">19:30</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">20:00</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">20:30</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">21:00</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">21:30</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">22:00</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">22:30</td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td class="bg-light-gray">
-
-                                    </td>
-                                    <td>
-                                        <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</span>
-                                        <div class="margin-10px-top font-size14">18:00-18:30</div>
-                                        <div class="font-size13 text-light-gray">Reserveerbaar</div>
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
+                                    <?php
+
+                                    $dagLoop = 0;
+                                    for ($i = 0; $i <= 6; $i++) {
+                                        $dagLoop++;
+
+                                        $newDate = ${"dag$dagLoop"}->format('Y-m-d');
+
+                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_tijd = '12:00:00' AND baan_id = :baanID");
+                                        $reserveringenSql->bindParam(":baanID", $baan);
+                                        $reserveringenSql->execute();
+                                        $reserveringenResult = $reserveringenSql->fetch();
+
+                                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "12:00:00") { ?>
+                                                <td>
+                                                    <span class="bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Gereserveerd</span>
+                                                    <div class="margin-10px-top font-size14">12:00-12:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd door lid</div>
+                                                </td>
+                                            <?php } else { ?>
+                                                <td>
+                                                    <a style="cursor:pointer; text-decoration: none" data-bs-toggle="modal" data-bs-target="#adminReserveerModal" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                                    <div class="margin-10px-top font-size14">12:00-12:30</div>
+                                                    <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                                </td>
+                                            <?php  }  ?>
+                                        <?php  } else { ?>
+                                            <td>
+                                                <a href="actions/baan-reserveren.php?tijd=12:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
+                                                <div class="margin-10px-top font-size14">12:00-12:30</div>
+                                                <div class="font-size13 text-light-gray">Reserveerbaar</div>
+                                            </td>
+                                        <?php } } ?>
                                 </tr>
                                 </tbody>
                             </table>

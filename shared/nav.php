@@ -52,11 +52,11 @@
               <?php }?>
           <?php }?>
 
-          <li class="nav-item ms-3">
+          <li class="nav-item">
               <?php if(isset($_SESSION["lidID"]) && $_SESSION["lidID"] != "") { ?>
                   <a class="btn btn-primary btn-rounded" href="actions/uitloggen.php">Uitloggen</a>
               <?php } else { ?>
-          <a class="btn btn-primary btn-rounded" href="login.php">Login</a>
+                  <a class="btn btn-primary btn-rounded" href="login.php">Login</a>
               <?php } ?>
         </li>
       </ul>
