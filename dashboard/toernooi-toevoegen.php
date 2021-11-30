@@ -15,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/dashboard.css" type="text/css"> <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="../css/melding.css" type="text/css"> <!-- melding CSS -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>  <!-- Custom icons from BoxIcons.com CSS -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <!-- Jquery for the mobile nav -->
@@ -97,55 +98,51 @@
                     <div class="col-md-12" style="margin:40px auto;">
                         <div class="row">
                             <div class="col-md-6">
-                                <h5>Toernooien deelnemers overzicht</h5>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="toernooi-toevoegen.php" class="btn btn-primary" style="float:right;">Toernooi toevoegen</a>
+                                <h5>Toernooien aanmaken</h5>
                             </div>
                         </div>
                         <hr>
-                        <form>
+                        <form action="../actions/toernooi-aanmaken.php" method="POST">
                             <div class="col-md-5">
-                                <input type="text" placeholder="Toernooi naam" class="form-control">
+                                <input type="text" placeholder="Toernooi naam" class="form-control" name="toernooi_naam">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="number" placeholder="Aantal deelnemers (max 32)" class="form-control">
+                                <input type="number" placeholder="Aantal deelnemers (max 32)" class="form-control" name="aantal_deelnemers">
                             </div>
 
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="time" placeholder="Begintijd" class="form-control">
+                                <input type="time" placeholder="Begintijd" class="form-control" name="toernooi_begin_tijd">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="time" placeholder="Eindtijd" class="form-control">
+                                <input type="time" placeholder="Eindtijd" class="form-control" name="toernooi_eind_tijd">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="date" placeholder="Toernooi datum" class="form-control">
+                                <input type="date" placeholder="Toernooi datum" class="form-control" name="toernooi_datum">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="date" placeholder="Toernooi deadline" class="form-control">
+                                <p>toernooi deadline</p>
+                                <input type="date" placeholder="Toernooi deadline" class="form-control" name="toernooi_deadline">
                             </div>
 
                             <br>
 
-                            <button class="btn-primary btn">Product toevoegen</button>
+                            <button class="btn-primary btn" name="toevoegen">Toernooi aanmaken</button>
                         </form>
-
-
                     </div>
                 </div>
             </div>
