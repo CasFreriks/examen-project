@@ -1,6 +1,19 @@
 <?php
-    session_start();
+session_start();
+include('../db/dbconfig.php');
+
+$db = new Dbh();
+$pdo = $db->connect();
+
+$toernooiID = $_GET['toernooi_id'];
+
+$queryToernooi = $pdo->prepare("SELECT * FROM toernooien WHERE toernooi_id = :toernooiID");
+$queryToernooi->bindParam(":toernooiID", $toernooiID);
+$queryToernooi->execute();
+
+$queryToernooiDone = $queryToernooi->fetch();
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -15,6 +28,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/dashboard.css" type="text/css"> <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="../css/melding.css" type="text/css"> <!-- melding CSS -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>  <!-- Custom icons from BoxIcons.com CSS -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <!-- Jquery for the mobile nav -->
@@ -97,55 +111,57 @@
                     <div class="col-md-12" style="margin:40px auto;">
                         <h5>Toernooi wijzigen</h5>
                         <hr>
-                        <form>
+                        <form action="../actions/update-toernooi.php?toernooi_id=<?php echo $toernooiID; ?>" method="POST">
                             <div class="col-md-5">
-                                <input type="text" placeholder="Toernooi naam" class="form-control">
+                                <input type="text" placeholder="Toernooi naam" value="<?php echo $queryToernooiDone['toernooi_naam'] ?>" name="toernooi_naam" class="form-control">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="number" placeholder="Aantal deelnemers (max 32)" class="form-control">
-                            </div>
-
-
-                            <br>
-
-                            <div class="col-md-5">
-                                <input type="time" placeholder="Begintijd" class="form-control">
+                                <input type="time" placeholder="Begintijd" value="<?php echo $queryToernooiDone['toernooi_begintijd'] ?>" name="toernooi_begintijd" class="form-control">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="time" placeholder="Eindtijd" class="form-control">
+                                <input type="time" placeholder="Eindtijd" value="<?php echo $queryToernooiDone['toernooi_eindtijd'] ?>" name="toernooi_eindtijd" class="form-control">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="date" placeholder="Toernooi datum" class="form-control">
+                                <input type="date" placeholder="Toernooi datum" value="<?php echo $queryToernooiDone['toernooi_datum'] ?>" name="toernooi_datum" class="form-control">
                             </div>
 
                             <br>
 
                             <div class="col-md-5">
-                                <input type="date" placeholder="Toernooi deadline" class="form-control">
+                                <input type="date" placeholder="Toernooi deadline" value="<?php echo $queryToernooiDone['toernooi_deadline'] ?>" name="toernooi_deadline" class="form-control">
                             </div>
 
                             <br>
 
-                            <button class="btn-primary btn">Toernooi wijzigen</button>
+                            <button class="btn-primary btn" name="wijzigen">Toernooi wijzigen</button>
+                            <div class="col-md-5">
+                                <?php
+                                if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                                    ?>
+                                    <div class="melding  <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%; margin: 20px 0;">
+                                        <h6><?php echo $_SESSION["status"]; ?></h6>
+                                    </div>
+
+                                    <?php
+                                    unset($_SESSION["status"]);
+                                }
+                                ?>
+                            </div>
                         </form>
-
-
                     </div>
                 </div>
             </div>
         </section>
     </div>
-
-
 </main>
 
 

@@ -154,7 +154,7 @@
                                         <td><?php echo $newDate?></td>
                                         <td><?php echo $toernooiDeadline?></td>
                                         <td><a href="toernooi-wijzigen.php?toernooi_id=<?php echo $toernooiRow['toernooi_id'];?>" class="btn btn-secondary"> Wijzigen</a></td>
-                                        <td><a href="../actions/toernooi-verwijderen.php?product_id=<?php echo $toernooiRow['toernooi_id'];?>" class="btn btn-danger">Verwijderen</a></td>
+                                        <td><a href="../actions/toernooi-verwijderen.php?toernooi_id=<?php echo $toernooiRow['toernooi_id'];?>" class="btn btn-danger">Verwijderen</a></td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>
