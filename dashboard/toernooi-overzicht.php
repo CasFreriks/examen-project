@@ -9,6 +9,7 @@
     $queryToernooien = "SELECT * FROM toernooien";
 
     $queryToernooienDone = $pdo->query($queryToernooien);
+    $queryToernooienDone->fetch();
 ?>
 
 <!doctype html>
@@ -131,24 +132,27 @@
                                 </thead>
                                 <tbody>
                                 <?php foreach($queryToernooienDone as $toernooiRow) { 
-                                    //   $date = date_create($queryToernooienDone['toernooi_datum']); //zet de datum om naar de Europese datum
-                                    //   $newDate = date_format($date, 'd-m-Y');
+                                       $date = date_create($toernooiRow['toernooi_datum']); //zet de datum om naar de Europese datum
+                                       $newDate = date_format($date, 'd-m-Y');
+
+                                        $dateEnd = date_create($toernooiRow['toernooi_deadline']); //zet de datum om naar de Europese datum
+                                        $toernooiDeadline = date_format($date, 'd-m-Y');
                                     
-                                    //   $time = date_create($queryToernooienDone['reserveer_begintijd']); //zet de datum om naar de Europese datum
-                                    //   $beginTijd = date_format($date, 'g:i');
+                                       $time = date_create($toernooiRow['toernooi_begintijd']); //zet de datum om naar de Europese datum
+                                       $beginTijd = date_format($time, 'H:i');
                                     
-                                    //   $timestamp = strtotime($queryToernooienDone['reserveer_eindtijd']);
-                                    //   $eindTijd = date('H:i', $timestamp);
+                                       $timestamp = strtotime($toernooiRow['toernooi_eindtijd']);
+                                       $eindTijd = date('H:i', $timestamp);
                                     
                                 ?>                                    
                                     <tr>
                                         <td><?php echo $toernooiRow['toernooi_id']?></td>
                                         <td><?php echo $toernooiRow['toernooi_naam']?></td>
                                         <td><?php echo $toernooiRow['toernooi_deelnemers']?></td>
-                                        <td><?php echo $toernooiRow['toernooi_begintijd']?></td>
-                                        <td><?php echo $toernooiRow['toernooi_eindtijd']?></td>
-                                        <td><?php echo $toernooiRow['toernooi_datum']?></td>
-                                        <td><?php echo $toernooiRow['toernooi_deadline']?></td>
+                                        <td><?php echo $beginTijd?></td>
+                                        <td><?php echo $eindTijd?></td>
+                                        <td><?php echo $newDate?></td>
+                                        <td><?php echo $toernooiDeadline?></td>
                                         <td><a href="toernooi-wijzigen.php?product_id=<?php echo $toernooiRow['toernooi_id'];?>" class="btn btn-secondary"> Wijzigen</a></td>
                                         <td><a href="../actions/toernooi-verwijderen.php?product_id=<?php echo $toernooiRow['toernooi_id'];?>" class="btn btn-danger">Verwijderen</a></td>
                                     </tr>
