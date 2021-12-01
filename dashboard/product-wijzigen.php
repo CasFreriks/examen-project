@@ -120,9 +120,9 @@ $queryProductDone = $queryProduct->fetch();
                             <br>
 
                             <div class="col-md-5">
-                                <select class="form-select">
-                                    <option>Snack</option>
-                                    <option>Drank</option>
+                                <select class="form-select" name="product_soort">
+                                    <option value="Snack">Snack</option>
+                                    <option value="Drank">Drank</option>
                                 </select>
                             </div>
 
