@@ -43,7 +43,7 @@ $queryDrankDone = $pdo->query($queryDrank);
         </div>
     </div>
   <div class="row menukaart">
-    <div class="col-md-6">
+    <div class="col-md-6" style="padding-top: 10px;padding-bottom: 13px;">
        <h4>Snacks</h4>
         <hr>
         <table>
@@ -54,7 +54,7 @@ $queryDrankDone = $pdo->query($queryDrank);
         <?php } ?>
         </table>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" style="padding-top: 10px;padding-bottom: 13px;">
         <h4>Drankjes</h4>
         <hr>
         <table>

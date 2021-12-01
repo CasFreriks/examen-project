@@ -56,7 +56,7 @@ $inschrijvingen = $queryInschrijven->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8" style="padding-top: 20px;">
                     <div class="row">
                         <div class="col-md-12">
                             <h5>Toernooien overzicht</h5>

@@ -51,7 +51,7 @@ $result = $sql->fetch();
               </div>
             </div>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-8" style="padding-top: 20px;">
             <h4>Profiel gegevens</h4>
 
               <?php

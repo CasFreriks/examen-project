@@ -270,7 +270,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -319,7 +319,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -369,13 +369,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "13:00:00" || $reserveringenResult == "13:30") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "13:00:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">13:00-13:30</div>
@@ -418,13 +418,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "13:30:00" || $reserveringenResult["reserveer_tijd"] == "13:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "13:30:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">13:30-14:00</div>
@@ -467,7 +467,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -516,13 +516,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "14:30:00" || $reserveringenResult["reserveer_tijd"] == "14:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "14:30:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">14:30-15:00</div>
@@ -565,13 +565,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "15:00:00" ) { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "15:00:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">15:00-15:00</div>
@@ -614,13 +614,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "15:30:00" || $reserveringenResult["reserveer_tijd"] == "15:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "15:30:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">15:30-16:00</div>
@@ -663,7 +663,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -712,13 +712,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "16:30:00" || $reserveringenResult["reserveer_tijd"] == "16:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "16:30:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">16:30-17:00</div>
@@ -761,7 +761,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -810,13 +810,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "17:30:00" || $reserveringenResult["reserveer_tijd"] == "17:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "17:30:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">17:30-18:00</div>
@@ -859,7 +859,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";;
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -908,13 +908,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "18:30:00" || $reserveringenResult["reserveer_tijd"] == "18:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "18:30:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">18:30-19:00</div>
@@ -957,7 +957,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -1006,13 +1006,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "19:30:00" || $reserveringenResult["reserveer_tijd"] == "19:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "19:30:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">19:30-20:00</div>
@@ -1055,7 +1055,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -1104,13 +1104,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "20:30:00" || $reserveringenResult["reserveer_tijd"] == "20:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "20:30:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">20:30-21:00</div>
@@ -1153,7 +1153,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -1202,13 +1202,13 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "21:30:00" || $reserveringenResult["reserveer_tijd"] == "21:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "21:30:00") { ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">21:30-22:00</div>
@@ -1251,7 +1251,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -1301,7 +1301,7 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "door lid";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
@@ -1326,6 +1326,8 @@ if (isset($_SESSION["week"])) {
                                                 <div class="margin-10px-top font-size14">22:30-23:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 </tbody>
