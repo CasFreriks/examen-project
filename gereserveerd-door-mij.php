@@ -7,6 +7,8 @@ $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 
 $lidID = $_SESSION["lidID"];
 
+if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"])) {
+
 $sql = $con->prepare("SELECT * FROM reservering LEFT JOIN baan ON reservering.baan_id = baan.baan_id
 WHERE lid_id = :lidID");
 $sql->bindParam(":lidID", $lidID);
@@ -114,7 +116,13 @@ $result = $sql->fetchAll();
         </div>
 </div>
 
-<?php include('shared/footer.php') ?>
+<?php
+} else {
+    header ("Location: login.php");
+}
+
+include('shared/footer.php')
+?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>

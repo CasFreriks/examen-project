@@ -5,6 +5,8 @@ include('db/dbconfig.php');
 $db = new Dbh();
 $pdo = $db->connect();
 
+if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"])) {
+
 $query = "SELECT * FROM toernooien";
 
 $sth = $pdo->prepare($query);
@@ -99,7 +101,13 @@ $data = $sth->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-<?php include('shared/footer.php') ?>
+<?php
+} else {
+    header ("Location: login.php");
+}
+
+include('shared/footer.php')
+?>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>

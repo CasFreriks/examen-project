@@ -6,6 +6,8 @@ include('../db/dbconfig.php');
 $db = new Dbh();
 $pdo = $db->connect();
 
+if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"] == "Admin") {
+
 $queryAssortiment = "SELECT * FROM assortiment";
 
 $queryAssortimentDone = $pdo->query($queryAssortiment);
@@ -149,7 +151,11 @@ $queryAssortimentDone = $pdo->query($queryAssortiment);
 
 
 </main>
-
+<?php
+} else {
+    header ("Location: ../login.php");
+}
+?>
 
 
 

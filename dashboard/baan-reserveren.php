@@ -5,6 +5,8 @@ require_once ("../db/dbconfig.php");
 $con = new Dbh();
 $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 
+if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"] == "Admin") {
+
 $date1 = new DateTime("29-11-2021");
 $date2 = new DateTime("+7 days");
 $date3 = new DateTime("+14 days");
@@ -1342,7 +1344,11 @@ if (isset($_SESSION["week"])) {
 
 </main>
 
-
+<?php
+} else {
+    header ("Location: ../login.php");
+}
+?>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
