@@ -8,7 +8,7 @@ require '../phpmailer/src/PHPMailer.php';
 require '../phpmailer/src/SMTP.php';
 
 function lidToevoegenMail($ledenNmr, $lidEmail) {
-    $url = "http://" . $_SERVER["HTTP_HOST"]. "/school/examen-project/login.php?email=$lidEmail&&ledenNmr=$ledenNmr";
+    $url = "http://" . $_SERVER["HTTP_HOST"]. "/examen-project/login.php?email=$lidEmail&&ledenNmr=$ledenNmr";
 
     $message = file_get_contents('../mail-templates/lid-toevoegen.html');
     $message = str_replace('$ledenNmr', $ledenNmr, $message);

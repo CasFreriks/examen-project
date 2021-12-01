@@ -14,10 +14,9 @@ if (isset($_POST['toevoegen'])) {
     $nieuwToernooiDatum = ":toernooiDatum";
     $nieuwToernooiDeadline = ":toernooiDeadline";
 
-    $query = $pdo->prepare("INSERT INTO toernooien (toernooi_naam, toernooi_deelnemers, toernooi_begintijd, toernooi_eindtijd, toernooi_datum, toernooi_deadline)VALUES ($nieuwToernooiNaam, $nieuwToernooiDeelnemers, $nieuwToernooiBeginTijd, $nieuwToernooiEindTijd, $nieuwToernooiDatum, $nieuwToernooiDeadline)");
+    $query = $pdo->prepare("INSERT INTO toernooien (toernooi_naam, toernooi_begintijd, toernooi_eindtijd, toernooi_datum, toernooi_deadline)VALUES ($nieuwToernooiNaam, $nieuwToernooiBeginTijd, $nieuwToernooiEindTijd, $nieuwToernooiDatum, $nieuwToernooiDeadline)");
 
     $query->bindParam(':toernooiNaam', $_POST['toernooi_naam']);
-    $query->bindParam(':toernooiDeelnemers', $_POST['aantal_deelnemers']);
     $query->bindParam(':toernooiBeginTijd', $_POST['toernooi_begin_tijd']);
     $query->bindParam(':toernooiEindTijd', $_POST['toernooi_eind_tijd']);
     $query->bindParam(':toernooiDatum', $_POST['toernooi_datum']);

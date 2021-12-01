@@ -87,7 +87,7 @@ $inschrijvingen = $queryInschrijven->fetchAll(PDO::FETCH_ASSOC);
                                 <th>Van / tot</th>
                                 <th>Toernooi datum</th>
                                 <th>Toernooi deadline</th>
-                                <th>Wijzigen</th>
+                                <th>Verwijderen</th>
                             </tr>
                             </thead>
                             <tbody>
