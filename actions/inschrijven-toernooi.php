@@ -12,8 +12,8 @@ $lid_id = $_SESSION["lidID"];
 $select = $pdo->prepare("SELECT lid_id, toernooi_id FROM inschrijvingen WHERE lid_id = :lidID AND toernooi_id = :toernooiID");
 $select->bindParam(':lidID', $lid_id);
 $select->bindParam(':toernooiID', $toernooiID);
-$count = $select->rowCount();
 $select->execute();
+$count = $select->rowCount();
 
 $select2 = $pdo->prepare("SELECT toernooi_id FROM inschrijvingen WHERE toernooi_id = :toernooiID");
 $select2->bindParam(':toernooiID', $toernooiID);
@@ -29,12 +29,11 @@ $toernooiIncrease = $deelnemers['toernooi_deelnemers'] +=1;
 
 if($count < 1) {
     if($toernooiCount <= 31) {
-        $sth = $pdo->prepare("INSERT INTO inschrijvingen (lid_id, toernooi_id)values(:lid_id ,:toernooiID)");
-        $select->bindParam(':lidID', $lid_id);
+        $sth = $pdo->prepare("INSERT INTO inschrijvingen (lid_id, toernooi_id)values(:lidID ,:toernooiID)");
+        $sth->bindParam(':lidID', $lid_id);
         $sth->bindParam(':toernooiID', $toernooiID);
         $execute = $sth->execute();
-
-
+        
         $sth2 = $pdo->prepare("UPDATE toernooien SET toernooi_deelnemers = :toernooiDeelnemers WHERE toernooi_id = :toernooiID");
         $sth2->bindParam(':toernooiID', $toernooiID);
         $sth2->bindParam(':toernooiDeelnemers', $toernooiIncrease);
