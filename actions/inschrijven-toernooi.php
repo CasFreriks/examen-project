@@ -8,12 +8,14 @@ $pdo = $dbh->connect();
 $toernooiID = $_GET['id'];
 $lid_id = $_SESSION["lidID"];
 
-$select2 = $pdo->prepare("SELECT toernooi_id FROM inschrijvingen WHERE toernooi_id = $toernooiID");
-$select = $pdo->prepare("SELECT lid_id, toernooi_id FROM inschrijvingen WHERE lid_id = $lid_id AND toernooi_id = $toernooiID");
-$select->bindParam(':toernooiID', $toernooiID);
+
+$select = $pdo->prepare("SELECT lid_id, toernooi_id FROM inschrijvingen WHERE lid_id = :lidID AND toernooi_id = :toernooiID");
 $select->bindParam(':lidID', $lid_id);
-$select2->bindParam(':toernooiID', $toernooiID);
+$select->bindParam(':toernooiID', $toernooiID);
 $select->execute();
+
+$select2 = $pdo->prepare("SELECT toernooi_id FROM inschrijvingen WHERE toernooi_id = :toernooiID");
+$select2->bindParam(':toernooiID', $toernooiID);
 $select2->execute();
 $toernooiCount = $select2->rowCount();
 $count = $select->rowCount();
