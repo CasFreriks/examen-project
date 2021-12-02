@@ -21,10 +21,20 @@ $toernooiCount = $select2->rowCount();
 $count = $select->rowCount();
 $data = $select->fetchAll(PDO::FETCH_ASSOC);
 
+$select3 = $pdo->prepare("SELECT toernooi_deelnemers FROM toernooien WHERE toernooi_id = :toernooiID");
+$select3->bindParam(':toernooiID', $toernooiID);
+$select3->execute();
+$deelnemers = $select3->fetchAll(PDO::FETCH_ASSOC);
+$toernooiIncrease = $deelnemers['toernooi_deelnemers'] +=1;
+
 if($count < 1) {
     if($toernooiCount <= 31) {
         $sth = $pdo->prepare("INSERT INTO inschrijvingen (lid_id, toernooi_id)values($lid_id ,$toernooiID)");
+        $sth2 = $pdo->prepare("UPDATE toernooien SET toernooi_deelnemers = :toernooiDeelnemers WHERE toernooi_id = :toernooiID");
+        $sth2->bindParam(':toernooiDeelnemers', $toernooiIncrease);
+        $sth2->bindParam(':toernooiID', $toernooiID);
         $execute = $sth->execute();
+        $execute2 = $sth2->execute();
         $_SESSION["status"] = "Je bent ingeschreven voor dit toernooi!";
         $_SESSION["statusCode"] = "success";
         header("Location: ../inschrijven-toernooien.php");
