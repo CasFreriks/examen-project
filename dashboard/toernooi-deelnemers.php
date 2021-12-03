@@ -1,5 +1,7 @@
 <?php
     session_start();
+    require_once ("../db/dbconfig.php");
+
 
     if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"] == "Admin") {
 

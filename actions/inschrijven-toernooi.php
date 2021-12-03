@@ -33,7 +33,7 @@ if($count < 1) {
         $sth->bindParam(':lidID', $lid_id);
         $sth->bindParam(':toernooiID', $toernooiID);
         $execute = $sth->execute();
-        
+
         $sth2 = $pdo->prepare("UPDATE toernooien SET toernooi_deelnemers = :toernooiDeelnemers WHERE toernooi_id = :toernooiID");
         $sth2->bindParam(':toernooiID', $toernooiID);
         $sth2->bindParam(':toernooiDeelnemers', $toernooiIncrease);
