@@ -9,10 +9,9 @@
     if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"] == "Admin") {
 
 
-    $queryToernooien = "SELECT * FROM toernooien";
-
-    $queryToernooienDone = $pdo->query($queryToernooien);
-    $queryToernooienDone->fetch();
+    $queryToernooienDone = $pdo->prepare("SELECT * FROM toernooien");
+    $queryToernooienDone->execute();
+    $toernooien = $queryToernooienDone->fetchAll(); //fetch mijn gegevens zodat ze in de forEach kunnen
 ?>
 
 <!doctype html>
@@ -134,7 +133,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach($queryToernooienDone as $toernooiRow) { 
+                                <?php foreach($toernooien as $toernooiRow) {
                                        $date = date_create($toernooiRow['toernooi_datum']); //zet de datum om naar de Europese datum
                                        $newDate = date_format($date, 'd-m-Y');
 

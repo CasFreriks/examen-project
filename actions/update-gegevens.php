@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../db/dbConfig.php';
+require '../db/dbconfig.php';
 $con = new Dbh();
 $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 

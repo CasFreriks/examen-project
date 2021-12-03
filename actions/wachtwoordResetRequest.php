@@ -2,14 +2,15 @@
 session_start();
 // Import PHPMailer classes into the global namespace
 // These must be at the top of your script, not inside a function
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+use phpmailer\PHPMailer\PHPMailer;
+use phpmailer\PHPMailer\SMTP;
+use phpmailer\PHPMailer\Exception;
 
-require '../PHPMailer/src/Exception.php';
-require '../PHPMailer/src/PHPMailer.php';
-require '../PHPMailer/src/SMTP.php';
-require '../db/dbConfig.php';
+require '../phpmailer/src/Exception.php';
+require '../phpmailer/src/PHPMailer.php';
+require '../phpmailer/src/SMTP.php';
+
+require '../db/dbconfig.php';
 $con = new Dbh();
 $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 
@@ -24,7 +25,7 @@ if(isset($_POST["email"])) {
     if ($result == 1) { //als je mail-adres bij ons in het systeem staat stuur hij een mail anders niet
         $code = uniqid(true); //met uniqid kan je allemaal unieke ids maken
 
-        $url = "http://" . $_SERVER["HTTP_HOST"] . "/school/examen-project/wachtwoord-resetten.php?code=$code";
+        $url = "http://" . $_SERVER["HTTP_HOST"] . "/examen-project/wachtwoord-resetten.php?code=$code";
 
         $message = file_get_contents('../mail-templates/wachtwoord-vergeten.html');
         $message = str_replace('$url', $url, $message);

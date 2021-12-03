@@ -10,11 +10,13 @@ $productID = $_GET['product_id'];
 if (isset($_POST['wijzigen'])) {
     $nieuwProductNaam = "product_naam=:productNaam";
     $nieuwProductPrijs = "product_prijs=:productPrijs";
+    $nieuwProductSoort = "product_soort=:productSoort";
 
-    $query = $pdo->prepare("UPDATE assortiment SET $nieuwProductNaam, $nieuwProductPrijs WHERE product_id= '$productID' ");
+    $query = $pdo->prepare("UPDATE assortiment SET $nieuwProductNaam,$nieuwProductSoort, $nieuwProductPrijs WHERE product_id= '$productID' ");
 
     $query->bindParam(':productNaam', $_POST['product_naam']);
     $query->bindParam(':productPrijs', $_POST['product_prijs']);
+    $query->bindParam(':productSoort', $_POST['product_soort']);
 
     $query_exec = $query->execute();
 

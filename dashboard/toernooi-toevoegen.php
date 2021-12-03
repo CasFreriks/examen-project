@@ -112,12 +112,9 @@
 
                             <br>
 
-                            <div class="col-md-5">
-                                <input type="number" placeholder="Aantal deelnemers (max 32)" class="form-control" name="aantal_deelnemers">
-                            </div>
-
-
-                            <br>
+                            <!--<div class="col-md-5">-->
+                            <!--    <input type="number" placeholder="Aantal deelnemers (max 32)" class="form-control" name="aantal_deelnemers">-->
+                            <!--</div>-->
 
                             <div class="col-md-5">
                                 <input type="time" placeholder="Begintijd" class="form-control" name="toernooi_begin_tijd">

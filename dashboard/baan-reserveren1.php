@@ -258,9 +258,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '12:00' AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '11:59:00' AND reserveer_tijd <= '13:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '12%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -272,31 +277,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "12:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "12:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">12:00-12:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">12:00-12:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=12:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">12:00-12:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=12:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">12:00-12:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -307,9 +328,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '12:30'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '11:59:00' AND reserveer_tijd <= '13:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '12%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -321,34 +347,49 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
-                                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "12:30:00") {
-                                                ?>
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
 
+                                        if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "12:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">12:30-13:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"]) && $reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">12:30-13:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=12:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">12:30-13:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=12:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">12:30-13:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
+                                </tr>
                                 <tr>
                                     <td class="align-middle">13:00</td>
                                     <?php
@@ -357,9 +398,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '13:00'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '12:59:00' AND reserveer_tijd <= '14:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '13%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -371,31 +417,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "13:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "13:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">13:00-13:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">13:00-13:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=13:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">13:00-13:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=13:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                                                <div class="margin-10px-top font-size14">13:00-13:30</div>
+                                                <div class="margin-10px-top font-size14">13:00-13:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -406,9 +468,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '13:30'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '12:59:00' AND reserveer_tijd <= '14:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '13%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -420,31 +487,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "13:30:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "13:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">13:30-14:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"]) && $reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">13:30-14:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=13:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">13:30-14:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=13:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">13:30-14:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -455,9 +538,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '14:00'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '13:59:00' AND reserveer_tijd <= '15:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '14%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -469,31 +557,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "14:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "14:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">14:00-14:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">14:00-14:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=14:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">14:00-14:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=14:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">14:00-14:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -504,9 +608,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '14:30' AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '13:59:00' AND reserveer_tijd <= '15:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '14%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -518,31 +627,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "14:30:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "14:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">14:30-15:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"]) && $reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">14:30-15:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=14:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">14:30-15:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=14:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">14:30-15:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -553,9 +678,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '15:00'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '14:59:00' AND reserveer_tijd <= '16:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '14%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -567,31 +697,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "15:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "15:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
-                                                    <div class="margin-10px-top font-size14">15:00-15:00</div>
+                                                    <div class="margin-10px-top font-size14">15:00-15:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">15:00-15:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=15:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">15:00-15:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=15:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">15:00-15:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -602,9 +748,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '15:30'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '14:59:00' AND reserveer_tijd <= '16:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '15%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -616,31 +767,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "15:30:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "15:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">15:30-16:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"]) && $reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">15:30-16:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=15:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">15:30-16:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=15:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">15:30-16:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -651,9 +818,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '16:00'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '15:59:00' AND reserveer_tijd <= '17:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '16%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -665,31 +837,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "16:00:00" ) { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "16:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">16:00-16:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">16:00-16:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=16:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">16:00-16:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=16:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">16:00-16:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -700,9 +888,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '16:30' AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '15:59:00' AND reserveer_tijd <= '17:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '16%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -714,31 +907,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "16:30:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "16:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">16:30-17:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"]) && $reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">16:30-17:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=16:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">16:30-17:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=16:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">16:30-17:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -749,9 +958,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '17:00'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '16:59:00' AND reserveer_tijd <= '18:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '17%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -763,31 +977,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "17:00:00" ) { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "17:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">17:00-17:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">17:00-17:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=17:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">17:00-17:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=17:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">17:00-17:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -798,9 +1028,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '17:30' AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '16:59:00' AND reserveer_tijd <= '18:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '17%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -812,31 +1047,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "17:30:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "17:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">17:30-18:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"]) && $reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">17:30-18:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=17:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">17:30-18:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=17:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">17:30-18:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -847,9 +1098,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '18:00'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '17:59:00' AND reserveer_tijd <= '19:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '18%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -861,31 +1117,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";;
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "18:00:00" ) { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "18:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">18:00-18:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">18:00-18:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=18:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">18:00-18:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=18:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">18:00-18:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -896,9 +1168,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '18:30'   AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '17:59:00' AND reserveer_tijd <= '19:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '18%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -910,31 +1187,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "18:30:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "18:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">18:30-19:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"]) && $reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">18:30-19:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=18:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">18:30-19:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=18:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">18:30-19:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -945,9 +1238,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '19:00'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '18:59:00' AND reserveer_tijd <= '20:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '19%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -959,31 +1257,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "19:00:00" ) { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "19:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">19:00-19:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">19:00-19:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=19:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">19:00-19:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=19:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">19:00-19:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -994,9 +1308,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd  = '19:30'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '18:59:00' AND reserveer_tijd <= '20:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '19%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -1008,31 +1327,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "19:30:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "19:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">19:30-20:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"]) && $reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">19:30-20:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=19:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">19:30-20:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=19:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">19:30-20:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -1043,9 +1378,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND  reserveer_tijd = '20:00'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '19:59:00' AND reserveer_tijd <= '21:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '20%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -1057,31 +1397,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "20:00:00" ) { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "20:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">20:00-20:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">20:00-20:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=20:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">20:00-20:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=20:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">20:00-20:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -1092,9 +1448,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '20:30'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '19:59:00' AND reserveer_tijd <= '21:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '20%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -1106,31 +1467,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "20:30:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "20:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">20:30-21:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"]) && $reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">20:30-21:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=20:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">20:30-21:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=20:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
-                                                <div class="margin-10px-top font-size14">20:30-21:00</div>
+                                                <div class="margin-10px-top font-size14">22:00-22:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -1141,9 +1518,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '21:00' AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '20:59:00' AND reserveer_tijd <= '22:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '21%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -1155,31 +1537,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "21:00:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "21:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">21:00-21:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">21:00-21:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=21:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">21:00-21:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=21:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">21:00-21:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -1190,9 +1588,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '21:30'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '20:59:00' AND reserveer_tijd <= '22:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '21%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -1204,31 +1607,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                         var_dump($reserveringenResult["reservering_per_uur"]);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "21:30:00") { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "21:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">21:30-22:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"]) && $reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">21:30-22:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=21:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">21:30-22:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=21:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">21:30-22:00</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -1239,9 +1658,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '22:00'  AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '21:59:00' AND reserveer_tijd <= '23:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '22%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -1253,32 +1677,47 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                        var_dump($reserveringenResult);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "22:00:00" ) {
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "22:00:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
                                                 ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">22:00-22:30</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">22:00-22:30</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=22:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">22:00-22:30</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=22:00&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">22:00-22:30</div>
                                                 <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                             </td>
+
+
                                         <?php } } ?>
                                 </tr>
                                 <tr>
@@ -1289,9 +1728,14 @@ if (isset($_SESSION["week"])) {
                                     for ($i = 0; $i <= 6; $i++) {
                                         $dagLoop++;
 
+                                        $reserveringenResult["reservering_per_uur"] = '';
+
                                         $newDate = ${"dag$dagLoop"}->format('Y-m-d');
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '22:30' AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT *, (SELECT reserveer_tijd FROM reservering
+                                                                                 WHERE reserveer_tijd >= '21:59:00' AND reserveer_tijd <= '23:00:00' AND baan_id = :baanID 
+                                                                                   AND reserveer_datum = :reserveerDatum LIMIT 1) AS reservering_per_uur FROM reservering
+                                                                                  WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '22%' AND baan_id = :baanID");
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
@@ -1303,26 +1747,48 @@ if (isset($_SESSION["week"])) {
                                                 $doel = "voor " . $reserveringenResult["reserveer_doel"];
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "door lid";
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }
 
+//                                        var_dump($reserveringenResult);
+
                                         if (isset($reserveringenResult["reserveer_datum"]) && isset($reserveringenResult["reserveer_tijd"])) {
-                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "22:30:00" ) { ?>
+                                            if ($reserveringenResult["reserveer_datum"] == $newDate && $reserveringenResult["reserveer_tijd"] == "22:30:00" && empty($reserveringenResult["reservering_per_uur"])) {
+                                                //RESERVERING VAN HALF UUR
+                                                ?>
                                                 <td>
                                                     <?php echo $deleteLink; ?>
                                                     <div class="margin-10px-top font-size14">22:30-23:00</div>
                                                     <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
                                                 </td>
-                                            <?php } else { ?>
+                                            <?php } elseif(!empty($reserveringenResult["reservering_per_uur"])) {
+                                                if ($reserveringenResult["lid_id"] != 0) {
+                                                //RESERVERING VAN UUR DOOR LID
+                                                ?>
+                                                <td>
+                                                    <?php echo $deleteLink; ?>
+                                                    <div class="margin-10px-top font-size14">22:30-23:00</div>
+                                                    <div class="font-size13 text-light-gray">Gereserveerd <?php echo $doel; ?></div>
+                                                </td>
+                                            <?php  } else { ?>
+                                                    <td>
+                                                        <?php echo $deleteLink; ?>
+                                                        <div class="margin-10px-top font-size14">22:30-23:00</div>
+                                                        <div class="font-size13 text-light-gray">Reserveerbaar <?php echo $doel; ?></div>
+                                                    </td>
+                                              <?php  }
+                                            } else {  //NOG TE RESERVEREN ?>
                                                 <td>
                                                     <a href="../actions/baan-reserveren-admin.php?tijd=22:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                     <div class="margin-10px-top font-size14">22:30-23:00</div>
                                                     <div class="font-size13 text-light-gray">Reserveerbaar</div>
                                                 </td>
-                                            <?php  }  ?>
-                                        <?php  } else { ?>
+                                            <?php } ?>
+                                        <?php  } else {
+                                            //NOG TE RESERVEREN
+                                            ?>
                                             <td>
                                                 <a href="../actions/baan-reserveren-admin.php?tijd=22:30&&datum=<?php echo ${"dag$dagLoop"}->format('Y-m-d'); ?>&&baan=<?php echo $baan ?>&&soort=<?php echo $soort; ?>" style="cursor:pointer; text-decoration: none" class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13">Reserveer</a>
                                                 <div class="margin-10px-top font-size14">22:30-23:00</div>

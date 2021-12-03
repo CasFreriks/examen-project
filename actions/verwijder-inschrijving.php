@@ -16,6 +16,7 @@ $selectQuery->execute();
 $data = $selectQuery->fetch(PDO::FETCH_ASSOC);
 
 $toernooiDeadline = $data["toernooi_deadline"];
+$deelnemersDecrease = $data["toernooi_deelnemers"] -=1;
 
 if(strtotime($huidigeDatum) == strtotime($toernooiDeadline)) {
     $_SESSION["status"] = "Oeps, er ging iets fout. Je inschrijving is niet verwijderd.";
@@ -26,6 +27,11 @@ if(strtotime($huidigeDatum) == strtotime($toernooiDeadline)) {
     $deleteQuery->bindParam(':toernooiID', $toernooi_id);
     $deleteQuery->bindParam(':lidID', $lidID);
     $deleteQuery->execute();
+
+    $updateQuery = $conn->prepare("UPDATE toernooien SET toernooi_deelnemers = :toernooiDeelnemers WHERE toernooi_id = :toernooiID");
+    $updateQuery->bindParam(':toernooiID', $toernooi_id);
+    $updateQuery->bindParam(':toernooiDeelnemers', $deelnemersDecrease);
+    $updateQuery->execute();
 
     $_SESSION["status"] = "Je inschrijving is succesvol verwijderd.";
     $_SESSION["statusCode"] = "success";

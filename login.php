@@ -92,7 +92,7 @@ session_start();
                                 <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.
                                 Deze heb je in onze mail ontvangen</span>
                             <?php } else { ?>
-                                <input type="number" placeholder="Leden nummer*" class="form-control" name="ledenNmr" required>
+                                <input type="number" placeholder="Leden nummer*" class="form-control" name="ledenNmr" required min="0">
                                 <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.
                                 Deze heb je in onze mail ontvangen</span>
                             <?php }  ?>
