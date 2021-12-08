@@ -66,7 +66,7 @@ $inschrijvingen = $queryInschrijven->fetchAll(PDO::FETCH_ASSOC);
 
                     </div>
                     <hr>
-                    <?php
+                    <?php //Status code error = foutmelding, succes is succesvol
                         if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
                             ?>
                             <div class="melding <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
@@ -95,6 +95,7 @@ $inschrijvingen = $queryInschrijven->fetchAll(PDO::FETCH_ASSOC);
                             <?php
                             foreach ($inschrijvingen as $toernooiRow) {
 
+                            // Pak datum uit de resultaten array en formatteer het als aangegeven naar Unix timestamp.
                             $toernooiDatum = $toernooiRow["toernooi_datum"];
                             $changeToernooiDatum = date("d-m-Y", strtotime($toernooiDatum));
 

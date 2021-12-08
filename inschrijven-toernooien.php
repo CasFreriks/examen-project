@@ -52,7 +52,7 @@ $data = $sth->fetchAll(PDO::FETCH_ASSOC);
 
             </div>
             <hr>
-            <?php
+            <?php //Status code error = foutmelding, succes is succesvol
               if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
                   ?>
                   <div class="melding <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
