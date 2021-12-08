@@ -16,6 +16,7 @@ if (isset($_POST['opslaan'])) {
     $nieuwLidnr = "lid_nr=:lidnr";
     $nieuwLidrol = "lid_rol=:lidrol";
 
+    //Wachtwoord hash voor het formulier veld "wachtwoord", salt: "examen", default hash if algo = empty
     $wachtwoordMetSaltEncrypt = password_hash($_POST["wachtwoord"] . "examen", PASSWORD_DEFAULT);
 
     $query = $pdo->prepare("UPDATE lid SET $nieuwVnaam, $nieuwTvoegsel, $nieuwAnaam, $nieuwEmail, $nieuwLidnr, $nieuwLidrol WHERE lid_id=$id");

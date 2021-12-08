@@ -47,7 +47,7 @@ $queryDrankDone = $pdo->query($queryDrank);
        <h4>Snacks</h4>
         <hr>
         <table>
-        <?php foreach ($querySnacksDone as $snackRow) { ?>
+        <?php foreach ($querySnacksDone as $snackRow) { //Voor elke record die een snack is, zet een menu-item in de kolom ?>
             <tr>
                 <td><?php echo ucfirst($snackRow['product_naam']) ?></td><td style="font-style: italic">€ <?php echo $snackRow['product_prijs'] ?></td>
             </tr>
@@ -58,7 +58,7 @@ $queryDrankDone = $pdo->query($queryDrank);
         <h4>Drankjes</h4>
         <hr>
         <table>
-        <?php foreach($queryDrankDone as $drankRow) { ?>
+        <?php foreach($queryDrankDone as $drankRow) { //Voor elke record die een drankje is, zet een menu-item in de kolom ?>
             <tr>
                 <td><?php echo ucfirst($drankRow['product_naam']) ?></td><td style="font-style: italic">€ <?php echo $drankRow['product_prijs'] ?></td>
             </tr>
