@@ -78,6 +78,7 @@ $data = $sth->fetchAll(PDO::FETCH_ASSOC);
                     </thead>
                     <tbody>
                     <?php foreach($data as $toernooi) {
+                        // Pak datum uit de resultaten array en formatteer het als aangegeven naar Unix timestamp.
                         $toernooiDatum = $toernooi["toernooi_datum"];
                         $changeToernooiDatum = date("d-m-Y", strtotime($toernooiDatum));
 
