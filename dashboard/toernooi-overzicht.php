@@ -3,15 +3,17 @@
 
     include('../db/dbconfig.php');
 
+
     $db = new Dbh();
     $pdo = $db->connect();
 
+    //check of admin ingelogd is dmv session
     if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"] == "Admin") {
 
-
-    $queryToernooienDone = $pdo->prepare("SELECT * FROM toernooien");
-    $queryToernooienDone->execute();
-    $toernooien = $queryToernooienDone->fetchAll(); //fetch mijn gegevens zodat ze in de forEach kunnen
+    
+    $queryToernooienDone = $pdo->prepare("SELECT * FROM toernooien");// haalt alle info van toernooien op
+    $queryToernooienDone->execute(); // voort query hierboven uit
+    $toernooien = $queryToernooienDone->fetchAll(); //fetch mijn gegevens in een array zodat ze in de forEach kunnen
 ?>
 
 <!doctype html>
@@ -133,7 +135,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach($toernooien as $toernooiRow) {
+                                
+                                <?php 
+                                // haalt elk toernooi binnen
+                                foreach($toernooien as $toernooiRow) {
                                        $date = date_create($toernooiRow['toernooi_datum']); //zet de datum om naar de Europese datum
                                        $newDate = date_format($date, 'd-m-Y');
 
@@ -143,10 +148,11 @@
                                        $time = date_create($toernooiRow['toernooi_begintijd']); //zet de datum om naar de Europese datum
                                        $beginTijd = date_format($time, 'H:i');
                                     
-                                       $timestamp = strtotime($toernooiRow['toernooi_eindtijd']);
+                                       $timestamp = strtotime($toernooiRow['toernooi_eindtijd']); //zet de datum om naar de juiste tijd
                                        $eindTijd = date('H:i', $timestamp);
                                     
-                                ?>                                    
+                                ?>
+                                <!-- toont de gegevens van het toernooi in een tabel. -->                    
                                     <tr>
                                         <td><?php echo $toernooiRow['toernooi_id']?></td>
                                         <td><?php echo $toernooiRow['toernooi_naam']?></td>
