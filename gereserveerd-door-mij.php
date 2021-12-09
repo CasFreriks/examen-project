@@ -7,10 +7,10 @@ $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 
 $lidID = $_SESSION["lidID"];
 
-if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"])) {
+if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"])) { //als de gebruiker gezet is mag hij hier komen
 
 $sql = $con->prepare("SELECT * FROM reservering LEFT JOIN baan ON reservering.baan_id = baan.baan_id
-WHERE lid_id = :lidID");
+WHERE lid_id = :lidID"); //selecteert alle reserveringen van het lid
 $sql->bindParam(":lidID", $lidID);
 $sql->execute();
 $result = $sql->fetchAll();
@@ -66,7 +66,7 @@ $result = $sql->fetchAll();
                 </div>
                 <hr>
                 <?php
-                if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                if(isset($_SESSION["status"]) && $_SESSION["status"] != "") { //gebruik ik voor meldingen
                     ?>
                     <div class="melding <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
                         <h6><?php echo $_SESSION["status"]; ?></h6>
@@ -89,7 +89,7 @@ $result = $sql->fetchAll();
                         </thead>
                         <tbody>
                         <?php
-                        foreach($result as $results) {
+                        foreach($result as $results) { //loopt hier door alle resultaten heen
                             $date = date_create($results["reserveer_datum"]); //zet de datum om naar de Europese datum
                             $newDate = date_format($date, 'd-m-Y');
 

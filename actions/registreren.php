@@ -9,7 +9,7 @@ if (!empty($_POST["email"]) && !empty($_POST["wachtwoord"]) && !empty($_POST["le
    $wachtwoord = $_POST["wachtwoord"];
    $ledenNmr = $_POST["ledenNmr"];
 
-   $wachtwoordMetSaltEncrypt = password_hash($wachtwoord . "examen", PASSWORD_DEFAULT);
+   $wachtwoordMetSaltEncrypt = password_hash($wachtwoord . "examen", PASSWORD_DEFAULT); //wachtwoord met 'examen' als salt
 
    //checkt of lid ingeschreven door ons doormiddel van hun Email-adres én ledennummer
    $checkOfLidIsIngeschrevenSql = $con->prepare("SELECT lid_email, lid_nr FROM lid WHERE lid_email = :lidEmail AND lid_nr = :lidNmr");

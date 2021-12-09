@@ -13,8 +13,9 @@ $email = $_POST["edit-email"];
 $telefoonnummer = $_POST["edit-tel"];
 $wachtwoord = $_POST["edit-password"];
 
-$wachtwoordMetSaltEncrypt = password_hash($wachtwoord . "examen", PASSWORD_DEFAULT);
+$wachtwoordMetSaltEncrypt = password_hash($wachtwoord . "examen", PASSWORD_DEFAULT); //wachtwoord met 'examen' als salt
 
+//update hier de gebruiker met de gegevens uit de form
 $sql = $con->prepare("UPDATE lid SET lid_vnaam = :voornaam, lid_anaam = :achternaam,
                lid_tel = :telefoonnummer, lid_email = :email WHERE lid_id = :lidID");
 $sql->bindParam(":voornaam", $voornaam);
@@ -25,6 +26,7 @@ $sql->bindParam(":lidID", $lidID);
 $sql->execute();
 
 if (isset($tussenvoegsel)) {
+    //als 'tussenvoegsel' gezet is dan mag die geupdate worden, zo niet? dan mag die dan niet doen
     $sql = $con->prepare("UPDATE lid SET lid_tvoegsel = :tussenvoegsel WHERE lid_id = :lidID");
     $sql->bindParam(":tussenvoegsel", $tussenvoegsel);
     $sql->bindParam(":lidID", $lidID);
@@ -32,6 +34,7 @@ if (isset($tussenvoegsel)) {
 }
 
 if (isset($wachtwoord)) {
+    //als 'wachtwoord' gezet is dan mag die geupdate worden, zo niet? dan mag die dan niet doen
     $sql = $con->prepare("UPDATE lid SET lid_wachtwoord = :wachtwoord WHERE lid_id = :lidID");
     $sql->bindParam(":wachtwoord", $wachtwoordMetSaltEncrypt);
     $sql->bindParam(":lidID", $lidID);

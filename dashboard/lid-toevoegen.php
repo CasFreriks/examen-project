@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"] == "Admin") {
+if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"] == "Admin") { //als de gebruiker gezet is mag hij hier komen. De gebruiker moet uiteraard wel een admin zijn.
 
 ?>
 <!doctype html>
@@ -44,7 +44,7 @@ if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"
     <div class="float-end">
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownBtn" data-bs-toggle="dropdown" aria-expanded="false">
-            <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] != "") { ?>
+            <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] != "") { //als deze sessie is gezet dan mag hij je naam tonen, anders niet ?>
               <?php if ($_SESSION["lidRol"] == "Admin") { ?>
                   Hoi, <?php echo ucfirst($_SESSION["lidName"]);?>
           <?php }}?>
@@ -128,7 +128,7 @@ if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"
 
                             <div class="col-md-5">
                                 <?php
-                                if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+                                if(isset($_SESSION["status"]) && $_SESSION["status"] != "") { //gebruik ik als melding
                                     ?>
                                     <div class="melding  <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%; margin: 20px 0;">
                                         <h6><?php echo $_SESSION["status"]; ?></h6>

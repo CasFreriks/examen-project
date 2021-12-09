@@ -5,33 +5,33 @@ require_once ("../db/dbconfig.php");
 $con = new Dbh();
 $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 
-if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"] == "Admin") {
+if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"]) && $_SESSION["lidRol"] == "Admin") { //als de gebruiker gezet is mag hij hier komen. De gebruiker moet uiteraard wel een admin zijn.
 
-$date1 = new DateTime("29-11-2021");
-$date2 = new DateTime("+7 days");
-$date3 = new DateTime("+14 days");
+$date1 = new DateTime("now"); //datum van vandaag
+$date2 = new DateTime("+7 days"); //datum over 7 dagen
+$date3 = new DateTime("+14 days");  //datum over 14 dagen
 $week1 = $date1->format("W");
 $week2 = $date2->format("W");
 $week3 = $date3->format("W");
 
-if (isset($_GET["week"])) {
+if (isset($_GET["week"])) { //als de get is gezet mag de sessie gezet worden
     $_SESSION["week"] = $_GET["week"];
 }
 
-if (isset($_GET["soort"])) {
+if (isset($_GET["soort"])) { //als de get is gezet mag die in een sessie, je zet hem in een sessie omdat je hem wilt bewaren
     $soort = $_SESSION["soort"] = $_GET["soort"];
-} elseif (isset($_SESSION["soort"])) {
+} elseif (isset($_SESSION["soort"])) { //als de sessie al gezet is dan moet de variable $soort gezet worden
     $soort = $_SESSION["soort"];
 } else {
-    $soort = "Training";
+    $soort = "Training"; //niks gezet? dan standaard op 'training'
 }
 
-if (isset($_GET["baan"]) ) {
+if (isset($_GET["baan"]) ) { //als de get is gezet mag die in een sessie, je zet hem in een sessie omdat je hem wilt bewaren
     $baan = $_SESSION["baan"] = $_GET["baan"];
-} elseif (isset($_SESSION["baan"])){
+} elseif (isset($_SESSION["baan"])){ //als de sessie al gezet is dan moet de variable $baan gezet worden
     $baan = $_SESSION["baan"];
 } else {
-    $baan = 1;
+    $baan = 1; //niks gezet? dan standaard op baan 1
 }
 
 $selectBaanGegevens = $con->prepare("SELECT * FROM baan WHERE baan_id = :baanID"); //haalt alle gegevens van de baan op
@@ -39,8 +39,8 @@ $selectBaanGegevens->bindParam(":baanID", $baan);
 $selectBaanGegevens->execute();
 $baanGegevens = $selectBaanGegevens->fetch();
 
-if (isset($_SESSION["week"])) {
-    if ($_SESSION["week"] == $week1) {
+if (isset($_SESSION["week"])) { //als de sessie week gezet is mag hij verder
+    if ($_SESSION["week"] == $week1) { //week 1
         $dag1 = new DateTime('now');
         $dag2 = new DateTime('+1 day');
         $dag3 = new DateTime('+2 day');
@@ -49,7 +49,7 @@ if (isset($_SESSION["week"])) {
         $dag6 = new DateTime('+5 day');
         $dag7 = new DateTime('+6 day');
 
-    } elseif ($_SESSION["week"] == $week2) {
+    } elseif ($_SESSION["week"] == $week2) { //week 2
         $dag1 = new DateTime('+7 day');
         $dag2 = new DateTime('+8 day');
         $dag3 = new DateTime('+9 day');
@@ -57,7 +57,7 @@ if (isset($_SESSION["week"])) {
         $dag5 = new DateTime('+11 day');
         $dag6 = new DateTime('+12 day');
         $dag7 = new DateTime('+13 day');
-    } elseif ($_SESSION["week"] == $week3) {
+    } elseif ($_SESSION["week"] == $week3) { //week 3
         $dag1 = new DateTime('+14 day');
         $dag2 = new DateTime('+15 day');
         $dag3 = new DateTime('+16 day');
@@ -66,7 +66,7 @@ if (isset($_SESSION["week"])) {
         $dag6 = new DateTime('+19 day');
         $dag7 = new DateTime('+20 day');
     }
-} else {
+} else { //standaard naar week 1
     $dag1 = new DateTime('now');
     $dag2 = new DateTime('+1 day');
     $dag3 = new DateTime('+2 day');
@@ -117,7 +117,7 @@ if (isset($_SESSION["week"])) {
     <div class="float-end">
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] != "") { ?>
+                <?php if (isset($_SESSION["lidRol"]) && $_SESSION["lidRol"] != "") { //als deze sessie is gezet dan mag hij je naam tonen, anders niet ?>
                     <?php if ($_SESSION["lidRol"] == "Admin") { ?>
                         Hoi, <?php echo ucfirst($_SESSION["lidName"]);?>
                     <?php }}?>
@@ -178,8 +178,8 @@ if (isset($_SESSION["week"])) {
                             </div>
                             <div class="col-md-2">
                                 <form>
-                                    <select class="form-select" name="soort" onchange="this.form.submit();">
-                                        <?php if (isset($_SESSION["soort"])) {
+                                    <select class="form-select" name="soort" onchange="this.form.submit();">  <!-- form submit is voor het submitten van de form-->
+                                        <?php if (isset($_SESSION["soort"])) { //als de sessie gezet is moet hij die tonen
                                             echo "<option value='" . $_SESSION["soort"] . "'> " . $_SESSION["soort"] . "</option>";
                                             echo "<option disabled>-----------------------</option>";
                                         } ?>
@@ -191,8 +191,8 @@ if (isset($_SESSION["week"])) {
                             </div>
                             <div class="col-md-2">
                                 <form>
-                                    <select class="form-select" name="week" onchange="this.form.submit();">
-                                        <?php if (isset($_SESSION["week"])) {
+                                    <select class="form-select" name="week" onchange="this.form.submit();">  <!-- form submit is voor het submitten van de form-->
+                                        <?php if (isset($_SESSION["week"])) { //als de sessie gezet is moet hij die tonen
                                             echo "<option value='" . $_SESSION["week"] . "'>Week " . $_SESSION["week"] . "</option>";
                                             echo "<option disabled>-----------------------</option>";
                                         } ?>
@@ -204,8 +204,8 @@ if (isset($_SESSION["week"])) {
                             </div>
                             <div class="col-md-2">
                                 <form>
-                                    <select class="form-select" name="baan" onchange="this.form.submit();">
-                                        <?php if (isset($_SESSION["baan"])) {
+                                    <select class="form-select" name="baan" onchange="this.form.submit();">  <!-- form submit is voor het submitten van de form-->
+                                        <?php if (isset($_SESSION["baan"])) { //als de sessie gezet is moet hij die tonen
                                             echo "<option value='" . $_SESSION["baan"] . "'>Baan " . $_SESSION["baan"] . " | " . ucfirst($baanGegevens["baan_naam"]) . " </option>";
                                             echo "<option disabled>-----------------------</option>";
                                         } ?>
@@ -223,7 +223,7 @@ if (isset($_SESSION["week"])) {
                         <hr>
 
                         <?php
-                        if(isset($_SESSION["status1"]) && $_SESSION["status1"] != "") {
+                        if(isset($_SESSION["status1"]) && $_SESSION["status1"] != "") { //Dit gebruik ik als melding
                             ?>
                             <div class="melding  <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
                                 <h6><?php echo $_SESSION["status1"]; ?></h6>
@@ -253,26 +253,27 @@ if (isset($_SESSION["week"])) {
                                 <tr>
                                     <td class="align-middle">12:00</td>
                                     <?php
-
+                                    //LET OP! BIJ DE TIJD VAN 12:00 STAAN ER COMMENTS BIJ DE ANDERE UREN NIET! DIT OMDAT HET PRECIES HETZELFDE WERKT
                                     $dagLoop = 0;
                                     for ($i = 0; $i <= 6; $i++) {
-                                        $dagLoop++;
+                                        $dagLoop++; //telt telkens een dag erbij op
 
-                                        $newDate = ${"dag$dagLoop"}->format('Y-m-d');
+                                        $newDate = ${"dag$dagLoop"}->format('Y-m-d'); //telt telkens een dag erbij op en formatteert het naar het juiste format
 
-                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '12:00' AND baan_id = :baanID");
+                                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd = '12:00' AND baan_id = :baanID"); //selecteert alles als de datum vandaag is + de tijd is om 12:00
                                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                                         $reserveringenSql->bindParam(":baanID", $baan);
                                         $reserveringenSql->execute();
                                         $reserveringenResult = $reserveringenSql->fetch();
                                         $reserveringenNum = $reserveringenSql->rowCount();
 
-                                        if ($reserveringenNum > 0) {
-                                            if ($reserveringenResult["lid_id"] == 0) {
-                                                $doel = "voor " . $reserveringenResult["reserveer_doel"];
+                                        if ($reserveringenNum > 0) { //als de reservering bestaat dan mag hij verder
+                                            if ($reserveringenResult["lid_id"] == 0) { //is lid_id 0? dan is hij geen lid en dus een admin
+                                                $doel = "voor " . $reserveringenResult["reserveer_doel"]; //zet de doel vast voor de reservering
+                                                //als het door een admin gemaakt is mag je hem ook verwijderen. Je kan niks van een lid verwijderen. En andersom ook niet.
                                                 $deleteLink = "<a href='../actions/verwijder-reserveren-admin.php?id=" . $reserveringenResult['reserveer_id'] . " ' style='cursor:pointer; text-decoration: none'' class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</a>";
                                             } else {
-                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)";
+                                                $doel = "Door lid (! let op, dit geld voor leden voor 1 uur én niet voor een half uur)"; //zet de doel vast voor de reservering
                                                 $deleteLink = "<span class='bg-warning padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13'>Gereserveerd</span>";
                                             }
                                         }

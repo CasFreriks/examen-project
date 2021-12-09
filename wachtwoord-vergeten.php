@@ -42,7 +42,7 @@ session_start();
             </div>
 
             <?php
-            if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+            if(isset($_SESSION["status"]) && $_SESSION["status"] != "") { // gebruik ik voor mijn meldingen
                 ?>
                 <div class="melding <?php echo $_SESSION["statusCode"]; ?>">
                     <h6><?php echo $_SESSION["status"]; ?></h6>

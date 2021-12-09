@@ -4,21 +4,25 @@ require_once ("db/dbconfig.php");
 $con = new Dbh();
 $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 
-if(!isset($_GET["code"])) {
+if(!isset($_GET["code"])) { //als de code niet in je url staat dan mag hij de pagina niet zien
     exit("Can`t find page");
 }
 
 $code = $_GET["code"];
 
+//selecteert hier je gegevens dmv je code
 $sql = $con->prepare("SELECT reset_email FROM resetwachtwoord WHERE reset_code = :uniqCode");
 $sql->bindParam(":uniqCode", $code);
 $sql->execute();
 
 $searchCode = $sql->rowCount();
 
+//als je code niet gevonden is dan mag je niet op de pagina komen
 if($searchCode == 0) {
     exit("Can`t find page");
 }
+
+//als je wachtwoord hetzelfde is als je herhaalde wachtwoord is hij goed
 if(isset($_POST["wachtwoord"]) && $_POST["wachtwoord"] === $_POST["wachtwoordHerhaling"]) {
 
     $wachtwoord = $_POST["wachtwoord"];
@@ -28,11 +32,13 @@ if(isset($_POST["wachtwoord"]) && $_POST["wachtwoord"] === $_POST["wachtwoordHer
     $row = $sql->fetch();
     $email = $row["reset_email"];
 
+    //update hier je huidige wachtwoord naar een nieuw veranderd wachtwoord
     $sqlUpdate = $con->prepare("UPDATE lid SET lid_wachtwoord = :lidWachtwoord WHERE lid_email = :lidEmail");
     $sqlUpdate->bindParam(":lidWachtwoord", $passwordHash);
     $sqlUpdate->bindParam("lidEmail", $email);
 
     if($sqlUpdate->execute()) {
+        //als hij geupdate is dan moet de code automatisch uit de database worden gehaald zodat je niet meerdere keren iets kan resetten
         $sqlDelete = $con->prepare("DELETE FROM resetwachtwoord WHERE reset_code = :uniqCode");
         $sqlDelete->bindParam(":uniqCode", $code);
         $sqlDelete->execute();
@@ -87,7 +93,7 @@ if(isset($_POST["wachtwoord"]) && $_POST["wachtwoord"] === $_POST["wachtwoordHer
                 </form>
             </div>
             <?php
-            if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+            if(isset($_SESSION["status"]) && $_SESSION["status"] != "") { //gebruik ik voor mijn meldingen
                 ?>
                 <div class="melding <?php echo $_SESSION["statusCode"]; ?>">
                     <h6><?php echo $_SESSION["status"]; ?></h6>

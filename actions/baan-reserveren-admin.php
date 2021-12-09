@@ -10,7 +10,7 @@ $datum =  $_GET["datum"];
 $baan = $_GET["baan"];
 $soort = $_GET["soort"];
 
-
+//maakt hier de reservering aan en zet hem in de database
 $sql = $con->prepare("INSERT INTO reservering (reserveer_datum, reserveer_tijd, baan_id, reserveer_doel) VALUES ( :datum, :tijd, :baanID, :reserveerSoort)");
 $sql->bindParam(":datum", $datum);
 $sql->bindParam(":tijd", $tijd);

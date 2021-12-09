@@ -24,15 +24,16 @@ if (isset($_POST["email"]) && isset($_POST["ledenNmr"]) && isset($_POST["rolKeuz
 
     $ledenNmrCheck = $ledenNmrCheckSql->rowCount();
 
-    if ($emailCheck === 0) {
-        if ($ledenNmrCheck === 0) {
+    if ($emailCheck === 0) {     //als de email nog niet bestaat dan mag hij verder
+        if ($ledenNmrCheck === 0) { //als het ledennummer nog niet bestaat dan mag hij verder
+            //maakt hier het lid aan en zet hem in de database
             $sql = $con->prepare("INSERT INTO lid (lid_email, lid_rol, lid_sinds, lid_nr) VALUES (:email, :rolKeuze, current_timestamp, :ledenNmr)");
             $sql->bindParam(":email", $email);
             $sql->bindParam(":rolKeuze", $rolKeuze);
             $sql->bindParam(":ledenNmr", $ledenNmr);
             $sql->execute();
 
-            lidToevoegenMail($ledenNmr, $email);
+            lidToevoegenMail($ledenNmr, $email); //stuurt hier doormiddel van een function de mail
 
             header ("Location: ../dashboard/lid-toevoegen.php");
 

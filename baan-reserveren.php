@@ -5,23 +5,23 @@ require_once ("db/dbconfig.php");
 $con = new Dbh();
 $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 
-if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"])) {
+if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"])) { //als de gebruiker gezet is mag hij hier komen
 
 
-if (isset($_GET["baan"]) ) {
+if (isset($_GET["baan"]) ) { //als de get is gezet mag die in een sessie, je zet hem in een sessie omdat je hem wilt bewaren
     $baan = $_SESSION["baan"] = $_GET["baan"];
-} elseif (isset($_SESSION["baan"])){
+} elseif (isset($_SESSION["baan"])){ //als de sessie al gezet is dan moet de variable $baan gezet worden
     $baan = $_SESSION["baan"];
-} else {
+} else { //niks gezet? dan standaard op baan 1
     $baan = 1;
 }
 
-if (isset($_GET["datum"]) ) {
+if (isset($_GET["datum"]) ) { //als de get is gezet mag die in een sessie, je zet hem in een sessie omdat je hem wilt bewaren
     $oneDate = $_SESSION["datum"] = $_GET["datum"];
-} elseif (isset($_SESSION["datum"])){
+} elseif (isset($_SESSION["datum"])){ //als de sessie al gezet is dan moet de variable $datum gezet worden
     $oneDate = $_SESSION["datum"];
 } else {
-    $oneDate = date("Y-m-d");
+    $oneDate = date("Y-m-d"); //niks gezet? dan de datum van vandaag
 }
 
 $selectBaanGegevens = $con->prepare("SELECT * FROM baan WHERE baan_id = :baanID"); //haalt alle gegevens van de baan op
@@ -62,7 +62,7 @@ $baanGegevens = $selectBaanGegevens->fetch();
         <div class="row">
             <div class="col-md-12">
                 <?php
-                if(isset($_SESSION["status1"]) && $_SESSION["status1"] != "") {
+                if(isset($_SESSION["status1"]) && $_SESSION["status1"] != "") { //gebruik ik voor meldingen
                     ?>
                     <div class="melding  <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
                         <h6><?php echo $_SESSION["status1"]; ?></h6>
@@ -81,8 +81,8 @@ $baanGegevens = $selectBaanGegevens->fetch();
             </div>
             <div class="col-md-6 d-flex justify-content-end">
                 <form class="mobileSelectDay" method="get">
-                    <select class="form-select" onchange="this.form.submit();" name="datum">
-                        <?php if (isset($_SESSION["datum"])) {
+                    <select class="form-select" onchange="this.form.submit();" name="datum"> <!-- form submit is voor het submitten van de form-->
+                        <?php if (isset($_SESSION["datum"])) { //als de sessie gezet is moet hij die tonen
                             echo "<option value='" . $_SESSION["datum"] . "'>" . $_SESSION["datum"] . "</option>";
                             echo "<option disabled>-----------------------</option>";
                         } ?>
@@ -97,8 +97,8 @@ $baanGegevens = $selectBaanGegevens->fetch();
                 </form>
 
                 <form class="banenSelectie" method="get">
-                    <select class="form-select" onchange="this.form.submit();" name="baan">
-                        <?php if (isset($_SESSION["baan"])) {
+                    <select class="form-select" onchange="this.form.submit();" name="baan"> <!-- form submit is voor het submitten van de form-->
+                        <?php if (isset($_SESSION["baan"])) { //als de sessie gezet is moet hij die tonen
                             echo "<option value='" . $_SESSION["baan"] . "'>Baan " . $_SESSION["baan"] . " | " . ucfirst($baanGegevens["baan_naam"]) . " </option>";
                             echo "<option disabled>-----------------------</option>";
                         } ?>
@@ -114,6 +114,7 @@ $baanGegevens = $selectBaanGegevens->fetch();
             </div>
         </div>
         <br>
+        <!-- LET OP! BIJ DE TIJD VAN 12:00 STAAN ER COMMENTS BIJ DE ANDERE UREN NIET! DIT OMDAT HET PRECIES HETZELFDE WERKT-->
         <div class="table-responsive">
             <table class="table table-bordered text-center overflow-auto">
                 <thead>
@@ -121,7 +122,7 @@ $baanGegevens = $selectBaanGegevens->fetch();
                     <th class="text-uppercase">Tijd
                     </th>
                     <?php
-                        if (isset($_SESSION["datum"])) {
+                        if (isset($_SESSION["datum"])) { //als de datum gezet is dan de sessie anders de datum van vandaag
                             echo "<th class='text-uppercase'>" .  $_SESSION["datum"] . "</th>";
                         } else {
                             echo "<th class='text-uppercase'>" .  date("d-m-y") . "</th>";
@@ -140,6 +141,7 @@ $baanGegevens = $selectBaanGegevens->fetch();
                     <td class="align-middle">12:00</td>
                     <td>
                         <?php
+                        //selecteert alles van de reservering van die dag + waar de tijd is iets met 12 uur aan het begin
                         $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '12%' AND baan_id = :baanID");
                         $reserveringenSql->bindParam(":reserveerDatum", $oneDate);
                         $reserveringenSql->bindParam(":baanID", $baan);
@@ -147,9 +149,9 @@ $baanGegevens = $selectBaanGegevens->fetch();
                         $reserveringenResult = $reserveringenSql->fetch();
                         $reserveringenNum = $reserveringenSql->rowCount();
 
-                        if ($reserveringenNum > 0) {
-                            if ($reserveringenResult["lid_id"] == 0) {
-                                $doel = "voor " . $reserveringenResult["reserveer_doel"];
+                        if ($reserveringenNum > 0) { //als de reservering bestaat dan mag hij verder
+                            if ($reserveringenResult["lid_id"] == 0) { //is lid_id 0? dan is hij geen lid en dus een admin
+                                $doel = "voor " . $reserveringenResult["reserveer_doel"]; //zet de doel vast voor de reservering
                             } else {
                                 $doel = "door lid";
                             }
@@ -177,20 +179,20 @@ $baanGegevens = $selectBaanGegevens->fetch();
                     $day = 1; //dag is standaard al een dag vooruit
 
                     for ($i = 0; $i <= 5; $i++) {
-                        $days = $day++;
-                        $date = new DateTime('+ ' .  $days . ' day');
-                        $newDate = $date->format('Y-m-d');
+                        $days = $day++; //telt telkens een dag erbij op
+                        $date = new DateTime('+ ' .  $days . ' day'); //telt telkens een dag erbij op
+                        $newDate = $date->format('Y-m-d'); //formateert het naar een leesbare format
 
-                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '12%' AND baan_id = :baanID");
+                        $reserveringenSql = $con->prepare("SELECT * FROM reservering WHERE reserveer_datum = :reserveerDatum AND reserveer_tijd like '12%' AND baan_id = :baanID"); //selecteert alles van de reservering van die dag + waar de tijd is iets met 12 uur aan het begin
                         $reserveringenSql->bindParam(":reserveerDatum", $newDate);
                         $reserveringenSql->bindParam(":baanID", $baan);
                         $reserveringenSql->execute();
                         $reserveringenResult = $reserveringenSql->fetch();
                         $reserveringenNum = $reserveringenSql->rowCount();
 
-                        if ($reserveringenNum > 0) {
-                            if ($reserveringenResult["lid_id"] == 0) {
-                                $doel = "voor " . $reserveringenResult["reserveer_doel"];
+                        if ($reserveringenNum > 0) { //als de reservering bestaat dan mag hij verder
+                            if ($reserveringenResult["lid_id"] == 0) { //is lid_id 0? dan is hij geen lid en dus een admin
+                                $doel = "voor " . $reserveringenResult["reserveer_doel"]; //zet de doel vast voor de reservering
                             } else {
                                 $doel = "door lid";
                             }

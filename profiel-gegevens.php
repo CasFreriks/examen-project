@@ -5,8 +5,8 @@ $con = new Dbh();
 $con = $con->connect(); //hier zorg ik ervoor dat mijn object connect
 $lidID = $_SESSION["lidID"];
 
-if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"])) {
-
+if(isset($_SESSION["lidID"]) && !empty($_SESSION["lidID"])) { //als de gebruiker gezet is mag hij hier komen
+//selecteert hier alle gegevens van het lid
 $sql = $con->prepare("SELECT * FROM lid WHERE lid_id = :lidID");
 $sql->bindParam(":lidID", $lidID);
 $sql->execute();
@@ -56,7 +56,7 @@ $result = $sql->fetch();
           <div class="col-md-8" style="padding-top: 20px;">
             <h4>Profiel gegevens</h4>
 
-              <?php
+              <?php //als het telefoonnummer nog mist dan komt er ook niks te staan
               if ($result["lid_tel"] == null) {
                   $lidTel = "";
               } else {
@@ -74,7 +74,7 @@ $result = $sql->fetch();
                 <button class="btn btn-primary" type="submit">Bijwerken</button>
 
               <?php
-              if(isset($_SESSION["status"]) && $_SESSION["status"] != "") {
+              if(isset($_SESSION["status"]) && $_SESSION["status"] != "") { //gebruik ik voor mijn meldingen
                   ?>
                   <div class="melding <?php echo $_SESSION["statusCode"]; ?>" style="width: 100%;">
                       <h6><?php echo $_SESSION["status"]; ?></h6>
