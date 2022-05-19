@@ -32,6 +32,7 @@ session_start();
                 <h5>Login</h5>
                 <form method="post" action="actions/inloggen.php">
                     <div class="row d-flex justify-content-center">
+<<<<<<< Updated upstream
                         <?php if (isset($_GET["email"]) && $_GET["email"] != "" || isset($_GET["ledenNmr"]) && $_GET["ledenNmr"] != "") { //als de gets gezet zijn dan moet hij de 'login' form disablen?>
                             <div class="col-md-8">
                                 <input type="email" placeholder="E-mailadres" class="form-control" name="email" required disabled>
@@ -50,6 +51,15 @@ session_start();
                             </div>
                         <?php } ?>
 
+=======
+                        <div class="col-md-8">
+                            <input type="email" placeholder="E-mailadres" class="form-control" name="email" required>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="password" placeholder="Wachtwoord" class="form-control" name="wachtwoord" required>
+                            <a href="wachtwoord-vergeten.php">Wachtwoord vergeten?</a>
+                        </div>
+>>>>>>> Stashed changes
                     </div>
                     <?php if (isset($_GET["email"]) && $_GET["email"] != "" || isset($_GET["ledenNmr"]) && $_GET["ledenNmr"] != "") { //als de gets gezet zijn dan moet hij de knop 'login' disablen?>
                         <button class="btn btn-primary" type="submit" disabled>Login</button>
@@ -77,6 +87,7 @@ session_start();
                 <form action="actions/registreren.php" method="post">
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8">
+<<<<<<< Updated upstream
                             <?php if (isset($_GET["email"]) && $_GET["email"] != "") { //als de get gezet is dan moet hij je email laten zien uit de url ?>
                                 <input type="email" placeholder="E-mailadres" class="form-control" value="<?php echo $_GET["email"]?>" name="email" required>
                             <?php } else { ?>
@@ -96,6 +107,17 @@ session_start();
                                 <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.
                                 Deze heb je in onze mail ontvangen</span>
                             <?php }  ?>
+=======
+                            <input type="email" placeholder="E-mailadres" class="form-control" required>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="password" placeholder="Wachtwoord" class="form-control" required>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="number" placeholder="Leden nummer*" class="form-control" required>
+                            <span style="font-size:0.8em;">*Vul hier je leden nummer in om te verifiëren dat je lid bij ons bent.
+                             Deze heb je in onze mail ontvangen</span>
+>>>>>>> Stashed changes
                         </div>
                     </div>
 
